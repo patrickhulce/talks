@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Collection of speaker decks",
   "scripts": {
+    "dev": "./scripts/dev.sh",
     "build": "./scripts/build.sh"
   },
   "author": "Patrick Hulce <patrick.hulce@gmail.com>",
