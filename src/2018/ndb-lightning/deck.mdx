@@ -1,13 +1,66 @@
 import {Image} from 'mdx-deck'
 export {future as theme} from 'mdx-deck/themes'
-import { SplitRight } from 'mdx-deck/layouts'
+import {SplitRight} from 'mdx-deck/layouts'
 
 export default SplitRight
 
 <img src={require('file-loader!./ndb.png')} />
 
-# NDB
+# ndb
 ## node debugging for the modern dev
 
 ---
 
+## ndb
+
+- Use familiar Chrome Developer Tools
+- Easily debug your tests
+- Re-run npm scripts from within the debugger
+- No need to find magic node args, `ndb` does the work for you
+- Let's check it out
+
+---
+
+## install it
+
+<pre style={{fontSize: '60px'}}>npm install -g ndb</pre>
+
+---
+
+## use it
+
+<pre style={{fontSize: '60px', textDecoration: 'line-through'}}>npm test</pre>
+
+<pre style={{fontSize: '60px'}}>ndb npm test</pre>
+
+---
+
+# 🤑 $$ profit $$ 🤑
+
+<img style={{maxHeight: '900px'}} src={require('file-loader!./screenshot-devtools.png')} />
+
+```notes
+steps it just took
+1. figured out the right binary and node arguments to enable debugging
+2. opened Chromium DevTools and attached to the node process for inspection
+3. ran your script and stopped at the debugger statement
+
+no more messing with --inspect, etc
+re-run scripts from within the debugger
+evaluate functions and variables in the REPL
+```
+
+---
+
+# recap
+
+- `npm install -g ndb`
+- `ndb <your node command here>`
+
+---
+
+# thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
