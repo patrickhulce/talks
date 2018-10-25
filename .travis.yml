@@ -1,0 +1,13 @@
+language: node_js
+dist: trusty
+cache:
+  yarn: true
+script:
+  - yarn build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GH_TOKEN
+  local_dir: dist-www
+  on:
+    branch: master
