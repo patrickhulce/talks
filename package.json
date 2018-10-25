@@ -1,0 +1,14 @@
+{
+  "name": "@patrickhulce/talks",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Collection of speaker decks",
+  "scripts": {
+    "build": "./scripts/build.sh"
+  },
+  "author": "Patrick Hulce <patrick.hulce@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mdx-deck": "^1.7.7"
+  }
+}
