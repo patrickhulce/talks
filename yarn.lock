@@ -33,6 +33,10 @@
     dotenv "^5.0.1"
     got "^8.3.0"
 
+"@eris/mdx-theme@erisventures/mdx-deck-theme#published":
+  version "0.0.1"
+  resolved "https://codeload.github.com/erisventures/mdx-deck-theme/tar.gz/813200aaeed1e4568df289b4b820a7f0324cd389"
+
 "@mdx-js/mdx@^0.15.3":
   version "0.15.5"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-0.15.5.tgz#a3821a1e0e460ee993437ef3f922482fb67c31d0"
