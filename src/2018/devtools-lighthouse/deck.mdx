@@ -1,6 +1,6 @@
-import { Head, Image } from 'mdx-deck'
+import {Head, Image} from 'mdx-deck'
 export {default as theme} from '@eris/mdx-theme/dist/chrome-theme'
-import { FullScreenCode, Main, Section, SectionInverted } from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
 import {Column, Row} from '../../components/column.js'
 
 export default Main
@@ -9,7 +9,17 @@ export default Main
 
 ## A Better Web with Lighthouse
 
-<img style={{position: 'absolute', top: '75%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '50%', maxHeight: '33%'}} src={require('file-loader!./lighthouse.png')} />
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '50%',
+    maxHeight: '33%',
+  }}
+  src={require('file-loader!./lighthouse.png')}
+/>
 
 ```notes
 A little about me, I just moved to Dallas a few weeks ago from CA where I worked on Chrome
@@ -24,10 +34,10 @@ Before that I jumped around between several different startups, but always had a
 
 # Agenda
 
-* Webdev in 2018
-* Lighthouse Breakdown
-* Diving Deeper with DevTools
-* Q & A
+- Webdev in 2018
+- Lighthouse Breakdown
+- Diving Deeper with DevTools
+- Q & A
 
 ```notes
 how many have heard of Lighthouse?
@@ -45,7 +55,9 @@ export default SectionInverted
 
 <img style={{maxWidth: '80vw', maxHeight: '80vh'}} src={require('file-loader!./webdev2018.png')} />
 
-<div style={{textAlign: 'center', fontSize: '12px'}}>Credit: @BrandonMorelli https://codeburst.io/the-2018-web-developer-roadmap-826b1b806e8d</div>
+<div style={{textAlign: 'center', fontSize: '12px'}}>
+  Credit: @BrandonMorelli https://codeburst.io/the-2018-web-developer-roadmap-826b1b806e8d
+</div>
 
 ```notes
 You may have seen this make the rounds on HN awhile back, but gist...
@@ -56,7 +68,16 @@ I mean we love it, I love it, but keeping up with everything is nuts.
 
 ---
 
-<Image style={{position: 'absolute', top: '0', transform: 'translateX(-30vw)', zIndex: -1, opacity: '0.1'}} src={require('file-loader!./word-cloud.png')}/>
+<Image
+  style={{
+    position: 'absolute',
+    top: '0',
+    transform: 'translateX(-30vw)',
+    zIndex: -1,
+    opacity: '0.1',
+  }}
+  src={require('file-loader!./word-cloud.png')}
+/>
 
 # You're not even done yet!
 
@@ -117,7 +138,10 @@ Tonight we're going to be picking on CNN, I'm not sure if any of you read CNN's 
 
 ---
 
-<img style={{maxWidth: '90vw', maxHeight: '90vh'}} src={require('file-loader!./performance-section.png')} />
+<img
+  style={{maxWidth: '90vw', maxHeight: '90vh'}}
+  src={require('file-loader!./performance-section.png')}
+/>
 
 ```notes
 This is what Lighthouse says about their performance, yikes. 2 out of 100.
@@ -126,6 +150,7 @@ The good news is that Lighthouse has already automatically found lots of room fo
 ```
 
 ---
+
 <Row>
 
 <Column style={{minWidth: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: '20px', lineHeight: '2'}}>
@@ -152,18 +177,23 @@ The good news is that Lighthouse has already automatically found lots of room fo
 ```
 
 ---
+
 <Row>
 
 <Column style={{fontSize: '20px', minWidth: '40%', textAlign: 'left'}}>
 
 ### First Contentful Paint
-When did the *first thing* show up?
+
+When did the _first thing_ show up?
 
 ### Speed Index
-How fast do users *perceive* your page load visually?
+
+How fast do users _perceive_ your page load visually?
 
 ### Time to Interactive
-How long until the whole thing stops jankin' so the user can, ya know, *use it*?
+
+How long until the whole thing stops jankin' so the user can, ya know, _use it_?
+
 </Column>
 
 <Column>
@@ -183,8 +213,10 @@ Now that we know how bad the situation is, let's take a look at how we can make 
 
 ---
 
-<img style={{maxWidth: '80vw', maxHeight: '80vh'}} src={require('file-loader!./performance-opportunity.png')} />
-
+<img
+  style={{maxWidth: '80vw', maxHeight: '80vh'}}
+  src={require('file-loader!./performance-opportunity.png')}
+/>
 
 ```notes
 Let's take a look at the waste, for the opportunities we try to frame everything in terms of how much is worth. You might read on medium about how awesome inlining all your CSS might be, but if it's only going to save you 20 ms and you've got 50MB image, it's obviously not going to be your #1 priority.
@@ -199,18 +231,27 @@ Here you'll also be able to see what specific resources we're identifying here t
 <Row>
 
 <Column>
-<h2 style={{color: '#2075ff'}}>DevTools</h2>
-<img style={{maxWidth: '30vw', maxHeight: '50vh'}} src={require('file-loader!./lh-env-devtools.png')} />
+  <h2 style={{color: '#2075ff'}}>DevTools</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-devtools.png')}
+  />
 </Column>
 
 <Column style={{margin: '0 20px'}}>
-<h2 style={{color: '#2075ff'}}>CLI</h2>
-<img style={{maxWidth: '30vw', maxHeight: '50vh'}} src={require('file-loader!./lh-env-cli.png')} />
+  <h2 style={{color: '#2075ff'}}>CLI</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-cli.png')}
+  />
 </Column>
 
 <Column>
-<h2 style={{color: '#2075ff'}}>Extension</h2>
-<img style={{maxWidth: '30vw', maxHeight: '50vh'}} src={require('file-loader!./lh-env-extension.png')} />
+  <h2 style={{color: '#2075ff'}}>Extension</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-extension.png')}
+  />
 </Column>
 
 </Row>
@@ -224,6 +265,17 @@ Built-in to Chrome as the "Audits" panel, on NPM as `lighthouse`, and even as a 
 
 I'm going to focus on the DevTools integration though and show you how can dive deeper
 ```
+
+---
+
+<img style={{maxWidth: '50vw', maxHeight: '60vh'}} src={require('file-loader!./but-wait.png')} />
+
+---
+
+<img
+  style={{maxWidth: '100vw', maxHeight: '100vh'}}
+  src={require('file-loader!./psi-lighthouse.png')}
+/>
 
 ---
 
@@ -247,8 +299,10 @@ Clicking in here let's you look at this data for yourself
 
 ### DevTools Performance Panel
 
-<img style={{maxWidth: '80vw', maxHeight: '80vh'}} src={require('file-loader!./performance-panel.png')} />
-
+<img
+  style={{maxWidth: '80vw', maxHeight: '80vh'}}
+  src={require('file-loader!./performance-panel.png')}
+/>
 
 ```notes
 This takes you over to the "Performance" panel in Chrome, which can be a bit overwhelming. I could spend an entire talk breaking down the performance panel, so I'll just be giving you a taste.
@@ -268,6 +322,13 @@ export default SectionInverted
 
 # Recap
 
+```notes
+1. Lighthouse is a tool to help guide you through web dev
+2. Available in DevTools, CLI, Chrome Extension, PageSpeed Insights, API
+3. Uses cutting-edge, user-centric metrics to judge performance
+4. Use DevTools Performance panel to dive deeper
+```
+
 ---
 
 # Poll - What's Next?
@@ -277,6 +338,7 @@ export default SectionInverted
 - WASM - Supercharge Your Perf with Web Assembly
 - Puppeteer - Automating Chrome for Tests and Profit
 - Progressive Web Apps - Taking Your Site Offline
+
 ---
 
 export default SectionInverted
