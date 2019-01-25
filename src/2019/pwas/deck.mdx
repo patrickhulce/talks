@@ -217,6 +217,23 @@ and **run in the background**.
 
 ---
 
+## Implications
+
+1. Site must be on HTTPS
+
+2. Service Worker becomes THE authority on caching
+
+3. You can do some amazing things
+
+```notes
+1. Can't have insecure scripts taking your website hostage
+2. That means if you say "here's this resource it's fresh", browser will believe you. Don't shoot yourself in the foot! More on this later...
+3. Controlling the entire network means you can do some crazy and amazing things, offline generate your own HTML documents, move SSR to the service worker, sky is the limit!
+Running in the background without a page means awesome stuff like push notifications and background sync!
+```
+
+---
+
 ## Register It
 
 #### page.js
@@ -268,19 +285,77 @@ self.addEventListener('fetch', event => {
 
 ---
 
+## Push Some Messages
+
+export default ({children}) => <div style={{fontSize: '75%'}}>{children}</div>
+
+<Row>
+
+<Column style={{marginRight: '2vw'}}>
+
+#### page.js
+
+```js
+let swRegistration
+
+window.addEventListener('load', async () => {
+  swRegistration = await navigator.serviceWorker.register('/service-worker.js')
+})
+
+const subscribeButton = document.getElementById('push-subscribe')
+subscribeButton.addEventListener('click', async () => {
+  try {
+    // Try to subscribe!
+    const subscription = await swRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: await fetchServerKey(),
+    })
+
+    await saveSubscriptionOnServer(subscription)
+  } catch (err) {
+    // User probably didn't give permission to receive push notifications
+    subscribeButton.disabled = true
+  }
+})
+```
+
+</Column>
+
+<Column>
+
+#### service-worker.js
+
+```js
+self.addEventListener('push', function(event) {
+  console.log(`Got a push notification: "${event.data.text()}"`)
+
+  const title = 'Hello, Push!'
+  const options = {
+    body: 'Yay it works.',
+    icon: 'images/icon.png',
+    badge: 'images/badge.png',
+  }
+
+  event.waitUntil(self.registration.showNotification(title, options))
+})
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close()
+  event.waitUntil(clients.openWindow('https://totally-not-a-rickroll.com'))
+})
+```
+
+</Column>
+
+</Row>
+
+---
+
 ## Pause for Effect
 
 ---
 
-export default ({children}) => (
-  <div
-    style={{
-      fontSize: '60%',
-    }}
-  >
-    {children}
-  </div>
-)
+export default ({children}) => <div style={{fontSize: '60%'}}>{children}</div>
 
 ## Simplest Real Service Worker
 
@@ -533,3 +608,14 @@ export default SectionInverted
 📧 patrick@eris.ventures
 
 Come stop by my office hours Thursday afternoons in Uptown!
+
+---
+
+# References & Links
+
+- [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/)
+- [Desktop PWAs](https://developers.google.com/web/progressive-web-apps/desktop)
+- [Push Notifications](https://developers.google.com/web/fundamentals/codelabs/push-notifications/)
+- [Web App Manifest](https://developers.google.com/web/fundamentals/web-app-manifest/)
+- [Service Worker Lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
+- [Workbox CLI](https://developers.google.com/web/tools/workbox/modules/workbox-cli)
