@@ -1,0 +1,375 @@
+import {Head, Image} from 'mdx-deck'
+import {default as chromeTheme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+import {Span} from '../../components/span.js'
+
+export default Main
+
+export const theme = chromeTheme
+
+# Progressive Web Apps & You
+
+## Braving the Offline Web
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '50%',
+    maxHeight: '33%',
+  }}
+  src={require('file-loader!./pwa.png')}
+/>
+
+---
+
+# Agenda
+
+- What's a PWA?
+- Installability (Web App Manifests)
+- Resilience (Service Workers)
+- Related Technologies (Electron/Cordova/React Native)
+- Q & A
+
+---
+
+export default SectionInverted
+
+# What's a great web experience?
+
+---
+
+<Row>
+
+<Column style={{paddingRight: '10vw'}}>
+
+# 😃 PWAwesome
+
+- Engaging
+- Reliable
+- Fast
+
+</Column>
+
+<Column>
+
+# 😭 PWAwful
+
+- Confusing
+- Buggy
+- Slow
+
+</Column>
+
+</Row>
+
+---
+
+<img style={{maxHeight: '90vh'}} src={require('file-loader!./mobile-wall.png')} />
+
+_this is not a great web experience_
+
+---
+
+export default SectionInverted
+
+# What's a PWA?
+
+---
+
+A **progressive web app** is
+
+a **web application**
+
+that leverages **modern browser technology**
+
+to act and **feel like a native app**,
+
+but **with the reach of the web**.
+
+---
+
+Don't think of a PWA as a new thing you have to write from scratch.
+
+## Progressive web apps are about making your web experience awesome.
+
+---
+
+## A PWA...
+
+- Added to desktop/homescreen
+- Loads without traditional browser UI
+- Treated as a separate application by the OS
+- Works offline and on "Lie-Fi"
+- Leverages push notifications and background sync
+
+---
+
+export default SectionInverted
+
+# Installability
+
+### Web App Manifest
+
+---
+
+# Web App Manifest
+
+- Added to desktop/homescreen
+- Loads without traditional browser UI
+- Treated as a separate application by the OS
+
+<Column style={{opacity: 0.5}}>
+
+- Works offline and on "Lie-Fi"
+- Leverages push notifications and background sync
+
+</Column>
+
+---
+
+A **web app manifest** is
+
+a **special JSON file**
+
+that **declares your site a PWA**
+
+and controls **how your app looks** when installed.
+
+---
+
+## my-app.webmanifest
+
+```JSON
+{
+  "name": "The Progressive Web App",
+  "short_name": "PWA",
+  "icons": [{"src": "/icon.png", "type": "image/png", "sizes": "192x192"}],
+  "start_url": "/index.html?homescreen=1",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#2196F3",
+  "theme_color": "#2196F3"
+}
+```
+
+---
+
+## Link It Up
+
+```html
+...
+<head>
+  <title>The Progressive Web App</title>
+  <!-- way too much stuff Lighthouse complains about :) -->
+  <!-- ... -->
+  <link rel="manifest" href="/my-app.webmanifest" />
+</head>
+...
+```
+
+---
+
+## Test It
+
+```bash
+$ npm install -g lighthouse
+$ lighthouse https://my-pwa.com --view
+```
+
+<img style={{maxHeight: '60vh'}} src={require('file-loader!./pwa-lh.png')} />
+
+---
+
+export default SectionInverted
+
+# Resilience
+
+### Service Workers
+
+---
+
+# Service Worker
+
+<Column style={{opacity: 0.5}}>
+
+- Added to desktop/homescreen
+- Loads without traditional browser UI
+- Treated as a separate application by the OS
+
+</Column>
+
+- Works offline and on "Lie-Fi"
+- Leverages push notifications and background sync
+
+---
+
+A **service worker** is
+
+a **special type of web worker**
+
+that can **control network traffic**
+
+and **run in the background**.
+
+---
+
+export default SectionInverted
+
+# Related Technologies
+
+### Electron/Cordova/React Native
+
+---
+
+## PWA
+
+<Span theme={chromeTheme}>
+  Uses service workers and manifests to bring native-like capabilities to a website.
+</Span>
+
+<Row style={{fontSize: '75%'}}>
+
+<Column style={{width: '50vw'}}>
+
+### Pros
+
+- Entirely web ergonomics
+- Works everywhere
+- No install step for the user
+
+</Column>
+
+<Column>
+
+### Cons
+
+- Won't cover 100% of native use cases
+- Desktop and iOS experience fairly lacking
+
+</Column>
+
+</Row>
+
+---
+
+## Electron
+
+<Span theme={chromeTheme}>
+  Uses modified Chromium and Node.js bundle to run your application. If developer-facing, consider
+  using <a href="https://github.com/GoogleChromeLabs/carlo">carlo</a> instead.
+</Span>
+
+<Row style={{fontSize: '75%'}}>
+
+<Column style={{width: '50vw'}}>
+
+### Pros
+
+- Mostly web ergonomics
+- Feels just like a native desktop application (Spotify, Slack, VSCode)
+
+</Column>
+
+<Column>
+
+### Cons
+
+- Desktop only
+- Security concerns
+
+</Column>
+
+</Row>
+
+---
+
+## Cordova / Ionic / PhoneGap
+
+<Span theme={chromeTheme}>Uses native web views to run your application in a wrapper.</Span>
+
+<Row style={{fontSize: '75%'}}>
+
+<Column style={{width: '50vw'}}>
+
+### Pros
+
+- Somewhat web ergonomics
+- Feature in App Store/Play Store
+
+</Column>
+
+<Column>
+
+### Cons
+
+- Mobile only
+- Need XCode/Android Studio and native plugins
+
+</Column>
+
+</Row>
+
+---
+
+## React Native
+
+<Span theme={chromeTheme}>
+  Not really a web technology. Lets you use JavaScript to write native mobile and windows apps.
+</Span>
+
+<Row style={{fontSize: '75%'}}>
+
+<Column style={{width: '50vw'}}>
+
+### Pros
+
+- Uses real native UI components
+- Feature in App Store/Play Store
+
+</Column>
+
+<Column>
+
+### Cons
+
+- App is platform-specific
+- Not really the web, cannot reuse as a website
+
+</Column>
+
+</Row>
+
+---
+
+export default SectionInverted
+
+# Recap
+
+---
+
+# Poll - What's Next?
+
+- Puppeteer - Automating Chrome for Tests and Profit
+- Node Debugging - Debug your mocha & jest tests with your familiar Chrome DevTools
+- Real World Cordova - Tips for wrapping your web app for App Stores
+- Real World WASM - Lessons Learned from WASM in Production
+
+---
+
+export default SectionInverted
+
+# Q & A
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+Come stop by my office hours Thursday afternoons in Uptown!
