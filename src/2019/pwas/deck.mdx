@@ -217,6 +217,166 @@ and **run in the background**.
 
 ---
 
+## Register It
+
+#### page.js
+
+```js
+window.addEventListener('load', async () => {
+  await navigator.serviceWorker.register('/service-worker.js')
+})
+```
+
+#### service-worker.js
+
+```js
+self.addEventListener('install', event => {
+  // A new service worker is being installed!
+  console.log('Installing!', event)
+})
+
+self.addEventListener('activate', event => {
+  // The service worker is ready to handle our network traffic!
+  console.log('Activating!', event)
+})
+```
+
+---
+
+## Cache Some Cats
+
+#### service-worker.js
+
+```js
+self.addEventListener('install', event => {
+  // Put a resource into the cache
+  const cachePromise = caches.open('static-v1').then(cache => cache.add('/cat.png'))
+  // Delay installation complete until we cache it!
+  event.waitUntil(cachePromise)
+})
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url)
+
+  // Check if we're requesting our cat image
+  if (url.origin === location.origin && url.pathname === '/cat.png') {
+    // If we are, let's serve that kitten from the cache!
+    event.respondWith(caches.match('/cat.png'))
+  }
+})
+```
+
+---
+
+## Pause for Effect
+
+---
+
+export default ({children}) => (
+  <div
+    style={{
+      fontSize: '60%',
+    }}
+  >
+    {children}
+  </div>
+)
+
+## Simplest Real Service Worker
+
+```js
+const version = '1.0.0'
+const cacheName = `pwa-${version}`
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(cacheName).then(cache => {
+      return (
+        cache
+          // Add all of our assets to the cache
+          .addAll([
+            `/`,
+            `/index.html`,
+            `/styles/main.css`,
+            `/scripts/main.min.js`,
+            `/scripts/vendor.min.js`,
+            `/images/image-1.jpg`,
+            `/images/image-2.jpg`,
+            `/images/image-3.jpg`,
+          ])
+          // Make this service worker active immediately
+          .then(() => self.skipWaiting())
+      )
+    }),
+  )
+})
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(allCacheNames => {
+      // Clear out all the old cache data we won't use anymore
+      return Promise.all(
+        allCacheNames.filter(name => name !== cacheName).map(name => caches.delete(name)),
+      )
+    }),
+  )
+})
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches
+      .open(cacheName)
+      // Try to find the request in the cache
+      .then(cache => cache.match(event.request, {ignoreSearch: true}))
+      // Return the cache response or fetch over the network
+      .then(response => response || fetch(event.request)),
+  )
+})
+```
+
+---
+
+export default SectionInverted
+
+# WARNING
+
+## Writing service worker logic is **HARD**.
+
+## The stakes are a lot higher now!
+
+## A mistake in your service worker could mean freezing your site in time forever!
+
+---
+
+## Solution: Don't Write It Yourself!
+
+<img style={{width: '30vw', margin: '5vh 0'}} src={require('file-loader!./workbox.svg')} />
+
+```bash
+$ npm install -g workbox-cli
+$ workbox wizard
+    ? What is the root of your web app (i.e. which directory do you deploy)? src/
+    ? Which file types would you like to precache? ico, png, js, css, json
+    ? Where would you like your service worker file to be saved? src/sw.js
+    ? Where would you like to save these configuration options? workbox-config.js
+$ workbox generateSW workbox-config.js
+    The service worker was written to src/sw.js
+    17 files will be precached, totalling 109 kB.
+```
+
+---
+
+## Test It
+
+```bash
+$ npm install -g lighthouse
+$ lighthouse https://my-pwa.com --view
+```
+
+<img style={{maxHeight: '60vh'}} src={require('file-loader!./pwa-lh.png')} />
+
+---
+
 export default SectionInverted
 
 # Related Technologies
