@@ -180,6 +180,11 @@ self.addEventListener('activate', event => {
   // The service worker is ready to handle our network traffic!
   console.log('Activating!', event)
 })
+
+self.addEventListener('fetch', event => {
+  // The page is fetching something!
+  console.log('Fetching!', event)
+})
 ```
 
 ---
@@ -206,10 +211,6 @@ self.addEventListener('fetch', event => {
   }
 })
 ```
-
----
-
-## Pause for a Breather
 
 ---
 
@@ -546,6 +547,12 @@ export default SectionInverted
 export default SectionInverted
 
 # Recap
+
+```notes
+1. PWAs are just bridging the functionality gap between the web and native
+2. Service worker and web app manifest are what you use to get there
+3. Use workbox and Lighthouse to automate as much as possible
+```
 
 ---
 
