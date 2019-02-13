@@ -68,17 +68,6 @@ export default SectionInverted
 
 ---
 
-# PWA Business Success
-
-<img style={{width: '30vw'}} src={require('file-loader!./pinterest-1.png')} />
-<img style={{width: '30vw'}} src={require('file-loader!./pinterest-2.png')} />
-
-_this is a great web experience_
-
-[Read the case study](https://medium.com/dev-channel/a-pinterest-progressive-web-app-performance-case-study-3bd6ed2e6154)
-
----
-
 <img style={{maxHeight: '90vh'}} src={require('file-loader!./mobile-wall.png')} />
 
 _this is not a great web experience_
@@ -119,6 +108,17 @@ Don't think of a PWA as a new thing you have to write from scratch.
 
 ---
 
+# PWA Business Success
+
+<img style={{width: '30vw'}} src={require('file-loader!./pinterest-1.png')} />
+<img style={{width: '30vw'}} src={require('file-loader!./pinterest-2.png')} />
+
+_this is a great web experience_
+
+[Read the case study](https://medium.com/dev-channel/a-pinterest-progressive-web-app-performance-case-study-3bd6ed2e6154)
+
+---
+
 export default SectionInverted
 
 # Resilience
@@ -156,7 +156,7 @@ and **run in the background**.
 
 1. Site must be on HTTPS
 
-2. Service Worker becomes THE authority on caching
+2. With great power comes great responsibility
 
 3. You can do some amazing things
 
@@ -218,7 +218,7 @@ self.addEventListener('fetch', event => {
   // Check if we're requesting our cat image
   if (url.origin === location.origin && url.pathname === '/cat.png') {
     // If we are, let's serve that kitten from the cache!
-    event.respondWith(caches.match('/cat.png'))
+    event.respondWith(caches.open('static-v1').then(cache => cache.match('/cat.png')))
   }
 })
 ```
@@ -230,7 +230,7 @@ export default ({children}) => <div style={{fontSize: '60%'}}>{children}</div>
 ## Simplest Real Service Worker
 
 ```js
-const version = '1.0.0'
+const version = '1.1.0'
 const cacheName = `pwa-${version}`
 
 self.addEventListener('install', e => {
@@ -249,8 +249,6 @@ self.addEventListener('install', e => {
             `/images/image-2.jpg`,
             `/images/image-3.jpg`,
           ])
-          // Make this service worker active immediately
-          .then(() => self.skipWaiting())
       )
     }),
   )
@@ -449,7 +447,7 @@ export default SectionInverted
 
 - Entirely web ergonomics
 - Works everywhere
-- No install step for the user
+- PWA is already "installed" on first visit
 
 </Column>
 
@@ -458,7 +456,7 @@ export default SectionInverted
 ### Cons
 
 - Won't cover 100% of native use cases
-- Not all platforms support single tap install
+- Not all platforms prompt for homescreen
 
 </Column>
 
@@ -516,6 +514,7 @@ export default SectionInverted
 
 ### Cons
 
+- Web views are not browsers
 - Mobile only
 - Need XCode/Android Studio and native plugins
 
