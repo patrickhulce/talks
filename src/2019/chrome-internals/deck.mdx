@@ -1,0 +1,284 @@
+import {Head, Image} from 'mdx-deck'
+import {default as chromeTheme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+import {Span} from '../../components/span.js'
+
+export default Main
+
+export const theme = chromeTheme
+
+# Chrome Internals
+
+## How do webpages work anyway?
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '50%',
+    maxHeight: '33%',
+  }}
+  src={require('file-loader!./chromium.png')}
+/>
+
+---
+
+# Agenda
+
+- Terminology
+- Browsers: A History
+- Chromium Architecture
+- Life of a Webpage
+- Web Best Practices Demystified
+- DevTools Protocol
+- Browsers Today & Beyond
+- Q & A
+
+---
+
+export default SectionInverted
+
+# Terminology
+
+---
+
+## Chrome vs. Chromium
+
+**Chromium** = **the open-source browser**.
+
+**Chrome** = **Chromium augmented and distributed by Google**.
+
+Chrome-specific features include automatic updates and proprietary codecs like H.264.
+
+Chromium is also used and embedded by Edge, Opera, Brave, Samsung Internet, Smart TVs, etc.
+
+```notes
+Chrome is augmented with proprietary codecs like MP3, H.264, etc whose licenses make open source distribution difficult.
+Autoupdates
+```
+
+---
+
+## Browser
+
+Complete application that allows users to access and interact with the web.
+
+Examples: Chrome, Firefox, Edge, Safari
+
+---
+
+## Rendering/layout engine
+
+Core component of a browser that renders HTML and CSS into interactive UI elements.
+
+Examples: WebKit (Safari), Blink (Chrome), Gecko (Firefox), Trident (IE)
+
+---
+
+## JavaScript engine
+
+Core component of a browser that executes JavaScript code, access to the DOM is provided in conjuction with the rendering engine.
+
+Examples: V8 (Chrome), SpiderMonkey (Firefox), Chakra (IE)
+
+---
+
+## Process
+
+An operating system construct that provides an isolated execution context for a program.
+
+---
+
+## Thread
+
+An operating system construct that provides an independently schedulable work queue. A process can have multiple threads.
+
+---
+
+export default SectionInverted
+
+# Browsers: A History
+
+---
+
+> 1994
+
+> Netscape Navigator
+
+<img style={{maxHeight: '30vh'}} src={require('file-loader!./netscape.png')} />
+
+```notes
+The year is 1994, JavaScript was invented in 10 days, and there's one obvious browser choice Netscape. CSS isn't even a thing yet.
+```
+
+---
+
+> 1997
+
+> Internet Explorer 4
+
+<img style={{maxHeight: '30vh'}} src={require('file-loader!./ie4.jpg')} />
+
+```notes
+The year is 1997, IE4 just changed the game. It's free and installed by default on all Windows machines. Game over.
+```
+
+---
+
+> 2006
+
+> Internet Explorer 7
+
+<img style={{maxHeight: '30vh'}} src={require('file-loader!./ie7.webp')} />
+
+```notes
+The year is 2006, JT had only just brought sexy back, and IE7 is hot off the presses.
+Tabs are finally a thing! But browsers have a few problems, one bad popup can crash all your tabs.
+Flash plugins are all over the place enabling remote code execution attacks across the web.
+JavaScript is really, *really* slow.
+```
+
+---
+
+> 2006
+
+> Firefox 2
+
+<img style={{maxHeight: '30vh'}} src={require('file-loader!./firefox2.webp')} />
+
+```notes
+It's not all bad, Firefox is fighting the good fight with an open source browser.
+Firefox 2 has just been released and their JavaScript performance is nearly 6x faster
+```
+
+---
+
+# DOS Anyone's Browser in 10 Characters
+
+```js
+while (1);
+```
+
+---
+
+> 2008
+
+> Chrome
+
+<img style={{maxHeight: '30vh'}} src={require('file-loader!./chrome3.png')} />
+
+```notes
+2008, Chrome breaks onto the scene advertising speed, security, stability, and simplicity. Also open source like firefox
+V8 is 56x faster executing javascript than IE7's engine.
+One bad tab won't take down the whole browser.
+How'd they do it?
+```
+
+---
+
+export default SectionInverted
+
+# Chromium Architecture
+
+---
+
+Chrome uses a **multi-process architecture**
+
+to isolate sites and tabs
+
+for **improved security**, **stability**, and **speed**.
+
+```notes
+Today, this has become a defacto standard for building a browser, but was fairly revolutionary at the time.
+
+What does this mean in practice?
+```
+
+---
+
+<img
+  style={{maxHeight: '90vh', maxWidth: '90vw'}}
+  src={require('file-loader!./chrome-helper-screenshot.png')}
+/>
+
+```notes
+As a user you've probably seen it like this, this is your CPU on multi-process architecture
+```
+
+---
+
+<img
+  style={{height: '80vh', width: '80vw', objectFit: 'contain'}}
+  src={require('file-loader!./browser-arch.png')}
+/>
+
+_Figure from [Inside look at modern web browser](https://developers.google.com/web/updates/2018/09/inside-browser-part1), Mariko Kosaka_
+
+```notes
+This is what all of those Chrome helpers are doing, some are responsible for the network requests, some are responsible filesystem interaction, etc
+
+
+By separating each of these concerns, Chrome can sandbox processes that don't deal with the filesystem to make sure they *can't* access the filesystem, etc.
+
+```
+
+---
+
+<img
+  style={{height: '80vh', width: '80vw', objectFit: 'contain'}}
+  src={require('file-loader!./renderer-process.png')}
+/>
+
+_Figure from [Inside look at modern web browser](https://developers.google.com/web/updates/2018/09/inside-browser-part1), Mariko Kosaka_
+
+```notes
+Typically each tab gets its own process and more recently even different origins within the same tab get their own process, more on this later.
+```
+
+---
+
+export default SectionInverted
+
+# Web Best Practices Demystified
+
+---
+
+# a[rel=noopener]
+
+---
+
+# script[defer]
+
+---
+
+export default SectionInverted
+
+# Q & A
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+Come stop by my office hours Thursday afternoons in Uptown!
+
+---
+
+# References & Links
+
+- [Browser Wars](https://en.wikipedia.org/wiki/Browser_wars)
+- [Original Chromium Multi-Process Architecture Blog Post](https://blog.chromium.org/2008/09/multi-process-architecture.html)
+- [Chromium Multi-Process Architecture Design](https://www.chromium.org/developers/design-documents/multi-process-architecture)
+- [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
+- [Inside Chrome: The Secret Project to Crush IE and Remake the Web](https://www.wired.com/2008/09/mf-chrome/)
+- [Google Developers: Inside the Modern Web Browser](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
+- [Chrome vs. Chromium Codec Differences](https://www.chromium.org/audio-video)
+- [document.write Intervention](https://developers.google.com/web/updates/2016/08/removing-document-write)
+
+"Google hopes to kick-start a new generation of Web-based applications that will truly make Microsoft's worst nightmare a reality: The browser will become the equivalent of an operating system" - Wired article September 2008
