@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RECENT_FILES=$(find ./src -type f -name "*.mdx" -print0 | xargs -0 stat -f "%m%t%Sm%t%N" | sort -rn | head -n 5 | cut -f2-)
+RECENT_FILES=$(find ./src -type f -regex ".*/deck.*" -print0 | xargs -0 stat -f "%m%t%Sm%t%N" | sort -rn | head -n 5 | cut -f2-)
 echo "Most Recently Modified Files"
 echo "$RECENT_FILES"
 

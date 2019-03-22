@@ -1,0 +1,231 @@
+import {Head, Image} from 'mdx-deck'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+import {Span} from '../../components/span.js'
+
+## Let's Render!
+
+```html
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Hello, HTML!</h1>
+    <section>
+      <span>Paragraph</span>
+    </section>
+  </body>
+</html>
+```
+
+---
+
+<Row style={{fontSize: '80%'}}>
+
+<Column style={{width: '40vw', marginRight: '5vw'}}>
+
+### IPC Traffic
+
+```
+[UI -> Browser] Hey someone clicked this bookmark link!
+[Browser -> Renderer] Hey new renderer welcome to the world!
+[Browser -> Renderer] You're going to https://all-about-browsers.com/index.html
+[Renderer -> Network] Fetch me https://all-about-browsers.com/index.html
+[Network -> Renderer] Here's the first chunk of the response
+[Renderer -> Network] Fetch me https://all-about-browsers.com/style.css
+[Renderer -> Network] Fetch me https://all-about-browsers.com/script.js
+---------------------------------------------------------------------
+```
+
+Rendered yet? **No**
+
+Done? **No**
+
+</Column>
+
+<Column style={{width: '40vw'}}>
+
+### Network Chunk
+
+```text
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+```
+
+### HTML Parsed
+
+```html
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+</html>
+```
+
+### DOM
+
+```
+document
+  head
+    link
+    script
+```
+
+</Column>
+
+</Row>
+
+---
+
+<Row style={{fontSize: '80%'}}>
+
+<Column style={{width: '40vw', marginRight: '5vw'}}>
+
+### IPC Traffic
+
+```
+[UI -> Browser] Hey someone clicked this bookmark link!
+[Browser -> Renderer] Hey new renderer welcome to the world!
+[Browser -> Renderer] You're going to https://all-about-browsers.com/index.html
+[Renderer -> Network] Fetch me https://all-about-browsers.com/index.html
+[Network -> Renderer] Here's the first chunk of index.html
+[Renderer -> Network] Fetch me https://all-about-browsers.com/style.css
+[Renderer -> Network] Fetch me https://all-about-browsers.com/script.js
+---------------------------------------------------------------------
+[Network -> Renderer] Here's the only chunk of style.css
+[Network -> Renderer] Here's the only chunk of script.js
+[Network -> Renderer] Here's the next chunk of index.html
+[Renderer -> Compositor] Composite these layers please
+[Renderer -> GPU] Put these pixels on the screen please
+---------------------------------------------------------------------
+```
+
+Rendered yet? **Yes**
+
+Done? **No**
+
+</Column>
+
+<Column style={{width: '40vw'}}>
+
+### Network Chunk
+
+```text
+  </head>
+  <body>
+    <h1>Hello, HTML!</h1>
+```
+
+### HTML Parsed
+
+```html
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Hello, HTML!</h1>
+  </body>
+</html>
+```
+
+### DOM
+
+```
+document
+  head
+    link
+    script
+  body
+    h1
+```
+
+</Column>
+
+</Row>
+
+---
+
+<Row style={{fontSize: '80%'}}>
+
+<Column style={{width: '40vw', marginRight: '5vw'}}>
+
+### IPC Traffic
+
+```
+[UI -> Browser] Hey someone clicked this bookmark link!
+[Browser -> Renderer] Hey new renderer welcome to the world!
+[Browser -> Renderer] You're going to https://all-about-browsers.com/index.html
+[Renderer -> Network] Fetch me https://all-about-browsers.com/index.html
+[Network -> Renderer] Here's the first chunk of index.html
+[Renderer -> Network] Fetch me https://all-about-browsers.com/style.css
+[Renderer -> Network] Fetch me https://all-about-browsers.com/script.js
+---------------------------------------------------------------------
+[Network -> Renderer] Here's the only chunk of style.css
+[Network -> Renderer] Here's the only chunk of script.js
+[Network -> Renderer] Here's the next chunk of index.html
+[Renderer -> Compositor] Composite these layers please
+[Renderer -> GPU] Put these pixels on the screen please
+---------------------------------------------------------------------
+[Network -> Renderer] Here's the last chunk of index.html
+[Renderer -> Compositor] Composite these layers please
+[Renderer -> GPU] Put these pixels on the screen please
+```
+
+Rendered yet? **Yes**
+
+Done? **Yes**
+
+</Column>
+
+<Column style={{width: '40vw'}}>
+
+### Network Chunk
+
+```text
+    <section>
+      <span>Paragraph</span>
+    </section>
+  </body>
+</html>
+```
+
+### HTML Parsed
+
+```html
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Hello, HTML!</h1>
+    <section>
+      <span>Paragraph</span>
+    </section>
+  </body>
+</html>
+```
+
+### DOM
+
+```
+document
+  head
+    link
+    script
+  body
+    h1
+    section
+      span
+```
+
+</Column>
+
+</Row>

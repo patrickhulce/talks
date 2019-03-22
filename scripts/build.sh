@@ -2,7 +2,7 @@
 
 rm -rf ./dist ./dist-www
 
-for f in $(find ./src -type f -name "*.mdx"); do
+for f in $(find ./src -type f -regex ".*/deck.*"); do
   echo "Building $f..."
   mdx-deck build "$f"
 

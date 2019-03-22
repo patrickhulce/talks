@@ -1,12 +1,9 @@
 import {Head, Image} from 'mdx-deck'
-import {default as chromeTheme} from '@eris/mdx-theme/dist/chrome-theme'
 import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
 import {Column, Row} from '../../components/column.js'
 import {Span} from '../../components/span.js'
 
 export default Main
-
-export const theme = chromeTheme
 
 # Chrome Internals
 
@@ -31,7 +28,6 @@ export const theme = chromeTheme
 - Terminology
 - Browsers: A History
 - Chromium Architecture
-- Life of a Webpage
 - Web Best Practices Demystified
 - DevTools Protocol
 - Browsers Today & Beyond
@@ -240,45 +236,27 @@ Typically each tab gets its own process and more recently even different origins
 
 ---
 
+<img
+  style={{height: '80vh', width: '80vw', objectFit: 'contain'}}
+  src={require('file-loader!./main-thread.png')}
+/>
+
+```notes
+There's a lot going inside all of this, and we're about to walk through some examples in a second.
+
+But the last important high level piece you need to know is that each renderer process has 1 "main thread".
+
+This is where HTML is parsed, input is processed, javascript is executed, style and layout are computed, etc.
+
+Because there's only one main thread that handles all of these things, that means none of them can happen at the same time.
+
+No two JavaScript functions are being executed at once, we can't be running a click handler and computing style at the same time, etc.
+
+If you've ever looked at the "Performance" tab in DevTools, that's what this is showing, what is happening on the main thread.
+```
+
+---
+
 export default SectionInverted
 
-# Web Best Practices Demystified
-
----
-
-# a[rel=noopener]
-
----
-
-# script[defer]
-
----
-
-export default SectionInverted
-
-# Q & A
-
----
-
-# Thanks!
-
-🐦 @patrickhulce
-
-📧 patrick@eris.ventures
-
-Come stop by my office hours Thursday afternoons in Uptown!
-
----
-
-# References & Links
-
-- [Browser Wars](https://en.wikipedia.org/wiki/Browser_wars)
-- [Original Chromium Multi-Process Architecture Blog Post](https://blog.chromium.org/2008/09/multi-process-architecture.html)
-- [Chromium Multi-Process Architecture Design](https://www.chromium.org/developers/design-documents/multi-process-architecture)
-- [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
-- [Inside Chrome: The Secret Project to Crush IE and Remake the Web](https://www.wired.com/2008/09/mf-chrome/)
-- [Google Developers: Inside the Modern Web Browser](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
-- [Chrome vs. Chromium Codec Differences](https://www.chromium.org/audio-video)
-- [document.write Intervention](https://developers.google.com/web/updates/2016/08/removing-document-write)
-
-"Google hopes to kick-start a new generation of Web-based applications that will truly make Microsoft's worst nightmare a reality: The browser will become the equivalent of an operating system" - Wired article September 2008
+# Life of a Webpage Visit
