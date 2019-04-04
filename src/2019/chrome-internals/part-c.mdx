@@ -5,28 +5,11 @@ import {Span} from '../../components/span.js'
 
 export default SectionInverted
 
-# Life of an Input Event
-
----
-
-<img
-  style={{height: '50vh', width: '70vw', objectFit: 'contain'}}
-  src={require('file-loader!./browser-ipc.png')}
-/>
-<img
-  style={{height: '40vh', width: '70vw', objectFit: 'contain'}}
-  src={require('file-loader!./renderer-ipc.png')}
-/>
+# Web Best Practices Demystified
 
 ```notes
-Typically each tab gets its own process and more recently even different origins within the same tab get their own process, more on this later.
+Now that we know how Chrome works let's take a look at some web best practices and see if we can understand them a little better.
 ```
-
----
-
-export default SectionInverted
-
-# Web Best Practices Demystified
 
 ---
 
@@ -35,9 +18,16 @@ export default SectionInverted
 ```html
 <head>
   <script src="slow.js"></script>
-  <!-- We can't even start parsing this HTML until slow.js has been loaded and executed! -->
-  <!-- This script could `document.write('<!-- comment out all the things hehe')` afterall -->
+  <!--
+  We can't even start parsing this HTML
+  until slow.js has been loaded and executed!
+  It could `document.write('<!-- mwuahaha')`!!
+  -->
 </head>
+```
+
+```notes
+We only have one main thread and as we are parsing our HTML we encounter
 ```
 
 ---
@@ -55,6 +45,12 @@ This forces them onto the same thread!
 ```notes
 
 ```
+
+---
+
+export default SectionInverted
+
+# DevTools Protocol
 
 ---
 
