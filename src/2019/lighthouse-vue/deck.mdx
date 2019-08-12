@@ -1,0 +1,350 @@
+import {Head, Image} from 'mdx-deck'
+export {default as theme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+
+export default Main
+
+# Staying Off the Rocks
+
+## A Better Web with Lighthouse
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '50%',
+    maxHeight: '33%',
+  }}
+  src={require('file-loader!./lighthouse.png')}
+/>
+
+```notes
+I was on the Chrome DevTools team working a project called Lighthouse, you'll hear a lot about that tonight.
+tl;dr === a tool to help developers like you build better websites
+
+Before that I jumped around between several different startups, but always had a passion for the web and the technologies around it, so I'm really excited to be talking you tonight about web development.
+```
+
+---
+
+# Agenda
+
+- Webdev in 2019
+- Lighthouse Breakdown
+- Diving Deeper with DevTools
+- Q & A
+
+```notes
+how many have heard of Lighthouse?
+how many have heard of Chrome DevTools?
+how many have heard of Chrome?
+```
+
+---
+
+export default SectionInverted
+
+# Webdev in 2019
+
+---
+
+<img style={{maxWidth: '80vw', maxHeight: '80vh'}} src={require('file-loader!./webdev2018.png')} />
+
+<div style={{textAlign: 'center', fontSize: '12px'}}>
+  Credit: @BrandonMorelli https://codeburst.io/the-2018-web-developer-roadmap-826b1b806e8d
+</div>
+
+```notes
+You may have seen this make the rounds on HN awhile back, but gist...
+
+Web dev in 2019 is crazy complicated and it kinda sucks!!
+I mean we love it, I love it, but keeping up with everything is nuts.
+```
+
+---
+
+<Image
+  style={{
+    position: 'absolute',
+    top: '0',
+    transform: 'translateX(-30vw)',
+    zIndex: -1,
+    opacity: '0.1',
+  }}
+  src={require('file-loader!./word-cloud.png')}
+/>
+
+# You're not even done yet!
+
+## CORS, CSP, SEO, acronyms oh my!
+
+```notes
+but that was just a set of technologies to know!
+doesn't even scratch the surface on best practices
+
+CORS, CSP, SEO, oh my
+```
+
+---
+
+export default SectionInverted
+
+# Lighthouse
+
+---
+
+<img style={{maxWidth: '50vw', maxHeight: '50vh'}} src={require('file-loader!./lh-cape.png')} />
+
+lighthouse | \ˈlīt-ˌhau̇s (n):
+
+a ~~tower or other structure~~ tool containing a beacon light to warn or guide ~~ships at sea~~ developers.
+
+```notes
+Lighthouse is a tool to guide you through web development pitfalls, keep best practices, and get your dose of nautical themed fun
+
+Lighthouse has 100+ checks (we call them audits) across performance, accessibility, SEO, progressive web app, and general best practices
+
+It's all open source and maintained by the Chrome team, but lots of community involvement with more than 150 total contributors
+
+Let's take a look at what it gives you
+```
+
+---
+
+## Lighthouse Report
+
+<img style={{maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./report.png')} />
+
+```notes
+This is the Lighthouse HTML report, if you prefer your information with fewer pieces of flair you can also get JSON or CSV output
+
+We break the checks down by the categories I mentioned before so you can drill down into whatever you're working on, all the scores are out of 100
+
+It's all good stuff, but today I want to focus on performance which is my focus and where Lighthouse really shines
+```
+
+---
+
+<img style={{maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./cnn-console.png')} />
+
+```notes
+Tonight we're going to be picking on CNN, I'm not sure if any of you read CNN's website, but it's very slow and if you pop open the console in DevTools you'll see this plea for help, so we're gonna help 'em out
+```
+
+---
+
+<img
+  style={{maxWidth: '90vw', maxHeight: '90vh'}}
+  src={require('file-loader!./performance-section.png')}
+/>
+
+```notes
+This is what Lighthouse says about their performance, yikes. 2 out of 100.
+
+The good news is that Lighthouse has already automatically found lots of room for improvement. We're finding images, unminified source, render blocking scripts, all kinds of things
+```
+
+---
+
+<Row>
+
+<Column style={{minWidth: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: '20px', lineHeight: '2'}}>
+
+## 3 Things to Know
+
+1. These ain't your grandma's metrics
+2. Scoring is framework agnostic
+3. We're trying to help, not complain
+
+</Column>
+
+<Column>
+<img style={{maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./performance-section.png')} />
+</Column>
+</Row>
+
+```notes
+3 three things I need you to know about the performance section
+
+1) These metrics are not domContentLoaded/onload nonsense, they're designed to represent how users experience your page load, we're predicting performance on a mobile device, lots happening behind the scenes, more on this in a second
+1) Your score is just based on how you do on the metrics, I don't care if you use React, angular, AMP, or nothing at all, just build a fast site y'all. If you can build a fast page ignoring all of our advice, then amazing! you get that 100!
+1) The opportunities are there to help you, not criticize you. We've prioritized them based on how many seconds we think it'll shave off your load so if the number is small, don't obssess about fixing it if you've got better things to do.
+```
+
+---
+
+<Row>
+
+<Column style={{fontSize: '20px', minWidth: '40%', textAlign: 'left'}}>
+
+### First Contentful Paint
+
+When did the _first thing_ show up?
+
+### Speed Index
+
+How fast do users _perceive_ your page load visually?
+
+### Time to Interactive
+
+How long until the whole thing stops jankin' so the user can, ya know, _use it_?
+
+</Column>
+
+<Column>
+<img style={{maxWidth: '60vw', maxHeight: '70vh'}} src={require('file-loader!./performance-metrics.png')} />
+</Column>
+</Row>
+
+```notes
+3 most important metrics, FCP, SI, TTI
+
+Time to Interactive is most important for the simple reason that it's the last one, if you focus on a great TTI everything else necessarily becomes good
+
+The values you're seeing here are predicting what these metrics will be on a typical mobile device, you can of course measure on whatever hardware you'd like, but protip: your users are not all using octo-core developer rigs to watch your cat videos
+
+Now that we know how bad the situation is, let's take a look at how we can make it better
+```
+
+---
+
+<img
+  style={{maxWidth: '80vw', maxHeight: '80vh'}}
+  src={require('file-loader!./performance-opportunity.png')}
+/>
+
+```notes
+Let's take a look at the waste, for the opportunities we try to frame everything in terms of how much is worth. You might read on medium about how awesome inlining all your CSS might be, but if it's only going to save you 20 ms and you've got 50MB image, it's obviously not going to be your #1 priority.
+
+Here you'll also be able to see what specific resources we're identifying here to make it easy.
+```
+
+---
+
+<img style={{maxHeight: '40vh'}} src={require('file-loader!./take-my-money.jpg')} />
+
+<Row>
+
+<Column>
+  <h2 style={{color: '#2075ff'}}>DevTools</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-devtools.png')}
+  />
+</Column>
+
+<Column style={{margin: '0 20px'}}>
+  <h2 style={{color: '#2075ff'}}>CLI</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-cli.png')}
+  />
+</Column>
+
+<Column>
+  <h2 style={{color: '#2075ff'}}>Extension</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '50vh'}}
+    src={require('file-loader!./lh-env-extension.png')}
+  />
+</Column>
+
+</Row>
+
+```notes
+Hopefully at this point you're pretty jazzed, wondering where you can get Lighthouse.
+
+It's free, it's open source, and it's probably already on your machine!
+
+Built-in to Chrome as the "Audits" panel, on NPM as `lighthouse`, and even as a as a Chrome extension so you can show your business counterparts how Google says you need to spend time on fixes and chill on those new features
+
+I'm going to focus on the DevTools integration though and show you how can dive deeper
+```
+
+---
+
+<img style={{maxWidth: '50vw', maxHeight: '60vh'}} src={require('file-loader!./but-wait.png')} />
+
+---
+
+<img
+  style={{maxWidth: '100vw', maxHeight: '100vh'}}
+  src={require('file-loader!./psi-lighthouse.png')}
+/>
+
+---
+
+export default SectionInverted
+
+# Diving Deeper with DevTools
+
+---
+
+## Lighthouse in DevTools
+
+<img style={{maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./view-trace.png')} />
+
+```notes
+Lighthouse in DevTools will offer a "View Trace" button, all the metrics you see in Lighthouse are powered by detailed runtime information from Chrome.
+
+Clicking in here let's you look at this data for yourself
+```
+
+---
+
+### DevTools Performance Panel
+
+<img
+  style={{maxWidth: '80vw', maxHeight: '80vh'}}
+  src={require('file-loader!./performance-panel.png')}
+/>
+
+```notes
+This takes you over to the "Performance" panel in Chrome, which can be a bit overwhelming. I could spend an entire talk breaking down the performance panel, so I'll just be giving you a taste.
+
+Who's used the performance panel before?
+
+1. This is a timeline of the page load. You can use "Performance" panel to profile anything including user interactions, but in Lighthouse case it's just the page load.
+1. Along the top is a mini-preview of what was going on with the page, you'll see a graph of CPU usage by category, yellow is script, purple is style/layout, gray is "other" which is usually an iframe/worker/Ad. You also get a filmstrip with screenshots
+1. The middle here is what we call a flame chart that breaks down the JavaScript stack of where time was spent. This is where you can get down in the weeds of profiling your code to find bottlenecks.
+1. There's also the network requests that were issued in this timeline along with iframes and other goodies you can dive into to line things up.
+1. The bottom is a detail view that changes as you make selections, right now its a pie chart, but you can view total time spent in each JS function, find the scripts that are installing timers, and all kinds of stuff here.
+```
+
+---
+
+export default SectionInverted
+
+# Recap
+
+1. Lighthouse guides you through web dev
+2. Available on NPM, Chrome DevTools, Chrome Extension, PageSpeed Insights, REST API
+3. Uses only *user-centric* metrics to judge performance
+4. Use DevTools Performance panel to dive deeper
+
+---
+
+# Poll - What's Next?
+
+- Node Debugging and Performance Profiling
+- Real-World WASM
+- Puppeteer: Automating Chrome for Tests and Profit
+
+---
+
+export default SectionInverted
+
+# Q & A
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+Come stop by my office hours Thursday afternoons!
