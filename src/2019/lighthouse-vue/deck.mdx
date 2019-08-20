@@ -156,7 +156,7 @@ The good news is that Lighthouse has already automatically found lots of room fo
 ## 3 Things to Know
 
 1. These ain't your grandma's metrics
-2. Scoring is framework agnostic
+2. Scoring is technology agnostic
 3. We're trying to help, not complain
 
 </Column>
@@ -206,7 +206,27 @@ Time to Interactive is most important for the simple reason that it's the last o
 
 The values you're seeing here are predicting what these metrics will be on a typical mobile device, you can of course measure on whatever hardware you'd like, but protip: your users are not all using octo-core developer rigs to watch your cat videos
 
-Now that we know how bad the situation is, let's take a look at how we can make it better
+Now that we understand what the goals are, let's take a look at how we can build a great page.
+```
+
+---
+
+### Paint *something* early.
+
+<span style={{color: '#888'}}>(First Contentful Paint)</span>
+
+### Quickly render the *actual* structure of the page.
+
+<span style={{color: '#888'}}>(Speed Index)</span>
+
+### Get off the main thread, stat!
+
+<span style={{color: '#888'}}>(Time to Interactive)</span>
+
+```notes
+1. Paint something early, this could be a splash screen, and loading spinner, *something* to show the user you care and are in fact loading the page for them.
+2. Quickly render the actual structure of the page, a loading spinner is great, but you want to setup the actual page soon! even if you don't have *all* the data yet, show the structure of what you can and loading UI in places where you don't yet.
+3. Get off the main thread stat, stop executing JS and let the user interact with what they can see already! You might have wondered why steps 1 and 2 weren't combined, like why not show the structure of the page immediately! Well I'm sure we've all been in the scenario where something looks ready but you're tapping and you're tapping and nothing is happening. SSR + late hydration is worse UX than progressive loading.
 ```
 
 ---
