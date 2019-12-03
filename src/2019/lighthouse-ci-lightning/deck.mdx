@@ -1,0 +1,234 @@
+import {Head, Image} from 'mdx-deck'
+export {default as theme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+
+export default Main
+
+# Lighthouse CI
+
+## Keepin' It 100
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxHeight: '50%',
+  }}
+  src={require('file-loader!./lighthouse.svg')}
+/>
+
+```notes
+Hey everyone, I'm Patrick. I used to work on the Chrome team and have spent signficant portion of my life pushing the web.
+
+Today we're gonna be talking about Lighthouse CI and how it can help you and your site "keep it 100"
+```
+
+---
+
+# ⚡ Agenda
+
+- Lighthouse, A History
+- The CI Dilemma
+- The Setup
+- The Extras
+- Q & A
+
+```notes
+Before agenda,
+
+how many have heard of Lighthouse?
+how many use it regularly?
+how many know what the acronym CI means in a development context?
+
+OK, cool
+
+Well here's our lightning fast agenda for tonight...
+
+and now to Lighthouse, A History
+```
+
+---
+
+export default SectionInverted
+
+# Lighthouse, A History
+
+```notes
+anyone familiar with Lighthouse wanna take a stab at saying what it is?
+```
+
+---
+
+
+<img style={{maxWidth: '50vw', maxHeight: '50vh'}} src={require('file-loader!./lighthouse.svg')} />
+
+lighthouse | \ˈlīt-ˌhau̇s (n):
+
+a ~~tower or other structure~~ tool containing a beacon light to warn or guide ~~ships at sea~~ developers.
+
+```notes
+[We'll keep this short since so many of you are familiar]
+
+Lighthouse is a web auditing tool that helps you deliver a great web experience.
+
+[skip to next if familiar]
+
+The web is a complicated place in 2019 with way, way too much for any one person to remember and keep track of in addition to your feature requirements. Lighthouse helps you offload that to focus on what's important and have an easy checklist when you're ready to make your site better.
+```
+
+---
+
+<img style={{maxWidth: '90vw', maxHeight: '90vh'}} src={require('file-loader!./report.png')} />
+
+```notes
+And it gives you a report like this, summary of the site's quality across the key categories with a score, and lets you drill down into the details in the rest of the report.
+
+To give you an idea of the types of checks, everything from performance metrics, images that are too large and files that aren't minified to missing form labels, password inputs without paste and loading offline
+
+You can get it from Chrome DevTools, node CLI, PageSpeed Insights, Chrome Extension, which is awesome!
+
+BUT, that's all manual, we're developers and that's just not gonna cut it.
+```
+
+---
+
+export default SectionInverted
+
+# The CI Dilemma
+
+```notes
+anyone familiar with CI wanna take a stab at saying what it is?
+
+Yeah exactly, continuous integration is about testing each of your changes before they're merged so you can rely on the correctness of trunk or master branch.
+
+In CI, manual just won't fly, CI gated on manual tests by a developer is CI that always passes :)
+```
+
+---
+
+### bit.ly/lhci
+
+<Row>
+
+<Column>
+<img style={{marginRight: '2vw', width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-2.png')} />
+</Column>
+
+<Column>
+<img style={{width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./gh-status-checks.png')} />
+</Column>
+
+</Row>
+
+
+```notes
+With Lighthouse CI, it'll run Lighthouse on every commit, get status checks right in GitHub for audit failures, and a fancy diffing UI on your very own Lighthouse CI server.
+
+If you're eager and want to poke around the docs already, bit.ly/lhci takes you straight to the good stuff.
+
+But let's jump into how to set it up.
+```
+
+---
+
+export default SectionInverted
+
+# The Setup
+
+---
+
+
+<Row>
+
+<Column>
+
+#### .travis.yml
+
+```yaml
+language: node_js
+addons:
+  chrome: stable
+before_install:
+  - npm install -g @lhci/cli@0.3.x
+script:
+  - npm run build
+  - lhci autorun --upload.target=temporary-public-storage
+```
+
+</Column>
+
+<Column style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+<img style={{marginLeft: '2vw', width: '40vw', height: '40vh', objectFit: 'contain'}} src={require('file-loader!./travis.png')} />
+</Column>
+</Row>
+
+```notes
+You can throw LHCI onto one of your projects with just 8 lines even if you don't have any continuous integration process already setup. Travis is a continuous integration provider that's free for open source projects, Circle CI is also free for private projects.
+
+Let's look at what each of these lines do...
+
+- Give us a node_js environment
+- Give us Chrome environment
+- Installs lighthouse CI
+- Builds our static site
+- Runs lighthouse CI
+```
+
+---
+
+
+export default SectionInverted
+
+# The Extras
+
+
+```notes
+So far we've got Lighthouse running on every commit, but we can spruce it up even nicer with GitHub integrations, a historical diffing server
+```
+
+---
+
+## GitHub Status checks
+
+
+#### https://github.com/apps/lighthouse-ci
+
+<img style={{width: '80vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./github-app.png')} />
+
+---
+
+## Lighthouse CI Server
+
+
+<Row>
+
+<Column>
+<img style={{marginRight: '2vw', width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-3.png')} />
+</Column>
+
+<Column>
+<img style={{width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-4.png')} />
+</Column>
+
+</Row>
+
+---
+
+export default SectionInverted
+
+# Q & A
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+📅 calend.ly/patrickhulce
+
+Come stop by my office hours Wednesday afternoons!
