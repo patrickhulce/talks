@@ -178,7 +178,7 @@ Let's look at what each of these lines do...
 
 - Give us a node_js environment
 - Give us Chrome environment
-- Installs lighthouse CI
+- Installs lighthouse CI, if anyone can say "Lighthouse CI CLI" 3 times fast you get an exclusive Chrome DevTools sticker :)
 - Builds our static site
 - Runs lighthouse CI and uploads the results to a public URL that's accessible to everyone
 
@@ -212,7 +212,7 @@ and that's what we'll look at next
       "assertions": {
         "first-contentful-paint": ["error", {"maxNumericValue": 2000}],
         "interactive": ["error", {"maxNumericValue": 5000}],
-        "resource-summary:scripts:size": ["error", "maxNumericValue": 100000]
+        "resource-summary:scripts:size": ["error", {"maxNumericValue": 100000}]
       }
     }
   }
