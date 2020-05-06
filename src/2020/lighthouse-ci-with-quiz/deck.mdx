@@ -1,0 +1,516 @@
+import {Head, Image} from 'mdx-deck'
+import {default as chromeTheme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+import {highlight} from 'mdx-deck/themes'
+import Highlighter from 'react-syntax-highlighter'
+
+export const theme = chromeTheme
+
+export default Main
+
+# Lighthouse CI
+
+## Keepin' It 100
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxHeight: '50%',
+  }}
+  src={require('file-loader!./lighthouse.svg')}
+/>
+
+```notes
+Hey everyone, I'm Patrick. I used to work on the Chrome team and have spent signficant portion of my life pushing the web.
+
+Today we're gonna be talking about Lighthouse CI and how it can help you and your site stay awesome
+
+```
+
+---
+
+# ⚡ Agenda
+
+- Lighthouse, the tl;dr
+- The CI Dilemma
+- The Setup
+- The Extras
+- Q & A
+
+```notes
+Well here's our agenda for tonight...
+
+...
+
+Before we start though,
+
+I was struggling to find a way to make a remote talk lively, if you've heard one of my past talks you know I like to poll the audience sometimes, and I don't think I could get through a talk without it, so we're gonna try that tonight.
+
+```
+
+---
+
+<img src={require('file-loader!./winner.png')} style={{maxHeight: '30vh', display: 'block'}} />
+
+<img src={require('file-loader!./testing-js.png')} style={{marginTop: '5vh', maxHeight: '55vh'}} />
+
+
+```notes
+
+AND on top of that, I will gift my license to Kent C Dodd's testing javascript course to one lucky participant tonight. Don't worry I didn't steal it or anything I maintain one of the testing libraries covered in it so I got one as a gift. I think it's the pro license which is pretty expensive too like $300 value so, pay attention to these polls!
+
+
+Alright let's try one out, like with all great web things, it's gotta be overengineered, so I borrowed this from some friends on the Chrome Team who made "the Big Web Quiz" and I present to you
+```
+---
+
+<div style={{position: 'relative', height: "100vh", width: "100vw"}}>
+<div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Do you know what Lighthouse is?</div>
+
+
+<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+</div>
+
+```notes
+.... "The Big D Web Quiz"
+
+So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
+
+your super stumper big D web quiz question is: do you know what Lighthouse is?
+
+Yes, this talk seems familiar.
+Nope, but that's on you, Patrick.
+
+.....
+30 seconds to vote
+
+OK, cool thanks everyone that went well, please go ahead and leave that tab up, you don't want to lose your raffle ID for the end of the talk
+
+and now to Lighthouse
+```
+
+---
+
+export default SectionInverted
+
+# Lighthouse, the tl;dr
+
+```notes
+Lighthouse, what is it?
+```
+
+---
+
+
+<img style={{maxWidth: '50vw', maxHeight: '50vh'}} src={require('file-loader!./lighthouse.svg')} />
+
+lighthouse | \ˈlīt-ˌhau̇s (n):
+
+a ~~tower or other structure~~ tool containing a beacon light to warn or guide ~~ships at sea~~ developers.
+
+```notes
+Lighthouse is a web auditing tool that helps you deliver a great web experience.
+
+The web is a complicated place in 2020 with way, way too much for any one person to remember and keep track of in addition to your feature requirements. Lighthouse helps you offload that to focus on what's important and have an easy checklist when you're ready to make your site better.
+```
+
+---
+
+<img style={{maxWidth: '90vw', maxHeight: '90vh'}} src={require('file-loader!./report.png')} />
+
+```notes
+It gives you a report like this, summary of the site's quality across the key categories with a score, and lets you drill down into the details in the rest of the report.
+
+To give you an idea of the types of checks, everything from performance metrics, images that are too large and files that aren't minified to missing form labels, password inputs without paste and loading offline
+```
+
+---
+
+### Available in...
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: '5vw'}}>
+  <div>
+    <h2 style={{color: '#2075ff'}}>DevTools</h2>
+    <img
+      style={{maxWidth: '30vw', maxHeight: '25vh'}}
+      src={require('file-loader!./lh-env-devtools.png')}
+    />
+  </div>
+  <div>
+  <h2 style={{color: '#2075ff'}}>CLI</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '25vh'}}
+    src={require('file-loader!./lh-env-cli.png')}
+  />
+  </div>
+  <div>
+  <h2 style={{color: '#2075ff'}}>Extension</h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '25vh'}}
+    src={require('file-loader!./lh-env-extension.png')}
+  />
+  </div>
+  <div>
+  <h2 style={{color: '#2075ff'}}>Web <span style={{fontSize: '50%', opacity: 0.5, position: 'relative', top: -20}}>(web.dev/measure)</span></h2>
+  <img
+    style={{maxWidth: '30vw', maxHeight: '25vh'}}
+    src={require('file-loader!./lh-env-psi.png')}
+  />
+  </div>
+</div>
+
+
+```notes
+You can get it from Chrome DevTools, node CLI, PageSpeed Insights, Chrome Extension, which is awesome!
+
+BUT, that's all manual, we're developers and that's just not gonna cut it.
+```
+
+---
+
+export default SectionInverted
+
+# The CI Dilemma
+
+```notes
+Which brings us to the CI dilemma, and round two of our Big D Web Quiz
+```
+
+
+---
+
+<div style={{position: 'relative', height: "100vh", width: "100vw"}}>
+<div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Do you use CI on your web projects?</div>
+
+<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+</div>
+
+```notes
+So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
+
+your super stumper big D web quiz question is: do you know what I mean when I say "CI" and do you use it on the primary website you work on?
+
+Yes, I use CI every of the time.
+No, danger is my middle name.
+
+.....
+30 seconds to vote
+
+OK, cool
+
+and now to CI
+```
+
+---
+
+## Continuous Integration
+
+<blockquote style={{borderLeft: '3px solid #888', paddingLeft: 20}}>
+<p style={{color: '#999', textAlign: 'left'}}>
+a software development practice where members of a team <strong style={{color: '#333'}}>integrate their work frequently</strong>, usually each person integrates at least daily - leading to multiple integrations per day. Each <strong style={{color: '#333'}}>integration is verified by an automated build (including tests)</strong> to detect integration errors as quickly as possible.<br /><br />- Martin Fowler
+</p>
+</blockquote>
+
+
+<img style={{marginLeft: '5vw', maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./ci-providers.png')} />
+
+```notes
+For those of you not quite sure what I mean or aren't practicing yet, there are two main components to CI.
+
+1. You integrate your changes to `master` branch / `trunk` / `dev` / whatever you call it, often.
+2. A system (not you the developer) automatically tests those changes to revert or avoid landing if they break the build
+
+the basic idea with CI is that when developers make small iterative changes, push code, and a system somewhere pulls down that version of the codebase and runs automated tests to determine whether it's safe before you deploy it to your users.
+
+- Jenkins
+- Travis
+- TeamCity
+- Circle
+- GitLab
+- GitHub Actions
+
+are all common CI providers you might have heard of
+```
+
+---
+
+## Common Automated Tests
+
+- compilation (typescript/babel/webpack)
+- linters (eslint/tslint)
+- unit tests (mocha/jest)
+
+## Less Common :(
+
+- integration tests
+- performance tests
+
+```notes
+Lots of codebases have some form of automated testing even, if you transpile your code with webpack or babel at the very least you're testing that there aren't crazy syntax errors for invalid javascript
+linters are another common form of automated tests
+unit tests are useful too to test individually isolated parts of your codebase
+
+less common though are end to end or integration tests, it's almost a philosophical war what the differences but end-to-end, integration tests, acceptance tests, are tests that are much closer to how your ultimate users are going to use the code you write. if the code you write is a webapp, that'd be loading it in a *actual* browser and making sure it looks right, responds to the right clicks, broken images, etc.
+
+and this is where lighthouse ci comes in
+```
+
+---
+
+### bit.ly/lhci
+
+<img style={{width: '80vw', height: '20vh', objectFit: 'contain'}} src={require('file-loader!./gh-status-checks.png')} />
+
+<Row>
+
+<Column>
+<img style={{width: '45vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-dash.png')} />
+</Column>
+
+<Column>
+<img style={{marginLeft: '2vw', width: '45vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-build.png')} />
+</Column>
+
+
+</Row>
+
+
+```notes
+With Lighthouse CI, you'll get help running Lighthouse on every commit. That means it'll load your site in a real browser, run Lighthouse on it to get the same performance data, whether there are browser errors, images are sized correctly, all that good stuff from the report as part of your automated testing process.
+
+get status checks right in GitHub for audit failures, and a fancy diffing UI for performance data on your very own Lighthouse CI server.
+
+If you're eager and want to poke around the docs already, bit.ly/lhci takes you straight to the good stuff.
+
+But let's jump into how to set it up.
+```
+
+---
+
+export default SectionInverted
+
+# The Setup
+
+```notes
+now a lot of you may know and use CI already but how many would be comfortable setting it up from scratch? we'll go back to our big d web quiz to find out
+```
+
+---
+
+<div style={{position: 'relative', height: "100vh", width: "100vw"}}>
+<div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>How comfortable would you be setting up CI from scratch?</div>
+
+<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+</div>
+
+```notes
+So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
+
+your super stumper big D web quiz question is: how comfortable would you be if your manager came to you and asked you to setup CI for a new project?
+
+Super comfortable, CI is like riding a bike.
+Not so comfortable, greenfield is for chumps.
+
+.....
+30 seconds to vote
+
+OK, cool
+
+and now to let's see how hard it is from scratch
+```
+
+---
+
+
+#### .github/workflows/ci.yml
+
+<div style={{textAlign: 'left', maxWidth: '90vw', overflowX: 'scroll'}}>
+<Highlighter language="yaml">
+{`name: CI
+on: [push]
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install && npm install -g @lhci/cli@0.3.x
+      - run: npm run build
+      - run: lhci autorun --upload.target=temporary-public-storage`}
+</Highlighter>
+</div>
+
+```notes
+You can throw LHCI onto one of your projects with just 11 lines even if you don't have any continuous integration process already setup. Github actions offers a free tier for 2000 minutes a month. Lighthouse CI works with just about any CI provider and there are example setup configs for half a dozen providers,
+
+Let's look at what each of these lines do...
+
+- Run on Ubuntu
+- Setup node
+- Install project deps & lighthouse CI
+- Builds our static site
+- Runs lighthouse CI and uploads the results to a public URL that's accessible to everyone
+
+So now we've got Lighthouse running on every commit and a link to the report in our build logs, but that's not what you came here for, we want those snazzy screenshots and our bot to keep it 100!
+```
+
+---
+
+
+export default SectionInverted
+
+# The Extras
+
+
+```notes
+and that's what we'll look at next
+```
+
+---
+
+## Assertions
+
+**lighthouserc.json**:
+
+<div style={{textAlign: 'left', maxWidth: '90vw', overflowX: 'scroll'}}>
+<Highlighter language="json">
+{`{
+  "ci": {
+    "assert": {
+      "assertions": {
+        "uses-responsive-images": ["error", {"maxLength": 0}],
+        "first-contentful-paint": ["error", {"maxNumericValue": 2000}],
+        "resource-summary:scripts:size": ["error", {"maxNumericValue": 100e3}]
+      }
+    }
+  }
+}`}
+</Highlighter>
+</div>
+
+
+```notes
+We can tell Lighthouse CI to fail on a particular outcome based on our thresholds. Just create a lighthouserc config file with some thresholds and you're good to go.
+```
+
+---
+
+## GitHub Status checks
+
+#### https://github.com/apps/lighthouse-ci
+
+<img style={{width: '80vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./github-app.png')} />
+
+```notes
+we want more than some build log output though, let's get Github involved! Open up the Lighthouse CI github app by going to that URL or clicking the link in the getting started section of Lighthouse CI docs, and add it to you repos. It's going to give you a LHCI_GITHUB_APP_TOKEN that you put in your CI provider's environment variables and BOOM you've got these nice little checkmarks on your PRs with links to the report right from github.
+```
+
+---
+
+## Lighthouse CI Server
+
+
+<Row>
+
+<Column>
+<img style={{marginRight: '2vw', width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-dash.png')} />
+</Column>
+
+<Column>
+<img style={{width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-build.png')} />
+</Column>
+
+</Row>
+
+---
+
+### bit.ly/lhci - docs/recipes/heroku-server/README.md
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="bash">
+{`# Create a directory and repo for your heroku project
+mkdir lhci-heroku && cd lhci-heroku && git init
+# Setup the LHCI files
+curl https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/master/docs/recipes/heroku-server/package.json > package.json
+curl https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/master/docs/recipes/heroku-server/server.js > server.js
+# Create the project's first commit
+git add -A && git commit -m 'Initial commit'
+# Create a new project on heroku
+heroku create
+# Add a free database to your project
+heroku addons:create heroku-postgresql:hobby-dev
+# Deploy your code to heroku
+git push heroku master
+# Ensure heroku is running your app and open the URL
+heroku ps:scale web=1
+heroku open
+`}
+</Highlighter>
+
+
+</div>
+
+---
+
+<div style={{position: 'relative', height: "100vh", width: "100vw"}}>
+<div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Are you going to try out Lighthouse CI?</div>
+
+<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+</div>
+
+```notes
+So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
+
+your super stumper big D web quiz question is: are you going to try out Lighthouse CI on a repo you control
+
+Yes, I love being awesome.
+Nah, Kool-Aid ain't for me.
+
+.....
+30 seconds to vote
+
+OK, cool
+
+and now to let's see how hard it is from scratch
+```
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+📅 calend.ly/patrickhulce
+
+```notes
+1st run - 22 minutes
+
+
+add notes to lhci server
+
+
+Setup 4 tabs of Quiz
+
+Yes, this talk seems familiar.
+Nope, but that's on Patrick.
+
+Yes, I use CI every of the time.
+No, danger is my middle name.
+
+Super comfortable, CI is like riding a bike.
+Not so comfortable, greenfield is for chumps.
+
+Yes, I love being awesome.
+Nah, Kool-Aid ain't for me.
+```
