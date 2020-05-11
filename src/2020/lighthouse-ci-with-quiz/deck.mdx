@@ -352,6 +352,7 @@ You can throw LHCI onto one of your projects with just 11 lines even if you don'
 
 Let's look at what each of these lines do...
 
+- First couple lines are actions boilerplate, we're going to run this action everytime someone pushes code and it's a job called lighthouse
 - Run on Ubuntu
 - Setup node
 - Install project deps & lighthouse CI
@@ -377,17 +378,17 @@ and that's what we'll look at next
 
 ## Assertions
 
-**lighthouserc.json**:
+**lighthouserc.js**:
 
 <div style={{textAlign: 'left', maxWidth: '90vw', overflowX: 'scroll'}}>
-<Highlighter language="json">
-{`{
-  "ci": {
-    "assert": {
-      "assertions": {
-        "uses-responsive-images": ["error", {"maxLength": 0}],
-        "first-contentful-paint": ["error", {"maxNumericValue": 2000}],
-        "resource-summary:scripts:size": ["error", {"maxNumericValue": 100e3}]
+<Highlighter language="js">
+{`module.exports = {
+  ci: {
+    assert: {
+      assertions: {
+        "uses-responsive-images": ["error", {maxLength: 0}],
+        "first-contentful-paint": ["error", {maxNumericValue: 2000}],
+        "resource-summary:scripts:size": ["error", {maxNumericValue: 100e3}]
       }
     }
   }
@@ -397,7 +398,17 @@ and that's what we'll look at next
 
 
 ```notes
-We can tell Lighthouse CI to fail on a particular outcome based on our thresholds. Just create a lighthouserc config file with some thresholds and you're good to go.
+So before we were getting a link to the Lighthouse report in our logs, but we have to open it up manually to take a look at what's going on. We're developers that's not gonna cut it! We want to automatically make sure we're passing the audits we care about.
+
+That's where assertions come in. With assertions, Lighthouse CI will check the audits you care about and make sure your site is making the cut.
+
+To get it setup just create a config file `lighthouserc.js` and throw this sucker in there. I know there's a lot of nesting because Lighthouse CI can do a lot of awesome things we're not going to cover in this talk, but let's focus on this assertions bit.
+
+Any audit you see in the report can be asserted against. Each line here is one of the audits in the report.
+
+- Uses responsive images is an audit checking to make sure that images aren't too big for their displayed size, so if you had a 20MP image being used as a thumbnail, this audit would catch it. Here we're asserting a maxLength of 0, so if anything comes up, we'll flag it.
+- First contentful paint is an audit that measures how long it takes the page to render its first text of image. Here we're asserting a max value of 2000 milliseconds, so if it takes more than 2s to paint, we'll start failing.
+- This last line is what you might be familiar with as a performance budget. It's looking at the total size of all scripts on the page and ensuring it's not more than 100KB. You might have seen in this in some of your tools like webpack, but has warnings for large JS sizes, but this is great because it looks at *ALL* the JS on your page even if its coming from a third-party.
 ```
 
 ---
@@ -409,7 +420,11 @@ We can tell Lighthouse CI to fail on a particular outcome based on our threshold
 <img style={{width: '80vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./github-app.png')} />
 
 ```notes
-we want more than some build log output though, let's get Github involved! Open up the Lighthouse CI github app by going to that URL or clicking the link in the getting started section of Lighthouse CI docs, and add it to you repos. It's going to give you a LHCI_GITHUB_APP_TOKEN that you put in your CI provider's environment variables and BOOM you've got these nice little checkmarks on your PRs with links to the report right from github.
+That's some great progress, but cmon Patrick you're making me look at some ugly build logs to find out what failed, that's lame! I don't know about you, but I want that nice green checkmark from Lighthouse telling me I did a good job.
+
+we want more, so let's get Github involved! and that's where the app comes in. Open up the Lighthouse CI github app by going to that URL or clicking the link in the getting started section of Lighthouse CI docs, and add it to you repos. It's going to give you a LHCI_GITHUB_APP_TOKEN that you put in your CI provider's environment variables (which we've got docs for) and BOOM you've got these nice little checkmarks on your PRs.
+
+The other nice thing about the github app is that the "Details" links straight to the report so you're able to jump to a Lighthouse report of every PR even if you're passing your assertions too.
 ```
 
 ---
@@ -428,6 +443,16 @@ we want more than some build log output though, let's get Github involved! Open 
 </Column>
 
 </Row>
+
+```notes
+Last but finally not least in the extras is the Lighthouse CI server.
+
+So far everything has been happening in the CI provider and on the temporary public storage service. But maybe you want to save reports for longer than a week, maybe you want some nice graphs of how your performance has improved over time to show your boss.
+
+That's where the CI server comes in. The server is an open source project you can setup on AWS/GCP/heroku/anywhere you like to have your very own storage and visualization center for your Lighthouse reports. This screenshot on the left is the dashboard. It covers high level trends, graphs your category scores over time, and highlights deltas so you can see exactly which commit started regressing performance or accessibility.
+
+This screenshot on the right is my personal favorite. The build comparison view. For any two Lighthouse versions of your repo you can compare the Lighthouse reports and drill down into differences. I love this view, because there are lots of tools that graph stuff over time but visualizing what exactly changed on your site has been really difficult. This makes it super easy to see what resources were different which metrics changed, audits, etc.
+```
 
 ---
 
@@ -458,6 +483,14 @@ heroku open
 
 </div>
 
+```notes
+Aaaaaaand the best part is it's super easy to get started. You don't have to read this or make sense of it or anything, it's just here to prove to you you can setup an LHCI server for free with only one slide of code.
+
+This sets up the LHCI server on heroku which is a PaaS provider with a free tier, so just create a git repo, copy some files from our examples, push it up to heroku and you've got yourself your very own LHCI server!
+
+1-slide proof, don't say it couldn't be done :)
+```
+
 ---
 
 <div style={{position: 'relative', height: "100vh", width: "100vw"}}>
@@ -468,7 +501,7 @@ heroku open
 </div>
 
 ```notes
-So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
+So, our final quiz question of the day get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
 
 your super stumper big D web quiz question is: are you going to try out Lighthouse CI on a repo you control
 
@@ -495,6 +528,7 @@ and now to let's see how hard it is from scratch
 
 ```notes
 1st run - 22 minutes
+2nd run - 25 minutes
 
 
 add notes to lhci server
@@ -503,7 +537,7 @@ add notes to lhci server
 Setup 4 tabs of Quiz
 
 Yes, this talk seems familiar.
-Nope, but that's on Patrick.
+Nope, but that's on you, Patrick.
 
 Yes, I use CI every of the time.
 No, danger is my middle name.
