@@ -1,0 +1,219 @@
+import {Head, Image} from 'mdx-deck'
+import {default as chromeTheme} from '@eris/mdx-theme/dist/chrome-theme'
+import {FullScreenCode, Main, Section, SectionInverted} from '@eris/mdx-theme/dist/chrome-theme'
+import {Column, Row} from '../../components/column.js'
+import {highlight} from 'mdx-deck/themes'
+import Highlighter from 'react-syntax-highlighter'
+
+export const theme = chromeTheme
+
+export default Main
+
+# Browser Integration Testing
+
+## with `npm i -D puppeteer`
+
+<img
+  style={{
+    position: 'absolute',
+    top: '75%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxHeight: '50%',
+  }}
+  src={require('file-loader!./browsers.jpg')}
+/>
+
+```notes
+Hey everyone, I'm Patrick. I used to work on the Chrome team and have spent signficant portion of my life pushing the web.
+
+Today we're gonna be talking about Browser integration testing and how it can help automatically check that your site working great
+```
+
+---
+
+# ⚡ Agenda
+
+- Web Testing 101
+- Puppeteer
+- Crash Course in Flakiness
+- Q & A
+
+```notes
+Well here's our lightning fast agenda for tonight...
+```
+
+---
+
+export default SectionInverted
+
+# Web Testing 101
+
+```notes
+web testing 101, i.e. how can you automatically catch bugs in your website or webapp before your users do
+```
+
+---
+
+
+## Common Automated Tests
+
+- compilation (typescript/babel/webpack)
+- linters (eslint/tslint)
+- unit tests (enzyme/dom-testing-library)
+
+## Less Common :(
+
+- integration tests (puppeteer/protractor/selenium)
+- performance tests
+
+```notes
+Lots of codebases have some form of automated testing, if you transpile your code with webpack or babel at the very least you're testing that there aren't crazy syntax errors for invalid javascript
+linters are another common form of automated tests
+unit tests are useful too to test individually isolated parts of your codebase
+
+less common though are end to end or integration tests, it's almost a philosophical war what the differences but end-to-end, integration tests, acceptance tests, are tests that are much closer to how your ultimate users are going to use the code you write. if the code you write is a webapp, that'd be loading it in a *actual* browser and making sure it looks right, responds to the right clicks, broken images, etc.
+
+and this is where puppeteer comes in
+```
+
+---
+
+export default SectionInverted
+
+# Puppeteer
+
+```notes
+Puppeteer is a javascript library built and maintained by the chrome team for making it easy to control *headless* Chrome.
+```
+
+---
+
+`npm i -D puppeteer`
+
+<Row>
+
+<Column style={{width: '45vw'}}>
+<img style={{marginRight: '2vw', width: '45vw', height: '60vh', objectFit: 'contain'}} src={require('file-loader!./puppeteer.png')} />
+</Column>
+
+<Column style={{width: '45vw'}}>
+
+- Clean node API for launching Chrome and navigating
+- Supports "headless" mode for running without a visible window
+- Automatically downloads a compatible copy of Chromium, no other dependencies required
+
+
+</Column>
+
+</Row>
+
+
+```notes
+
+```
+
+---
+
+### Screenshots
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="javascript">
+{`const fs = require('fs');
+const puppeteer = require('puppeteer');
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+\n// Navigate and take the screenshot
+await page.goto('https://www.theverge.com');
+const screenshot = await page.screenshot();
+fs.writeFileSync('theverge.png', screenshot);
+\n// Cleanup when you're done
+await browser.close();
+`}
+</Highlighter>
+
+
+</div>
+
+---
+
+export default SectionInverted
+
+# Crash Course in Flakiness
+
+```notes
+Really quick before we close I want to give a crash course in avoiding flakiness, or tests that sometimes fail sometimes pass without code changes
+```
+
+---
+
+### Screenshots
+
+
+<Row>
+
+<Column style={{width: '45vw'}}>
+
+## Bad
+
+<Highlighter language="javascript">
+{`await page.click('.add-to-cart')
+await page.click('.checkout-btn')
+await page.click('.confirm-btn')`}
+</Highlighter>
+
+</Column>
+
+<Column style={{width: '45vw'}}>
+
+## Better
+
+<Highlighter language="javascript">
+{`await page.click('.add-to-cart')
+await page.waitFor('#checkout-view')
+await page.click('.checkout-btn')
+await page.waitFor('#confirmation-view')
+await page.click('.confirm-btn')`}
+</Highlighter>
+
+</Column>
+
+</Row>
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="javascript">
+{`const fs = require('fs');
+const puppeteer = require('puppeteer');
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+\n// Navigate and take the screenshot
+await page.goto('https://www.theverge.com');
+const screenshot = await page.screenshot();
+fs.writeFileSync('theverge.png', screenshot);
+\n// Cleanup when you're done
+await browser.close();
+`}
+</Highlighter>
+
+
+</div>
+
+---
+
+export default SectionInverted
+
+# Q & A
+
+---
+
+# Thanks!
+
+🐦 @patrickhulce
+
+📧 patrick@eris.ventures
+
+📅 calend.ly/patrickhulce
+
+Come (virtually) stop by my office hours Thursday afternoon!
