@@ -56,23 +56,41 @@ web testing 101, i.e. how can you automatically catch bugs in your website or we
 ---
 
 
+> Write tests. Not too many. Mostly integration.
+
+Kent C. Dodds
+
+```notes
+This is a quote by Kent C Dodds, which really spoke to my soul the first time I heard it, and we'll cover the series of libraries it inspired a little later in this talk, but the gist here is that you want tests that give you confidence your code is correct when they pass, and are a strong signal of user-facing failures when they don't.
+
+So what is an integration test anyway?
+
+```
+
+---
+
 ## Common Automated Tests
 
 - compilation (typescript/babel/webpack)
 - linters (eslint/tslint)
-- unit tests (enzyme/dom-testing-library)
+- unit tests (enzyme)
 
-## Less Common :(
+## Not as Common as They Should Be™ :)
 
 - integration tests (puppeteer/protractor/selenium)
-- performance tests
+- performance tests (Chrome Lighthouse 😉)
 
 ```notes
-Lots of codebases have some form of automated testing, if you transpile your code with webpack or babel at the very least you're testing that there aren't crazy syntax errors for invalid javascript
-linters are another common form of automated tests
-unit tests are useful too to test individually isolated parts of your codebase
+lots of codebases have some form of tests, so let's use our new lens of the quote to see how good each of them are.
 
-less common though are end to end or integration tests, it's almost a philosophical war what the differences but end-to-end, integration tests, acceptance tests, are tests that are much closer to how your ultimate users are going to use the code you write. if the code you write is a webapp, that'd be loading it in a *actual* browser and making sure it looks right, responds to the right clicks, broken images, etc.
+1st off, compilation tests, typescript, babel, webpack. these are good examples of when they fail, it's a pretty big user facing deal, usually it means your code wouldn't even be deployable it has syntax errors so bad or referencing names that don't exist
+it doesn't do so hot on the second part though, when they pass you're not exactly confident your code does what you want it to do. it's more like a bare minimum
+
+linters, eslint tslint etc, some of what these check are good user-facing problems, perhaps using a variable that doesn't exist or catching sneaky mistakes like variable shadowing or ===, but a lot of it is also just consistency, not exactly high signal user-facing issues
+
+unit tests, are where we start to get more interesting. these might be running with mocha or jest and exercise a single component or small part of your site in isolation. they might ensure that a component passes the right props to the right children for example, which is a helpful signal but just because they pass doesn't mean everything is going to work smoothly together as a unit
+
+and that's where we get to integration tests, they have many names (integration, e2e, whatever you call it) but I'm talking about here is using the application in the way that is closest to how your end user is going to use it, for a website that means loading it in a real browsser, and trying to use it!
 
 and this is where puppeteer comes in
 ```
@@ -99,9 +117,9 @@ Puppeteer is a javascript library built and maintained by the chrome team for ma
 
 <Column style={{width: '45vw'}}>
 
-- Clean node API for launching Chrome and navigating
+- Clean node API for launching a browser and controlling it
 - Supports "headless" mode for running without a visible window
-- Automatically downloads a compatible copy of Chromium, no other dependencies required
+- Automatically downloads a compatible copy of Chromium or Firefox, i.e. batteries included
 
 
 </Column>
@@ -110,7 +128,7 @@ Puppeteer is a javascript library built and maintained by the chrome team for ma
 
 
 ```notes
-
+run through bullets...
 ```
 
 ---
@@ -136,6 +154,115 @@ await browser.close();
 
 </div>
 
+```notes
+here we've got a quick example of how puppeteer works, no testing just getting a feel for the API
+
+we'll try to grab a screenshot of The Verge news site
+
+*walk through the code line by line*
+
+You can also use it for more practical things though...
+
+```
+
+---
+
+### Definitely Not A DMV Appointment
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="javascript">
+{`const puppeteer = require('puppeteer');
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+\n// Navigate through some forms
+await page.goto('https://definitely-not-the-dmv.tx.gov');
+await page.click('#btnEnglish');
+await page.type('#KeypadTable', '555-555-5555');
+await page.click('#btnHaveDLNo');
+await page.click('#btnYesGetInline');
+\n// Check for an appt and email P̶a̶t̶r̶i̶c̶k̶ the hypothetical user
+const hasAppointment = await page.evaluate(() => {
+  return !document.body.textContent.includes('No service time available');
+});
+await sendEmailWithAvailability(hasAppointment, new Date());
+`}
+</Highlighter>
+
+</div>
+
+```notes
+Like in this totally hypothetical example that definitely didn't happen to me of moving to TX and being confused about the DMV appoitments never being available
+
+In this script we'll load up our browser, navigate to the definitely not the DMV URL,
+```
+
+---
+
+### Automate Your Testing
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="javascript">
+{`const puppeteer = require('puppeteer');
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+\n// Load your app
+await page.goto('http://localhost/login');
+await page.type('#username', 'mscott@dundermifflin.com');
+await page.type('#password', 'Thr3at Leve1 Midn1ght');
+await Promise.all([
+  page.click('.login-btn'),
+  page.waitForNavigation(),
+]);
+\n// Check it looks good, requires 'jest-image-snapshot'
+expect(await page.screenshot()).toMatchImageSnapshot();
+`}
+</Highlighter>
+
+</div>
+
+```notes
+but now back to our main agenda with testing, let's walkthrough what it looks like on a real app testing the login flow
+
+*walk through code*
+
+think of how many layers of your site this is exercising, it's making sure API for login is working, the javascript to process input, the CSS is loading correctly, when this passes you have very high confidence things are working
+```
+
+---
+
+### Use Familiar APIs
+
+`dom-testing-library`
+
+<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
+
+<Highlighter language="javascript">
+{`require('pptr-testing-library/extend');
+const puppeteer = require('puppeteer');
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+\n// Load your app
+await page.goto('http://localhost/login');
+// Find your elements the way your user would
+const $document = await page.getDocument();
+const $emailInput = await $document.getByLabelText('Email');
+const $passwordInput = await $document.getByLabelText('Password');
+const $loginBtn = await $document.getByText('Login');
+`}
+</Highlighter>
+
+</div>
+
+```notes
+You can also use APIs you might already be familiar with. If you've ever used dom-testing-library or react-testing-library there's a version for you specific to puppeteer
+
+this is a collection of libraries inspired by that quote from the beginning of using the application *as your user would*
+find the input by its label, not some class list or ID they don't care about
+```
+
+
 ---
 
 export default SectionInverted
@@ -148,24 +275,26 @@ Really quick before we close I want to give a crash course in avoiding flakiness
 
 ---
 
-### Screenshots
+### Preventing Flakiness
 
 
 <Row>
 
-<Column style={{width: '45vw'}}>
+<Column style={{width: '45vw', textAlign: 'left'}}>
 
 ## Bad
 
 <Highlighter language="javascript">
 {`await page.click('.add-to-cart')
+// Page navigates to checkout view
 await page.click('.checkout-btn')
+// Page navigates to confirmation view
 await page.click('.confirm-btn')`}
 </Highlighter>
 
 </Column>
 
-<Column style={{width: '45vw'}}>
+<Column style={{width: '45vw', textAlign: 'left'}}>
 
 ## Better
 
@@ -180,25 +309,6 @@ await page.click('.confirm-btn')`}
 </Column>
 
 </Row>
-
-<div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
-
-<Highlighter language="javascript">
-{`const fs = require('fs');
-const puppeteer = require('puppeteer');
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-\n// Navigate and take the screenshot
-await page.goto('https://www.theverge.com');
-const screenshot = await page.screenshot();
-fs.writeFileSync('theverge.png', screenshot);
-\n// Cleanup when you're done
-await browser.close();
-`}
-</Highlighter>
-
-
-</div>
 
 ---
 
@@ -216,4 +326,8 @@ export default SectionInverted
 
 📅 calend.ly/patrickhulce
 
-Come (virtually) stop by my office hours Thursday afternoon!
+Come (virtually) stop by my office hours Thursday afternoon.
+
+See you in the breakout sessions!
+
+https://virus.cafe/r/dallasjs
