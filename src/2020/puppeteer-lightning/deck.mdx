@@ -83,16 +83,14 @@ So what is an integration test anyway?
 ```notes
 lots of codebases have some form of tests, so let's use our new lens of the quote to see how good each of them are.
 
-1st off, compilation tests, typescript, babel, webpack. these are good examples of when they fail, it's a pretty big user facing deal, usually it means your code wouldn't even be deployable it has syntax errors so bad or referencing names that don't exist
-it doesn't do so hot on the second part though, when they pass you're not exactly confident your code does what you want it to do. it's more like a bare minimum
+compilation tests, these are good examples of when they fail, it's a pretty big deal, code wouldn't even be deployable it has syntax errors so bad
+it doesn't do so hot on the first part though, when they pass you're not exactly confident your code does what you want it to do. it's a bare minimum
 
-linters, eslint tslint etc, some of what these check are good user-facing problems, perhaps using a variable that doesn't exist or catching sneaky mistakes like variable shadowing or ===, but a lot of it is also just consistency, not exactly high signal user-facing issues
+linters, some of what these check are good user-facing problems, perhaps using a variable that doesn't exist or catching sneaky mistakes like variable shadowing or ===, but a lot of it is also just consistency, not exactly high signal user-facing issues
 
-unit tests, are where we start to get more interesting. these might be running with mocha or jest and exercise a single component or small part of your site in isolation. they might ensure that a component passes the right props to the right children for example, which is a helpful signal but just because they pass doesn't mean everything is going to work smoothly together as a unit
+unit tests, are where we start to get more interesting. these might be running with mocha or jest and exercise a single component or small part of your site in isolation. they might ensure that a component passes the right props to the right children for example, which is helpful but just because they pass doesn't mean everything is going to work smoothly together
 
-and that's where we get to integration tests, they have many names (integration, e2e, whatever you call it) but I'm talking about here is using the application in the way that is closest to how your end user is going to use it, for a website that means loading it in a real browsser, and trying to use it!
-
-and this is where puppeteer comes in
+and that's where we get to integration tests, they have many names (integration, e2e, whatever you call it) but I'm talking about here is using the application in the way that is closest to how your end user is going to use it, for a website that means loading it in a real browser, and trying to use it!
 ```
 
 ---
@@ -119,7 +117,7 @@ Puppeteer is a javascript library built and maintained by the chrome team for ma
 
 - Clean node API for launching a browser and controlling it
 - Supports "headless" mode for running without a visible window
-- Automatically downloads a compatible copy of Chromium or Firefox, i.e. batteries included
+- Batteries included, i.e. automatically downloads a compatible copy of Chromium or Firefox
 
 
 </Column>
@@ -205,19 +203,22 @@ In this script we'll load up our browser, navigate to the definitely not the DMV
 
 <Highlighter language="javascript">
 {`const puppeteer = require('puppeteer');
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-\n// Load your app
-await page.goto('http://localhost/login');
-await page.type('#username', 'mscott@dundermifflin.com');
-await page.type('#password', 'Thr3at Leve1 Midn1ght');
-await Promise.all([
-  page.click('.login-btn'),
-  page.waitForNavigation(),
-]);
-\n// Check it looks good, requires 'jest-image-snapshot'
-expect(await page.screenshot()).toMatchImageSnapshot();
-`}
+\nlet page;
+beforeAll(async () => {
+  const browser = await puppeteer.launch();
+  page = await browser.newPage();
+});
+\nit('should login', async () => {
+  await page.goto('http://localhost/login');
+  await page.type('#username', 'mscott@dundermifflin.com');
+  await page.type('#password', 'Thr3at Leve1 Midn1ght');
+  await Promise.all([
+    page.click('.login-btn'),
+    page.waitForNavigation(),
+  ]);
+\n  // Check it looks good, requires 'jest-image-snapshot'
+  expect(await page.screenshot()).toMatchImageSnapshot();
+});`}
 </Highlighter>
 
 </div>
