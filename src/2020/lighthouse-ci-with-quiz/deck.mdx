@@ -50,38 +50,36 @@ Before we start though,
 
 I was struggling to find a way to make a remote talk lively, if you've heard one of my past talks you know I like to poll the audience sometimes, and I don't think I could get through a talk without it, so we're gonna try that tonight.
 
-```
-
----
-
-<img src={require('file-loader!./winner.png')} style={{maxHeight: '30vh', display: 'block'}} />
-
-<img src={require('file-loader!./testing-js.png')} style={{marginTop: '5vh', maxHeight: '55vh'}} />
-
-
-```notes
-
-AND on top of that, I will gift my license to Kent C Dodd's testing javascript course to one lucky participant tonight. Don't worry I didn't steal it or anything I maintain one of the testing libraries covered in it so I got one as a gift. I think it's the pro license which is pretty expensive too like $300 value so, pay attention to these polls!
-
-
 Alright let's try one out, like with all great web things, it's gotta be overengineered, so I borrowed this from some friends on the Chrome Team who made "the Big Web Quiz" and I present to you
 ```
+
 ---
 
 <div style={{position: 'relative', height: "100vh", width: "100vw"}}>
 <div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Do you know what Lighthouse is?</div>
 
 
-<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+<iframe
+  frameBorder={0}
+  style={{
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    top: 0,
+    transform: 'translateX(-50%)',
+    border: 'none',
+    outline: 'none',
+  }}
+  src="https://big-d-web-quiz.glitch.me/big-screen"
+></iframe>
 
 </div>
+
 
 ```notes
 .... "The Big D Web Quiz"
 
 So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
-
-You should get a little raffle id at the top, be sure to leave this tab open and reuse it. You don't want to lose out on winning the testing JS course.
 
 your super stumper big D web quiz question is: do you know what Lighthouse is?
 
@@ -90,12 +88,12 @@ One note here, I'm doing a disservice to the Chrome folks who built the original
 Yes, this talk seems familiar.
 Nope, but that's on you, Patrick.
 
-One other note here as you're voting, I know it's a "quiz" but these are really more polls. There's no correct answer, no winners or losers because if you already know what I'm talking about, you're on team toby, and if you don't you're on team michael *and* get the bonus of learning today, so no-win situation.
+One other note here as you're voting, I know it's a "quiz" but these are really more polls. There's no correct answer, no winners or losers. You either already know what I'm talking about in which case hey you're ahead of the curve pat yourself on the back or you learn something new so win-win
 
 .....
 30 seconds to vote
 
-OK, cool thanks everyone that went well, please go ahead and leave that tab up, you don't want to lose your raffle ID for the end of the talk
+OK, cool thanks everyone that went well, please go ahead and leave that tab up
 
 and now to Lighthouse
 ```
@@ -111,7 +109,6 @@ Lighthouse, what is it?
 ```
 
 ---
-
 
 <img style={{maxWidth: '50vw', maxHeight: '50vh'}} src={require('file-loader!./lighthouse.svg')} />
 
@@ -148,28 +145,32 @@ To give you an idea of the types of checks, everything from performance metrics,
     />
   </div>
   <div>
-  <h2 style={{color: '#2075ff'}}>CLI</h2>
-  <img
-    style={{maxWidth: '30vw', maxHeight: '25vh'}}
-    src={require('file-loader!./lh-env-cli.png')}
-  />
+    <h2 style={{color: '#2075ff'}}>CLI</h2>
+    <img
+      style={{maxWidth: '30vw', maxHeight: '25vh'}}
+      src={require('file-loader!./lh-env-cli.png')}
+    />
   </div>
   <div>
-  <h2 style={{color: '#2075ff'}}>Extension</h2>
-  <img
-    style={{maxWidth: '30vw', maxHeight: '25vh'}}
-    src={require('file-loader!./lh-env-extension.png')}
-  />
+    <h2 style={{color: '#2075ff'}}>Extension</h2>
+    <img
+      style={{maxWidth: '30vw', maxHeight: '25vh'}}
+      src={require('file-loader!./lh-env-extension.png')}
+    />
   </div>
   <div>
-  <h2 style={{color: '#2075ff'}}>Web <span style={{fontSize: '50%', opacity: 0.5, position: 'relative', top: -20}}>(web.dev/measure)</span></h2>
-  <img
-    style={{maxWidth: '30vw', maxHeight: '25vh'}}
-    src={require('file-loader!./lh-env-psi.png')}
-  />
+    <h2 style={{color: '#2075ff'}}>
+      Web{' '}
+      <span style={{fontSize: '50%', opacity: 0.5, position: 'relative', top: -20}}>
+        (web.dev/measure)
+      </span>
+    </h2>
+    <img
+      style={{maxWidth: '30vw', maxHeight: '25vh'}}
+      src={require('file-loader!./lh-env-psi.png')}
+    />
   </div>
 </div>
-
 
 ```notes
 You can get it from Chrome DevTools, node CLI, PageSpeed Insights, Chrome Extension, which is awesome!
@@ -187,15 +188,28 @@ export default SectionInverted
 Which brings us to the CI dilemma, and round two of our Big D Web Quiz
 ```
 
-
 ---
 
 <div style={{position: 'relative', height: "100vh", width: "100vw"}}>
 <div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Do you use CI on your web projects?</div>
 
-<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+<iframe
+  frameBorder={0}
+  style={{
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    top: 0,
+    transform: 'translateX(-50%)',
+    border: 'none',
+    outline: 'none',
+  }}
+  src="https://big-d-web-quiz.glitch.me/big-screen"
+></iframe>
 
 </div>
+
 
 ```notes
 So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
@@ -218,13 +232,23 @@ and now to CI
 ## Continuous Integration
 
 <blockquote style={{borderLeft: '3px solid #888', paddingLeft: 20}}>
-<p style={{color: '#999', textAlign: 'left'}}>
-a software development practice where members of a team <strong style={{color: '#333'}}>integrate their work frequently</strong>, usually each person integrates at least daily - leading to multiple integrations per day. Each <strong style={{color: '#333'}}>integration is verified by an automated build (including tests)</strong> to detect integration errors as quickly as possible.<br /><br />- Martin Fowler
-</p>
+  <p style={{color: '#999', textAlign: 'left'}}>
+    a software development practice where members of a team{' '}
+    <strong style={{color: '#333'}}>integrate their work frequently</strong>, usually each person
+    integrates at least daily - leading to multiple integrations per day. Each{' '}
+    <strong style={{color: '#333'}}>
+      integration is verified by an automated build (including tests)
+    </strong>{' '}
+    to detect integration errors as quickly as possible.
+    <br />
+    <br />- Martin Fowler
+  </p>
 </blockquote>
 
-
-<img style={{marginLeft: '5vw', maxWidth: '70vw', maxHeight: '70vh'}} src={require('file-loader!./ci-providers.png')} />
+<img
+  style={{marginLeft: '5vw', maxWidth: '70vw', maxHeight: '70vh'}}
+  src={require('file-loader!./ci-providers.png')}
+/>
 
 ```notes
 For those of you not quite sure what I mean or aren't practicing yet, there are two main components to CI.
@@ -271,18 +295,27 @@ and this is where lighthouse ci comes in
 
 ### bit.ly/lhci
 
-<img style={{width: '80vw', height: '20vh', objectFit: 'contain'}} src={require('file-loader!./gh-status-checks.png')} />
+<img
+  style={{width: '80vw', height: '20vh', objectFit: 'contain'}}
+  src={require('file-loader!./gh-status-checks.png')}
+/>
 
 <Row>
 
+
 <Column>
-<img style={{width: '45vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-dash.png')} />
+  <img
+    style={{width: '45vw', height: '70vh', objectFit: 'contain'}}
+    src={require('file-loader!./lhci-server-dash.png')}
+  />
 </Column>
 
 <Column>
-<img style={{marginLeft: '2vw', width: '45vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-build.png')} />
+  <img
+    style={{marginLeft: '2vw', width: '45vw', height: '70vh', objectFit: 'contain'}}
+    src={require('file-loader!./lhci-server-build.png')}
+  />
 </Column>
-
 
 </Row>
 
@@ -312,9 +345,23 @@ now a lot of you may know and use CI already but how many would be comfortable s
 <div style={{position: 'relative', height: "100vh", width: "100vw"}}>
 <div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>How comfortable would you be setting up CI from scratch?</div>
 
-<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+<iframe
+  frameBorder={0}
+  style={{
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    top: 0,
+    transform: 'translateX(-50%)',
+    border: 'none',
+    outline: 'none',
+  }}
+  src="https://big-d-web-quiz.glitch.me/big-screen"
+></iframe>
 
 </div>
+
 
 ```notes
 So, get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
@@ -334,12 +381,11 @@ and now to let's see how hard it is from scratch
 
 ---
 
-
 #### .github/workflows/ci.yml
 
 <div style={{textAlign: 'left', maxWidth: '90vw', overflowX: 'scroll'}}>
-<Highlighter language="yaml">
-{`name: CI
+  <Highlighter language="yaml">
+    {`name: CI
 on: [push]
 jobs:
   lighthouse:
@@ -347,10 +393,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-      - run: npm install && npm install -g @lhci/cli@0.3.x
+      - run: npm install && npm install -g @lhci/cli@0.5.x
       - run: npm run build
       - run: lhci autorun --upload.target=temporary-public-storage`}
-</Highlighter>
+  </Highlighter>
 </div>
 
 ```notes
@@ -370,11 +416,9 @@ So now we've got Lighthouse running on every commit and a link to the report in 
 
 ---
 
-
 export default SectionInverted
 
 # The Extras
-
 
 ```notes
 and that's what we'll look at next
@@ -387,8 +431,8 @@ and that's what we'll look at next
 **lighthouserc.js**:
 
 <div style={{textAlign: 'left', maxWidth: '90vw', overflowX: 'scroll'}}>
-<Highlighter language="js">
-{`module.exports = {
+  <Highlighter language="js">
+    {`module.exports = {
   ci: {
     assert: {
       assertions: {
@@ -399,9 +443,8 @@ and that's what we'll look at next
     }
   }
 }`}
-</Highlighter>
+  </Highlighter>
 </div>
-
 
 ```notes
 So before we were getting a link to the Lighthouse report in our logs, but we have to open it up manually to take a look at what's going on. We want to automatically make sure we're passing the audits we care about.
@@ -423,7 +466,10 @@ Any audit you see in the report can be asserted against. Each line here is one o
 
 #### https://github.com/apps/lighthouse-ci
 
-<img style={{width: '80vw', height: '70vh', objectFit: 'contain'}} src={require('file-loader!./github-app.png')} />
+<img
+  style={{width: '80vw', height: '70vh', objectFit: 'contain'}}
+  src={require('file-loader!./github-app.png')}
+/>
 
 ```notes
 That's some great progress, but cmon Patrick you're making me look at some ugly build logs to find out what failed, that's lame! I don't know about you, but I want that nice green checkmark from Lighthouse telling me I did a good job.
@@ -437,18 +483,25 @@ The other nice thing about the github app is that the "Details" links straight t
 
 ## Lighthouse CI Server
 
-
 <Row>
 
+
 <Column>
-<img style={{marginRight: '2vw', width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-dash.png')} />
+  <img
+    style={{marginRight: '2vw', width: '45vw', height: '90vh', objectFit: 'contain'}}
+    src={require('file-loader!./lhci-server-dash.png')}
+  />
 </Column>
 
 <Column>
-<img style={{width: '45vw', height: '90vh', objectFit: 'contain'}} src={require('file-loader!./lhci-server-build.png')} />
+  <img
+    style={{width: '45vw', height: '90vh', objectFit: 'contain'}}
+    src={require('file-loader!./lhci-server-build.png')}
+  />
 </Column>
 
 </Row>
+
 
 ```notes
 Last but finally not least in the extras is the Lighthouse CI server.
@@ -466,8 +519,9 @@ This screenshot on the right is my personal favorite. The build comparison view.
 
 <div style={{maxWidth: '80vw', overflowX: 'scroll', textAlign: 'left'}}>
 
+
 <Highlighter language="bash">
-{`# Create a directory and repo for your heroku project
+  {`# Create a directory and repo for your heroku project
 mkdir lhci-heroku && cd lhci-heroku && git init
 # Setup the LHCI files
 curl https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/master/docs/recipes/heroku-server/package.json > package.json
@@ -486,8 +540,8 @@ heroku open
 `}
 </Highlighter>
 
-
 </div>
+
 
 ```notes
 Aaaaaaand the best part is it's super easy to get started. You don't have to read this or make sense of it or anything, it's just here to prove to you you can setup an LHCI server for free with only one slide of code.
@@ -502,9 +556,23 @@ This sets up the LHCI server on heroku which is a PaaS provider with a free tier
 <div style={{position: 'relative', height: "100vh", width: "100vw"}}>
 <div style={{position: 'absolute', top: '20vh', width: '100vw', textAlign: 'center', zIndex: 999999}}>Are you going to try out Lighthouse CI?</div>
 
-<iframe frameBorder={0} style={{position: "absolute", height: "100%", width: "100%", top: 0, transform: 'translateX(-50%)', border: 'none', outline: 'none'}} src="https://big-d-web-quiz.glitch.me/big-screen"></iframe>
+
+<iframe
+  frameBorder={0}
+  style={{
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    top: 0,
+    transform: 'translateX(-50%)',
+    border: 'none',
+    outline: 'none',
+  }}
+  src="https://big-d-web-quiz.glitch.me/big-screen"
+></iframe>
 
 </div>
+
 
 ```notes
 So, our final quiz question of the day get out your phones or on your laptop for the call go to this url: big-d-web-quiz.glitch.me
