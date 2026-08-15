@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "description": "Collection of speaker decks",
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "./scripts/dev.sh",
     "build": "./scripts/build.sh"
@@ -10,7 +14,7 @@
   "author": "Patrick Hulce <patrick.hulce@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@eris/mdx-theme": "erisventures/mdx-deck-theme#published",
+    "@eris/mdx-theme": "file:vendor/mdx-theme",
     "file-loader": "^2.0.0",
     "mdx-deck": "^1.7.7"
   }

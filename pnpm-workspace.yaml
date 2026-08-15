@@ -1,0 +1,8 @@
+shamefullyHoist: true
+strictPeerDependencies: false
+allowBuilds:
+  core-js: false
+  es5-ext: false
+  fsevents: false
+  puppeteer: false
+  styled-components: false
