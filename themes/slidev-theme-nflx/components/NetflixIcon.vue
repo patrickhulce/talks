@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-  <svg class="noir-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <svg class="netflix-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
       v-if="name === 'mail'"
       d="M3 6.5h18v11H3v-11Zm0 0 9 7 9-7"
@@ -32,7 +32,7 @@ defineProps({
 </template>
 
 <style scoped>
-.noir-icon {
+.netflix-icon {
   width: 1em;
   height: 1em;
   flex: none;

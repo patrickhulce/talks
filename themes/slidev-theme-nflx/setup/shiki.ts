@@ -1,8 +1,8 @@
 import type { ShikiSetupReturn } from '@slidev/types'
 import { defineShikiSetup } from '@slidev/types'
 
-const noirPrism = {
-  name: 'noir-prism',
+const netflixPrism = {
+  name: 'netflix-prism',
   type: 'light' as const,
   colors: {
     'editor.background': '#ffffff',
@@ -25,8 +25,8 @@ const noirPrism = {
 export default defineShikiSetup((): ShikiSetupReturn => {
   return {
     themes: {
-      light: noirPrism,
-      dark: noirPrism,
+      light: netflixPrism,
+      dark: netflixPrism,
     },
   }
 })

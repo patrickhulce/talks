@@ -16,31 +16,31 @@ function toneColor(tone) {
 </script>
 
 <template>
-  <div class="noir-timeline" role="list">
+  <div class="netflix-timeline" role="list">
     <div
       v-for="(item, i) in items"
       :key="item.year || i"
-      class="noir-timeline-item"
+      class="netflix-timeline-item"
       role="listitem"
     >
-      <div class="noir-timeline-label">{{ item.label }}</div>
-      <div class="noir-timeline-axis">
-        <div class="noir-timeline-tick" :style="{ background: toneColor(item.tone) }" />
+      <div class="netflix-timeline-label">{{ item.label }}</div>
+      <div class="netflix-timeline-axis">
+        <div class="netflix-timeline-tick" :style="{ background: toneColor(item.tone) }" />
       </div>
-      <div class="noir-timeline-year">{{ item.year }}</div>
+      <div class="netflix-timeline-year">{{ item.year }}</div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.noir-timeline {
+.netflix-timeline {
   display: flex;
   align-items: stretch;
   width: 100%;
   position: relative;
 }
 
-.noir-timeline-item {
+.netflix-timeline-item {
   flex: 1;
   display: grid;
   grid-template-rows: 3.4rem 0.5rem 1.8rem;
@@ -50,7 +50,7 @@ function toneColor(tone) {
   z-index: 1;
 }
 
-.noir-timeline-label {
+.netflix-timeline-label {
   align-self: end;
   padding-bottom: 0.55rem;
   font-size: 1.15rem;
@@ -60,7 +60,7 @@ function toneColor(tone) {
   max-width: 100%;
 }
 
-.noir-timeline-axis {
+.netflix-timeline-axis {
   position: relative;
   width: 100%;
   height: 0.5rem;
@@ -69,7 +69,7 @@ function toneColor(tone) {
   justify-content: center;
 }
 
-.noir-timeline-axis::before {
+.netflix-timeline-axis::before {
   content: '';
   position: absolute;
   left: 0;
@@ -80,15 +80,15 @@ function toneColor(tone) {
   background: var(--n-dim);
 }
 
-.noir-timeline-item:first-child .noir-timeline-axis::before {
+.netflix-timeline-item:first-child .netflix-timeline-axis::before {
   left: 50%;
 }
 
-.noir-timeline-item:last-child .noir-timeline-axis::before {
+.netflix-timeline-item:last-child .netflix-timeline-axis::before {
   right: 50%;
 }
 
-.noir-timeline-tick {
+.netflix-timeline-tick {
   position: relative;
   z-index: 1;
   width: 68%;
@@ -96,7 +96,7 @@ function toneColor(tone) {
   height: 0.38rem;
 }
 
-.noir-timeline-year {
+.netflix-timeline-year {
   align-self: start;
   padding-top: 0.45rem;
   font-size: 1rem;

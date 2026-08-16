@@ -1,6 +1,6 @@
 ---
 theme: ./
-title: Noir Theme Starter
+title: Netflix Theme Starter
 info: |
   Copy this file to start a black/red talk.
   Layouts: cover, about, agenda, section, chapter, statement, quote,
@@ -113,7 +113,7 @@ label: ORIGINS
 
 # Evolution of the stack
 
-<NoirTimeline :items="[
+<NetflixTimeline :items="[
   { year: '1995', label: 'Scripts', tone: 'dark' },
   { year: '2008', label: 'V8', tone: 'deep' },
   { year: '2012', label: 'WebGL', tone: 'accent' },
@@ -174,11 +174,11 @@ title: Filmstrip Method
   <Callout label="File API">
     <MediaTile icon="film" tone="dim" />
   </Callout>
-  <NoirArrow />
+  <NetflixArrow />
   <Callout label="Canvas API">
     <MediaTile icon="browser" tone="dark" />
   </Callout>
-  <NoirArrow />
+  <NetflixArrow />
   <Callout label="WebGPU API">
     <MediaTile icon="chip" tone="accent" />
   </Callout>
@@ -250,9 +250,9 @@ layout: end
 
 # Thank You.
 
-- <NoirIcon name="at" /> yourhandle
-- <NoirIcon name="mail" /> you@example.com
-- <NoirIcon name="link" /> /in/yourname
+- <NetflixIcon name="at" /> yourhandle
+- <NetflixIcon name="mail" /> you@example.com
+- <NetflixIcon name="link" /> /in/yourname
 
 ::media::
 
