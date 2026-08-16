@@ -1,6 +1,7 @@
 packages:
   - '.'
   - 'themes/*'
+  - 'src/*/*'
 
 shamefullyHoist: true
 strictPeerDependencies: false
