@@ -17,6 +17,8 @@ for f in $(find ./src -type f -regex ".*/deck.*"); do
   mv ./dist/* "$OUT_DIR/"
 done
 
+cp -R ./assets/favicons ./dist-www/favicons
+
 cat > ./dist-www/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +26,9 @@ cat > ./dist-www/index.html <<'EOF'
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Talks — Patrick Hulce</title>
+  <link rel="icon" type="image/png" href="./favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="shortcut icon" href="./favicons/favicon.ico">
+  <link rel="manifest" href="./favicons/site.webmanifest">
   <style>
     :root { color-scheme: dark; }
     body {

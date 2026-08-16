@@ -1,3 +1,7 @@
+packages:
+  - '.'
+  - 'themes/*'
+
 shamefullyHoist: true
 strictPeerDependencies: false
 allowBuilds:

@@ -2,3 +2,4 @@ dist/
 !vendor/mdx-theme/dist/
 dist-www/
 node_modules/
+.slidev/
