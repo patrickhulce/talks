@@ -1,0 +1,12 @@
+{
+  "name": "react-profiling",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.19.0"
+  }
+}

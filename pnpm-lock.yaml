@@ -27,6 +27,42 @@ importers:
         specifier: ^0.25.0
         version: 0.25.0
 
+  src/2022/react-profiling:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
+  src/2023/technical-writing:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
+  src/2024/intro-to-cv:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
+  src/2025/genai-for-media:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
+  src/2025/webgpu:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
+  src/2026/deploy-diffusion:
+    devDependencies:
+      '@slidev/cli':
+        specifier: ^52.19.0
+        version: 52.19.0(@nuxt/kit@3.21.11)(@oxc-project/types@0.144.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vitejs/devtools-kit@0.4.12(@modelcontextprotocol/server@2.0.0)(cac@7.0.0)(srvx@0.12.5)(vite@8.2.1(@types/node@26.2.0)(jiti@2.7.0)(yaml@2.9.0)))(@vue/compiler-sfc@3.5.41)(cac@7.0.0)(hono@4.13.2)(lightningcss@1.33.0)(markdown-it@14.3.0)(oxc-parser@0.131.0)(postcss@8.5.26)(react@16.14.0)(rolldown@1.2.4)(srvx@0.12.5)(supports-color@5.5.0)(webpack@4.47.0(supports-color@5.5.0))
+
   themes/slidev-theme-compass:
     dependencies:
       '@slidev/types':
