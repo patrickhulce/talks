@@ -19,6 +19,27 @@ done
 
 cp -R ./assets/favicons ./dist-www/favicons
 
+# Generate meta-refresh redirect pages from the "redirects" map in package.json,
+# e.g. "cyc2026": "2026/deploy-diffusion" -> domain.com/cyc2026 redirects to the talk.
+node -e '
+const redirects = require("./package.json").redirects || {};
+for (const [from, to] of Object.entries(redirects)) {
+  console.log(`${from}\t${to}`);
+}
+' | while IFS=$'\t' read -r FROM TO; do
+  echo "Building redirect /$FROM -> /$TO..."
+  TARGET="/${TO%/}/"
+  OUT_DIR="./dist-www/$FROM"
+  mkdir -p "$OUT_DIR"
+  cat > "$OUT_DIR/index.html" <<EOF
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Redirecting to $TARGET</title>
+<meta http-equiv="refresh" content="0; URL=$TARGET">
+<link rel="canonical" href="$TARGET">
+EOF
+done
+
 cat > ./dist-www/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="en">

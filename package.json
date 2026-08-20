@@ -13,6 +13,9 @@
   },
   "author": "Patrick Hulce <patrick.hulce@gmail.com>",
   "license": "MIT",
+  "redirects": {
+    "cyc2026": "2026/deploy-diffusion"
+  },
   "devDependencies": {
     "@eris/mdx-theme": "file:vendor/mdx-theme",
     "file-loader": "^2.0.0",

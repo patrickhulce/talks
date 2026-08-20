@@ -1,27 +1,27 @@
 ---
 theme: ../../../themes/slidev-theme-nflx
-title: GenAI for Media — Build a SaaS
-info: Dallas Software Developers · May 2025
+title: Deploy Your Own VideoGen Model
+info: Commit Your Code · September 2026
 layout: cover
-event: Dallas Software Developers
-date: May 2025
+event: Commit Your Code
+date: September 2026
 speaker: Patrick Hulce
 email: patrick.hulce@gmail.com
-link: bit.ly/genai-4-media
+link: talks.patrickhulce.com/cyc2026
 ---
 
-# GenAI for Media<br>Build a SaaS
+# Deploy Your Own VideoGen Model
 
 ::media::
 
 <img src="./images/qr-code-for-bit-ly-genai-4.avif" alt="QR code for bit.ly/genai-4-media" />
 
 <!--
-Alright everyone settled in? Thanks for coming. My name is Patrick, and I’m an ML architect at Netflix.
-But I’m not here to talk to you about Netflix, no, today my grand, ambitious goal is to introduce you to a bunch of GenAI concepts in media generation, just enough for you to start googling on your own. Then ALSO give you not just an understanding, but the *confidence* to go out and train, even deploy, your very own image generating model, all in under 20 minutes, crazy, right? Maybe. We'll see.
+Alright everyone settled in? Thanks for coming to Commit Your Code and welcome to Dallas for those of you who are visiting us! My name is Patrick, and I’m an ML architect at a big red streaming company you may know that rhymes with Shmetflix, creating tools for Studio Production.
+But I’m not here for them, I'm here for me, and today my grand goal is to introduce you to the basic concepts behind image and video generation in this era of GenAI, just enough for you to start googling on your own. Then ALSO give you not just an understanding, but the *confidence* to go out and train, and deploy, your very own video generation model, all in a tight 25 minutes, crazy, right? Maybe. Time will tell.
 We _are_ going to cover a LOT today though, so we’ll be speeding right along, if you get lost, follow along the slides at this link below.
 To kick things off, and to explain *why* I’m so excited about this, let me tell you a quick story.
-A few years ago, I wrote...
+Twenty years ago, I starred in...
 -->
 
 ---
@@ -32,37 +32,16 @@ layout: about
 
 ::tiles::
 
-<div class="flex items-start justify-between gap-3 w-full" style="grid-column: 1 / -1;">
-  <MediaTile src="./images/the-great-lion-escape.avif" tone="dim" caption="The Great Lion Escape" />
-  <MediaTile src="./images/bear-and-lions-winter-forest.avif" tone="dark" />
-  <MediaTile src="./images/lion-pride-sunset.avif" tone="dim" />
-  <MediaTile src="./images/lion-pride-savanna-storm.avif" tone="deep" />
-  <MediaTile src="./images/lions-climbing-snowy-mountain.avif" tone="accent" />
-</div>
+TODO__FILL_THIS_IN_WITH_STILLS_FROM_MY_MOVIES
 
 <!--
-...a children's book.
-It’s a story about my grandparents and their rather dramatic escape from the Soviets during the Cold War.
-Obviously, "escaping Soviets" is a bit heavy for a 3-year-old, so it became a tale of two brave lions escaping "Boris the Bear" and their epic journey across "Iron Mountain."
-It’s been a really fun way to bring a piece of my history to life for my kids, but you know what’s better than reading a book?
-_Making_ a book.
-What if my kids could keep making more pages of their own with the same style and characters? How awesome would that be?
-So that’s what we’re going to do, today we're going to be building a...
--->
+...a series of epic films about various aspects of world history, produced by yours truly as a high school student.
+They were my introduction to video production and VFX, opened doors to my first major entrepreneurial adventures, and the main reason I've loved working in Hollywood.
+But, there's a problem here, these beautiful masterpieces have some pretty glarring omissions that I'd love to reshoot, and I'm not in my teens anymore. In fact I'm so old now that these were recorded on video cameras with physical _tapes_. How are we going to help deliver the extra shots we need?
 
----
-layout: statement
-split: ABOUT / THE TALK
----
+So that’s what we’re solve today, we're going to be training a video generation model to replicate this beautiful 2000s era footage of a Patrick in high school.
 
-<p style="font-size: 1.6rem; font-weight: 600; letter-spacing: 0.02em; color: #999; margin: 0 0 0.5rem;">totally what SaaS means…</p>
-
-# Storybook-as-a-Service
-
-<!--
-Storybook as a Service.
-Because as everyone in the tech world *obviously* knows this is what "SaaS" has always been about. Am I right?
-Jokes aside, let's dive into the agenda.
+Let's dive into the agenda...
 -->
 
 ---
@@ -77,10 +56,10 @@ title: AGENDA
 
 ::default::
 
-1. ImageGen Basics
+1. Diffusion Basics
    <small>History</small>
-   <small>Ecosystem</small>
    <small>Mechanics</small>
+   <small>Models</small>
 2. Model Customization
    <small>ML 101</small>
    <small>LoRAs</small>
@@ -90,36 +69,36 @@ title: AGENDA
    <small>Live demo</small>
 
 <!--
-So, first, we’ll take a quick sprint through the history of image generation models, what tools are available, and how they work.
+So, first, we’ll take a quick sprint through the history and mechanics of modern image and video generation models, and some of the common options out there.
 Then, we’ll get to the fun part: customization.
-How do you take a generic model and make it your own with a?
-And finally, the "SaaS" part.
-We'll talk about how to quickly deploy these models live for anyone to use.
+How do you take a generic model and make it your own with data?
+And finally, the practical part.
+We'll talk about how to get the GPUs you need to train and deploy these models live for anyone to use.
 How awesome is that!?
 Sound good? Excellent. Let's dive in.
 -->
 
 ---
 layout: section
-label: IMAGEGEN BASICS
+label: DIFFUSION BASICS
 ---
 
-# ImageGen<br>Basics
+# Diffusion<br>Basics
 
 What are we talking about?
 
 <!--
-Image generation models haven't just appeared out of nowhere.
+Image and video generation models didn't just appear out of nowhere.
 We've actually been seeing quite a bit of steady progress for quite some time.
 It started with things like...
 -->
 
 ---
 layout: timeline
-label: IMAGEGEN BASICS
+label: DIFFUSION BASICS
 ---
 
-# Image Generation Models Over Time
+# Media Generation Models Over Time
 
 <NetflixTimeline :items="[
   { year: '2014', label: 'GANs', tone: 'dark' },
@@ -155,17 +134,21 @@ label: IMAGEGEN BASICS
     The ecosystem continues to mature with faster and higher resolution models.
   </div>
   <div>
-    <strong>2024 — FLUX</strong><br>
-    Original SD team releases a brand new breed of diffusion models.
+    <strong>2024 — Sora</strong><br>
+    Realistic video appears to be within reach for first time.
   </div>
   <div>
-    <strong>2025 — Autoregressive Token Models (GPT 4o)</strong><br>
-    The limitations of diffusion are shed in multi-modal LLMs.
+    <strong>2025 — TODO___FIGURE_OUT_VIDEO_MILESTONE</strong><br>
+    ...
   </div>
   <div>
-    <strong>Diffusion</strong>
+    <strong>2026 — Video Is Viable</strong><br>
+    Many high-quality open-source video models up to 4K resolution.
   </div>
 </div>
+
+
+TODO__INSERT_WILL_SMITH_SPAGHETTI_EVOLUTION_SEQUENCE
 
 <div class="flex items-end justify-center gap-3" style="margin-top: 1.1rem;">
   <img src="./images/gan-face-quality-2014-2017.avif" alt="GAN face quality 2014–2017" style="height: 4.4rem;" />
@@ -177,55 +160,22 @@ label: IMAGEGEN BASICS
 
 <!--
 ...GANs or Generative Adversarial Networks all the way back in 2014.
-I start here because this is the first time, most people, I think, were like "oh, this is actually a real thing. I can actually generate a photorealistic image"
+I start here because this is the first time, most people, I think, were like "oh, this is actually a real thing. I can actually generate a photorealistic image out of thin air"
 They were super cool and realistic looking, but very limited in what they could produce. If you ever saw, “thispersondoesnotexist.com”, it could give you a face of a person but that’s it, no body, no text prompts, just the face.
 Even so, GANs were the king around town for quite a while.
-But, around 2020, we got a new type of image called called a diffusion model.
-And this was the start of something big. Nothing really happened immediately, everyone was still distracted by COVID and crypto hype.
-But by 2022 with an innovation called "latent diffusion", we had sparked a revolution which unleashed models you might have heard of like DALL-E, Midjourney, and the open-source hero, Stable Diffusion.
-And once this went open-source, the community exploded. With whole ecosystems of tools and models and techniques to customize and deploy these models on consumer-grade GPUs.
-The last update I’ll touch on is that we’re even approaching the next generation of image models with the recent release of OpenAI's model back in March which isn't diffusion-based at all but token-based instead.
-That’s all very exciting too, but we only have 20 minutes, so we're just going to focus on the diffusion models for today.
-"But Patrick why aren't we talking about those fancy new models? Diffusion models are so last year!"
-Great question! Short answer...
+But, around 2020, we got a new type of image called called a diffusion model, which is what we'll be covering today.
+And this was the start of something big. Nothing really happened immediately, everyone was still distracted by COVID and the crypto psychosis.
+But over the next couple years we got a series of improvements to diffusion in the open source community that really caused feasibility to explode, including the ability to generate not just realistic images, but video too.
+
+If you've ever seen this amusing montage of "Will Smith eating spaghetti" you can see how far we've come in just a few short years. 
+
+But enough about where we've been, let's talk about how the task of generating an image or video actually works, and to do that we're going to start with a slightly different task...
 -->
 
----
-layout: chapter
-label: IMAGEGEN BASICS
----
-
-::marks::
-
-<MediaTile src="./images/comfyui-logo.avif" size="sm" />
-<MediaTile src="./images/civitai-logo.avif" size="sm" />
-<MediaTile src="./images/black-forest-labs-logo.avif" size="sm" />
-<MediaTile src="./images/wan-logo.avif" size="sm" />
-
-::default::
-
-# ECOSYSTEM
-
-<div class="flex items-center justify-center gap-3" style="margin-top: 1.4rem; max-width: 52rem;">
-  <img src="./images/automatic1111-stable-diffusion-web-ui.avif" alt="Automatic1111 Stable Diffusion Web UI" style="height: 5.2rem; object-fit: cover;" />
-  <img src="./images/civitai-model-marketplace.avif" alt="Civitai model marketplace" style="height: 5.2rem; object-fit: cover;" />
-  <img src="./images/stability-matrix.avif" alt="Stability Matrix" style="height: 5.2rem; object-fit: cover;" />
-  <img src="./images/lora-fine-tuning-diagram.avif" alt="LoRA Fine Tuning diagram" style="height: 5.2rem; object-fit: cover;" />
-  <img src="./images/controlnet-conditioning-grid.avif" alt="ControlNet conditioning grid" style="height: 5.2rem; object-fit: cover;" />
-  <img src="./images/ecosystem-tool-mark.avif" alt="Ecosystem tool mark" style="height: 5.2rem; object-fit: cover;" />
-</div>
-
-<!--
-...ecosystem.
-The ecosystem around diffusion models is far more mature and has a HUGE, vibrant community.
-Today you can download dozens of off-the-shelf models, UIs, and customization options that simply don’t exist for anything else yet.
-And perhaps most crucially, unlike the monster LLMs that need a small power station and an $80K GPU to run, many diffusion models and these customization techniques can actually run on consumer-grade GPUs you’d find on a gaming rig, or even on your laptop!
-But before we dive into how to contribute to this amazing ecosystem or bend these models to our will, we need a basic grasp of how diffusion actually works.
--->
 
 ---
 layout: image
-label: IMAGEGEN BASICS
+label: DIFFUSION BASICS
 tone: dark
 ---
 
@@ -242,19 +192,19 @@ tone: dark
 </div>
 
 <!--
-...so we're going to start with an analogy: imagine you’ve found an incredibly old, grainy, damaged photograph.
+...image restoration. Imagine you’ve found an incredibly old, grainy, damaged photograph.
 Like, here this hand is missing with a torn piece, a giant stain over the face.
 And our task is going to be to restore it.
 Imagine we had a magic wand that could isolate _just_ the scratches and stains from this picture.
 If we could identify just the parts that aren’t supposed to be there, we could subtract them from this image, and viola, get back our pristine original.
-And this is actually _exactly_ what diffusion models are doing.
-Step-by-step, a diffusion model tries to *recover* the “original” image from an obscured version of it.
+And this is actually _exactly_ what diffusion models are doing at their core.
+Step-by-step, a diffusion model tries to *recover* the “original” image from an obscured, noisy version of it.
 Let's take a look at a concrete example.
 -->
 
 ---
 layout: image
-label: IMAGEGEN BASICS
+label: DIFFUSION BASICS
 tone: dark
 ---
 
@@ -284,7 +234,7 @@ And now the model is going to try to predict the noise in the image. It's everyt
 We then subtract a fraction of that predicted noise, and we get an ever so slightly less noisy image that's nudged a bit closer to our target digit.
 Rinse and repeat, maybe 20, 50, even 100 times. Each step, the image gets a little clearer, a little more defined, at each step getting nudged a little closer to our goal, until voila!
 We get out digit.
-If you think back to our photo analogy, we basically did started halfway through this process.
+If you think back to our photo analogy, what we did basically started halfway through this process.
 We saw what it looked like already, but it was very noisy and damaged.
 All we're doing here is taking that to the extreme, and starting with a completely random image, so we're 100% imagining the image from the description alone.
 Our goal for the rest of today is going to be adjusting how we *influence* this noise removal process to end up with the *specific* output we want.
@@ -312,7 +262,7 @@ title: ML 101
 <div class="grid grid-cols-3 gap-6 h-full text-center" style="align-items: start;">
   <div>
     <h2>MODEL</h2>
-    <p style="font-size: 1.15rem; line-height: 1.35;">a description of how to deterministically process some data to derive some useful output</p>
+    <p style="font-size: 1.15rem; line-height: 1.35;">a description of how to process data to derive some useful output</p>
     <p style="margin-top: 1.2rem; font-size: 1.35rem; font-weight: 800;">procedure + parameters</p>
   </div>
   <div>
@@ -330,7 +280,7 @@ title: ML 101
 <p style="text-align: center; font-size: 1.5rem; font-weight: 800; margin-top: 1.4rem;">bit.ly/intro-2-cv-video</p>
 
 <!--
-Before we dive into the specific method, I need to do a super-fast Machine Learning 101 recap.Quick show of hands, how many people here would be comfortable defining the terms, “model”, “training”, and “inference” for everyone?
+Before we dive into the specific method, I need to do a super-fast Machine Learning 101 recap. Quick show of hands, how many people here would be comfortable defining the terms, “model”, “training”, and “inference” for everyone?
 __WAIT_FOR_AUDIENCE_RESPONSE__
 Alright, don’t panic, we're about to speed through the basics.If you want to know more though, I actually gave a whole talk on these fundamentals here last year, so hit up that bitly link for more.
 Alright, for now though, the first term you need to know is **model**.
@@ -395,7 +345,7 @@ title: LoRA (Low-Rank Adaptation)
 ::left::
 
 - **What is it?** Retrain *part* of the model with your data.
-- **Requires?** A strong GPU (4090)<br>10s-100s of well-captioned images
+- **Requires?** A strong GPU (5090)<br>10s-100s of well-captioned videos
 - **Good for?** Add a single style, character, or concept.
 - **Bad for?** Massive changes.
 - **How?** python libraries (diffusers, kohya_ss)
@@ -420,8 +370,8 @@ title: LoRA (Low-Rank Adaptation)
 <!--
 …a **LoRA**, or Low-Rank Adaptation. This is clever. Instead of retraining everything, we freeze most of the original pre-trained model. Then, you train a *much smaller* set of its weights to tweak its output just a bit, usually to introduce a single concept or character.
 So if you wanted to get really good images of Master Chief from Halo, you don’t need to mess with the model’s knowledge of everything else like cats and dogs, and books, and ancient egyptian pharohs. We just need to tweak it’s knowledge of sci-fi, human soldiers a bit.
-So LoRAs are fantastic when you want to make smaller, more targeted changes. Teach the model a specific art style (like my children's book!), a particular character, or a unique object.
-Best of all, you only need 10 to 100 well-captioned images, and can take only a few minutes to train.
+So LoRAs are fantastic when you want to make smaller, more targeted changes. Teach the model a specific art style, a particular character, or a unique object.
+Best of all, you only need 10 to 100 well-captioned data points, depending on your specificity, and can take minutes to train rather than days.
 There are a couple python libraries that help you do this and in practice it looks something like this…
 -->
 
@@ -453,10 +403,10 @@ title: LoRA Process - Pets
 </div>
 
 <!--
-…we gather some images of the concept we want to train, in this case a pet, and we pick a random word that will become our trigger word.
+…we gather some examples of the concept we want to train, in this case a pet, and we pick a random word that will become our trigger word.
 It’s important here that it’s something the model has no pre-existing ideas about, so I choose ZXFL here.
 You’ll also notice the caption is including dog, or the class, of our concept. This way we can piggyback on everything the model already knows about dogs, to get ZXFL to focus on just the fact that it’s _your specific dog_ we’re talking about.
-Then training is going to be tweaking just a few million parameters instead of the full multi-billion of the entire model.
+Then training is going to be training just a few million parameters instead of multi-billion of the full model.
 And finally at inference time we’ll be able to use our trigger word to inject our concept into the image.
 Everyone excited to do this for real? Let’s make it happ’n cap’n.
 -->
@@ -471,8 +421,8 @@ label: WALKTHROUGH
 How do we do all this in practice?
 
 <!--
-So how do we actually build our "Storybook as a Service,"? How do we train and deploy our LoRA?
-Well there are a lot of ways we could go about doing this, but I took the chance to try out a new vendor to make it as easy for you as possible….
+So how do we actually build this out? How do we train and deploy our LoRA?
+Well there are a lot of ways we could go about doing this, but I've got a special treat for y'all….
 -->
 
 ---
@@ -489,19 +439,19 @@ tone: dark
 
 - Per-second GPU billing.
 - Hard billing limits.
-- H100s and A100s on-demand.
+- H100s and B200s on-demand.
 - Generous free tier.
 
 <!--
-...enter **Modal**! Hashtag not-a-sponsor, haha I wish, Modal if you're listening, slide into my DMs please, haha,
-but anyway, they made getting started with this type of work easy peasy.
+...enter **Modal**! Funny story -- a year and a half ago I gave a similar talk on image models and joked that Modal was #not-a-sponsor, I just happened to love them and invited them to slide into my DMs. Well a bit ago, you'll never guess who loved what I had to say and slide into my DMs!? So everyone here is getting some great Modal swag and $XXX in free GPU credits.
+
+Anyway, Modal is awesome because they make getting started with this type of tricky AI training easy peasy.
 They're a cloud provider that specializes in making python deployments with GPU access a breeze.
 So an alternative to AWS, GCP, Azure, etc.
-They let you deploy backend jobs, web apps, all that good stuff, and you always get access to powerful GPUs.
+You can deploy backend jobs, web apps, all that good stuff, and you always get access to powerful GPUs.
 Key things I love: **per-second GPU billing** – you only pay for what you really, really use, down to the second, no idle times.
-Even better, HARD BILLING CAPS, no more forgotten instances (or *cough* cough too many meetup demo users) racking up huge surprise bills.
-They give you access to powerful GPUs all the way up to H100s, have tons of great, working examples to get you started, and the biggest kicker, a generous free tier,
-so I didn't even have to whip out any of those $10 I found.
+Even better, HARD BILLING CAPS, no more forgotten instances (or *cough* cough too many CYC demo users) racking up huge surprise bills.
+They give you access to powerful GPUs all the way up to B200s, have tons of great, working examples to get you started, and the biggest kicker, a generous free tier,
 I know, easy to play fast and loose with my cash when I already knew it'd free, but hey it's even better news for you.
 So, hopefully you're sold already, let's get to trying it out...
 -->
@@ -517,13 +467,6 @@ tone: dark
 ```bash
 $ pip install modal
 $ modal setup
-$ curl -L https://hulce.link/modal-lora > lora.py
-$ cat > example_urls.txt <<EOF
-https://picsum.photos/seed/lions/512/512
-https://picsum.photos/seed/tigers/512/512
-https://picsum.photos/seed/bears/512/512
-https://picsum.photos/seed/oh/512/512
-https://picsum.photos/seed/my/512/512
 EOF
 ```
 
@@ -533,12 +476,6 @@ EOF
 ...getting started is super straightforward.
 You `pip install modal` if you already have python on your system.
 You run `modal setup` and follow the prompts to link your account.
-Then, for this talk, you'd grab the example code I've put together from a GitHub repo at this handy-dandy personalized link.
-The last bit here is a simple text file, `example_urls.txt`, with direct URLs to your training images that you're going to be using for your LoRA.
-For our storybook, these would be URLs to my beautiful lion illustrations.
-That’s pretty much it to get ready for training!
-There's a ton in that lora.py file and you'd actually already be ready to go without any changes,
-but for our lightning talk, let's walkthrough some of the code at a really high level...
 -->
 
 ---
@@ -550,7 +487,7 @@ title: Setup Our Environment
 <div class="flex items-stretch gap-6">
 <div style="flex: 1; min-width: 0;">
 
-<WindowChrome title="lora.py">
+<WindowChrome title="train.py">
 
 ```python
 import modal
@@ -560,12 +497,12 @@ apt_deps = ["git", "curl", "zip", ...]
 
 image = (
   modal.Image
-    .debian_slim(python_version="3.10")
+    .debian_slim(python_version="3.11")
     .pip_install(pip_deps)
     .apt_install(apt_deps)
 )
 
-volume = modal.Volume.from_name("lora-result", create_if_missing=True)
+volume = modal.Volume.from_name("mymodels", create_if_missing=True)
 ```
 
 </WindowChrome>
@@ -579,10 +516,10 @@ volume = modal.Volume.from_name("lora-result", create_if_missing=True)
 </div>
 
 <!--
-...first we set up the basics of our environment.
+...then we'll set up the basics of our environment.
 This is everything that Modal needs to know about in order to run our code.
-We define python dependencies with pip, system dependencies with apt, and then we define our debian-based docker image with those.
-What Modal is doing here behind the scenes is making sure that our container has everything it needs to run our code before we even ask for a GPU, so you don't pay the huge setup cost you'd get with AMIs and bare metal instances on other cloud providrs.
+We'll define our python dependencies with pip, system dependencies with apt, and then we build our debian-based docker image with those.
+What Modal is doing here behind the scenes is making sure that our container has everything it needs to run our code before we even ask for a GPU, so you don't pay the huge setup cost you'd get with bare metal instances on other cloud providrs.
 Fianlly, we set up a `volume`, which is like a persistent network disk.
 This is where we'll store our downloaded base models and our eventual trained LoRA, so we don't have to re-download or re-train everything **every** **single** **time**.
 Next up...
@@ -635,11 +572,13 @@ def train(example_urls: string[]):
 ...training code.
 We create an app, which is just how Modal organizes our deployments.
 Then, we're going to attach a function to it.
-Here, we use a decorator to tell Modal that this function is going to use the image and volume we set up earlier, plus it'll run on an A100 with 80GB of VRAM.
+Here, we use a decorator to tell Modal that this function is going to use the image and volume we set up earlier, plus it'll run on a B200 with 80GB of VRAM.
 That's way overkill for us, but if you've been around AI for a while, you will appreciate how awesome it is that we can just immediately get 80GB of VRAM with per-second billing.
 Then, inside this function is where the actual LoRA training happens.
-Here I've completely blanked out the actual training code because that's not what I want you to take away from this, and we couldn't get through everything there in 20 minutes even if I wanted to.
+In our case we're going to be fine-tuning an open source model called LTX-2 which comes with a great starter repository for training a LoRA.
 But feel free to poke around the lora.py file in the repo for more details if you're curious.
+
+TODO__REPLACE_THIS_STUFF_FOR_ACTUAL_WORK
 What I do want you to understand at least though are these few parameters we pass in.
 First, we pass our trigger word, the name we want to associate with our new concept in our LoRA.
 Then, we pass in our set of URLs to our training images.
@@ -664,10 +603,10 @@ label: WALKTHROUGH
 
 <!--
 ...we're ready to run it!
-If you run this command, Modal will spin up a container with our deps and an A100, runs your training code, and saves your LoRA to that volume we defined earlier.
+If you run this command, Modal will spin up a container with our deps and a B200, runs your training code, and saves your LoRA to that volume we defined earlier.
 It takes about ~20 minutes, and once it's done we have our model!
-But... a model file sitting on a disk isn't sufficient for our "Storybook as a Service," is it?
-We need a way to actually *use* it, to generate images.
+But... a model file sitting on a disk isn't sufficient for our deployment promise is it?
+We need a way to actually *use* it, to generate videos.
 Anyone remember what that's called from ML 101 a few slides ago?
 If a _model_ was our procedure and weights, and _training_ was computing the parameters, what was it called when we use the model?
 -->
@@ -702,6 +641,7 @@ def web_app():
 </WindowChrome>
 
 <!--
+...INFERENCE that's right
 For inference, we're going to set up another Modal function, but this time we'll be returning a FastAPI app.
 For those of you who aren't as familiar with python, FastAPI is a popular web framework in python, think like express for node if you're familiar with that.
 And here we're going to load the base model and our LoRA from the volume using the diffusers library,
