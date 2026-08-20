@@ -3,13 +3,13 @@ defineProps({
   label: { type: String, default: '' },
   split: { type: String, default: '' },
   tone: { type: String, default: 'dark' },
+  kicker: { type: String, default: '' },
 })
 </script>
 
 <template>
-  <div class="slidev-layout quote" :class="{ 'is-light': tone === 'light' }">
+  <HudShell class="quote" :label="label || split">
+    <HudMeta v-if="kicker">{{ kicker }}</HudMeta>
     <slot />
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

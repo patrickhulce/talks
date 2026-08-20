@@ -5,6 +5,7 @@ const props = defineProps({
   label: { type: String, default: '' },
   split: { type: String, default: '' },
   image: { type: String, default: '' },
+  kicker: { type: String, default: '' },
 })
 
 const slots = useSlots()
@@ -12,16 +13,16 @@ const hasMedia = computed(() => Boolean(props.image || slots.media))
 </script>
 
 <template>
-  <div class="slidev-layout section" :class="{ 'has-media': hasMedia }">
+  <HudShell class="section" :class="{ 'has-media': hasMedia }" :label="label || split">
     <div v-if="hasMedia" class="section-media">
-      <slot name="media">
-        <img v-if="image" :src="image" alt="">
-      </slot>
+      <HudFrame>
+        <slot name="media">
+          <img v-if="image" :src="image" alt="">
+        </slot>
+      </HudFrame>
     </div>
     <div class="section-body">
       <slot />
     </div>
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

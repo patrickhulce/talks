@@ -6,12 +6,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="slidev-layout about">
+  <HudShell class="about" :label="label || split">
     <slot />
     <div class="about-tiles">
       <slot name="tiles" />
     </div>
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

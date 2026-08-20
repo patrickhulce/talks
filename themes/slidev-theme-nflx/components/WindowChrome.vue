@@ -14,8 +14,8 @@ const slots = useSlots()
   <div class="window-chrome" :data-kind="kind">
     <div class="window-chrome-bar">
       <svg class="window-chrome-dots" viewBox="0 0 52 14" aria-hidden="true">
-        <circle cx="7" cy="7" r="5" fill="#e50914" />
-        <circle cx="26" cy="7" r="5" fill="#d83729" />
+        <circle cx="7" cy="7" r="5" fill="#ff1e4e" />
+        <circle cx="26" cy="7" r="5" fill="#c4123a" />
         <circle cx="45" cy="7" r="5" fill="#5e5e5e" />
       </svg>
       <div v-if="kind === 'browser'" class="window-chrome-tab">{{ title || 'Preview' }}</div>
@@ -42,16 +42,10 @@ const slots = useSlots()
 <style scoped>
 .window-chrome {
   overflow: hidden;
-  border: 1px solid #2a2a2a;
-  background: #141414;
+  border: 1px solid var(--n-border);
+  background: var(--n-code);
   width: 100%;
-}
-
-.slidev-layout.is-light .window-chrome,
-.window-chrome[data-kind="browser"],
-.window-chrome[data-kind="screenshot"] {
-  border-color: #d0d0d0;
-  background: #fff;
+  box-shadow: 0 0 0 1px rgba(255, 30, 78, 0.08);
 }
 
 .window-chrome-bar {
@@ -61,13 +55,7 @@ const slots = useSlots()
   height: 1.7rem;
   padding: 0 0.7rem;
   background: #111;
-  border-bottom: 1px solid #2a2a2a;
-}
-
-.window-chrome[data-kind="browser"] .window-chrome-bar,
-.window-chrome[data-kind="screenshot"] .window-chrome-bar {
-  background: #f3f3f3;
-  border-bottom-color: #e2e2e2;
+  border-bottom: 1px solid var(--n-border);
 }
 
 .window-chrome-dots {
@@ -77,19 +65,23 @@ const slots = useSlots()
 }
 
 .window-chrome-title {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-family: var(--n-font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--n-muted);
 }
 
 .window-chrome-tab {
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: #fff;
-  color: #222;
+  font-family: var(--n-font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  background: var(--n-surface);
+  color: var(--n-fg);
   padding: 0.18rem 0.7rem;
-  border-radius: 6px 6px 0 0;
+  border: 1px solid var(--n-border);
+  border-bottom: 0;
 }
 
 .window-chrome-url {
@@ -97,20 +89,20 @@ const slots = useSlots()
   display: flex;
   align-items: center;
   padding: 0 0.7rem 0 3.9rem;
-  background: #f3f3f3;
-  border-bottom: 1px solid #e2e2e2;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--n-border);
 }
 
 .window-chrome-url span {
   display: block;
   width: 100%;
-  background: #fff;
-  border: 1px solid #e2e2e2;
-  border-radius: 999px;
+  background: #050505;
+  border: 1px solid var(--n-border);
   padding: 0.12rem 0.7rem;
+  font-family: var(--n-font-mono);
   font-size: 0.68rem;
   font-weight: 500;
-  color: #666;
+  color: var(--n-dim);
 }
 
 .window-chrome-body :deep(pre) {
@@ -118,20 +110,6 @@ const slots = useSlots()
   border-radius: 0;
   background: transparent !important;
   border: 0 !important;
-}
-
-.window-chrome[data-kind="code"] {
-  border-color: #d0d0d0;
-  background: #fff;
-}
-
-.window-chrome[data-kind="code"] .window-chrome-bar {
-  background: #f3f3f3;
-  border-bottom-color: #e2e2e2;
-}
-
-.window-chrome[data-kind="code"] .window-chrome-body :deep(pre) {
-  background: #fff !important;
 }
 
 .window-chrome-skeleton {
@@ -145,7 +123,7 @@ const slots = useSlots()
 .sk-nav,
 .sk-hero,
 .sk-card {
-  background: linear-gradient(90deg, #ececec, #f7f7f7 50%, #ececec);
+  background: linear-gradient(90deg, #1a1a1a, #242424 50%, #1a1a1a);
 }
 
 .sk-nav {

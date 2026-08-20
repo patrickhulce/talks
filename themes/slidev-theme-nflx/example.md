@@ -1,33 +1,98 @@
 ---
 theme: ./
-title: Netflix Theme Starter
+title: Tactical Deployment
+command: AERO-NET COMMAND
 info: |
-  Copy this file to start a black/red talk.
-  Layouts: cover, about, agenda, section, chapter, statement, quote,
-  timeline, default, code, image, two-cols, split, beat, demo, end.
-  Color scheme only — no brand marks or licensed fonts.
----
-
----
+  Command-center HUD starter. Layouts: cover, about, agenda, section, chapter,
+  statement, quote, timeline, default, code, image, two-cols, split, beat, demo, end.
+event: STABLE BUILD
+date: v4.0.2
+speaker: Operator One
+email: ops@aero.net
+link: talks.patrickhulce.com
+sections:
+  - STRATEGY
+  - TACTICAL
+  - INTEL
+  - LOGISTICS
 layout: cover
-event: Conference Name
-date: Month 2026
-speaker: Your Name
-email: you@example.com
-link: bit.ly/your-talk
+label: TACTICAL
+kicker: SECURE PROTOCOL // INITIALIZED
 ---
 
-# Talk Title Goes Here
+<HudTitle title="Tactical" accent="Deployment" />
 
-::media::
+---
+layout: default
+label: TACTICAL
+---
 
-<MediaTile icon="qr" tone="accent" />
+<div class="cover-grid" style="height: 100%;">
+  <div class="cover-copy" style="display: flex; flex-direction: column; min-height: 0;">
+    <HudTitle kicker="SECURE PROTOCOL // INITIALIZED" title="Tactical" accent="Deployment" />
+    <HudCard accent="none" style="flex: 1; margin-top: 1rem;">
+      <HudList :items="[
+        { title: 'Orbit Insertion', body: 'Lock trajectory and confirm thermal shields before the burn window.' },
+        { title: 'Relay Handshake', body: 'Authenticate the mesh and flood telemetry to the surface teams.' },
+        { title: 'Payload Release', body: 'Stage the habitat module and wait for green on all clamps.' },
+      ]" />
+    </HudCard>
+    <div style="display: flex; gap: 0.7rem; margin-top: 1rem;">
+      <HudButton>Execute Plan</HudButton>
+      <HudButton kind="ghost">Abort</HudButton>
+    </div>
+  </div>
+  <HudFrame target="TARGET: ORBITAL HABITAT X-9" caption="ALT 408KM  //  SIG 0.94">
+    <MediaTile icon="layers" tone="dark" />
+  </HudFrame>
+</div>
+
+---
+layout: default
+label: TACTICAL
+kicker: // PHASE 3 DEPLOYMENT METRICS
+title: Tactical Overview
+---
+
+<div class="grid grid-cols-3 gap-4" style="flex: 1; min-height: 0;">
+  <HudCard title="Radar Telemetry" kicker="SECTOR 7G SURVEILLANCE" accent="bottom">
+    - Real-time object tracking
+    - Doppler drift compensation
+    - Ghost-echo rejection
+  </HudCard>
+  <HudCard title="Shield Lattice" kicker="PRIORITY DEFENSE GRID" accent="bottom">
+    - Encrypted communications
+    - Failover across three bands
+    - Auto-rearm on breach
+  </HudCard>
+  <HudCard title="Supply Vector" kicker="LOGISTICS NODE 12" accent="bottom">
+    - On-demand mass drivers
+    - Cold-storage for payload
+    - 14-minute resupply loop
+  </HudCard>
+</div>
+
+---
+layout: timeline
+label: STRATEGY
+kicker: DEPLOYMENT SEQUENCE
+---
+
+<HudTitle title="Operation" accent="Nexus" kicker="" />
+
+<NetflixTimeline variant="phases" :items="[
+  { year: '01', kicker: 'INITIATION', title: 'Core Boot', body: 'Bring reactors online and verify the mesh heartbeat.' },
+  { year: '02', kicker: 'UPLINK', title: 'Relay Lock', body: 'Authenticate ground stations and flood the command channel.' },
+  { year: '03', kicker: 'INSERTION', title: 'Orbit Burn', body: 'Commit the trajectory window and stage thermal shields.' },
+  { year: '04', kicker: 'HANDOFF', title: 'Habitat Drop', body: 'Release the module and confirm clamp telemetry.' },
+]" />
 
 ---
 layout: about
+label: INTEL
 ---
 
-# My inspiration…
+# Field Assets
 
 ::tiles::
 
@@ -38,8 +103,10 @@ layout: about
 
 ---
 layout: agenda
-label: AGENDA
-title: Agenda
+label: TACTICAL
+title: Mission
+accent: Agenda
+kicker: SECURE PROTOCOL // INITIALIZED
 ---
 
 ::media::
@@ -59,16 +126,16 @@ title: Agenda
 
 ---
 layout: section
-label: HOW WE GOT HERE
+label: STRATEGY
 ---
 
-# Origins
+<HudTitle kicker="CHAPTER 01 // ORIGINS" title="Origin" accent="Story" />
 
 How did we get to this point?
 
 ---
 layout: chapter
-split: WEB / GPU
+label: INTEL
 ---
 
 ::marks::
@@ -84,7 +151,8 @@ split: WEB / GPU
 
 ---
 layout: statement
-label: ORIGINS
+label: INTEL
+kicker: DEFINITION // LOCKED
 ---
 
 # WebAssembly
@@ -93,7 +161,7 @@ How did we get to WebGPU?
 
 ---
 layout: statement
-label: WEB / GPU
+label: INTEL
 display: true
 ---
 
@@ -101,44 +169,33 @@ display: true
 
 ---
 layout: quote
-label: VIDEO CAPTIONING
+label: LOGISTICS
+kicker: VIDEO CAPTIONING
 ---
 
 # a multimodal large language model capable of processing both images and text
 
 ---
-layout: timeline
-label: ORIGINS
+layout: default
+label: LOGISTICS
+title: Direct Access
+accent: GPUs
+kicker: WALKTHROUGH // BRIEFING
 ---
 
-# Evolution of the stack
-
-<NetflixTimeline :items="[
-  { year: '1995', label: 'Scripts', tone: 'dark' },
-  { year: '2008', label: 'V8', tone: 'deep' },
-  { year: '2012', label: 'WebGL', tone: 'accent' },
-  { year: '2017', label: 'WASM', tone: 'deep' },
-  { year: '2022', label: 'WebGPU', tone: 'accent' },
-  { year: '2026', label: 'On-device', tone: 'dark' },
+<HudList :items="[
+  { title: 'Parallel compute', body: 'Not just graphics pipelines — general GPU work.' },
+  { title: '2023 — Chrome', body: 'Shipped in the browser that already had the users.' },
+  { title: '2025 — Everywhere', body: 'Cross-browser, finally boring enough to bet on.' },
 ]" />
 
 ---
-layout: default
-label: WALKTHROUGH
----
-
-# Direct access to GPUs
-
-- Parallel compute, not just graphics
-- **2023** — shipped in Chrome
-- **2025** — shipped across browsers
-
----
 layout: code
-label: WALKTHROUGH
+label: LOGISTICS
+title: Hello
+accent: Triangle
+kicker: WALKTHROUGH // SOURCE
 ---
-
-# WebGPU — Hello Triangle
 
 <WindowChrome title="triangle.ts">
 
@@ -164,13 +221,15 @@ const vertexShader = device.createShaderModule({
 
 ---
 layout: image
-label: WALKTHROUGH
-title: Filmstrip Method
+label: LOGISTICS
+title: Filmstrip
+accent: Method
+kicker: WALKTHROUGH // PIPELINE
 ---
 
 ::media::
 
-<div class="flex items-end justify-center gap-4 w-full">
+<div class="flex items-end justify-center gap-4 w-full h-full">
   <Callout label="File API">
     <MediaTile icon="film" tone="dim" />
   </Callout>
@@ -186,8 +245,10 @@ title: Filmstrip Method
 
 ---
 layout: two-cols
-label: WALKTHROUGH
-title: One idea per column
+label: LOGISTICS
+title: One Idea
+accent: Each
+kicker: WALKTHROUGH // SPLIT
 ---
 
 ::left::
@@ -203,7 +264,7 @@ The frame is a wireframe, not a screenshot. Swap the slot for a still when you h
 
 ---
 layout: split
-label: WEB / NN
+label: INTEL
 ---
 
 ::left::
@@ -218,7 +279,7 @@ label: WEB / NN
 
 ---
 layout: demo
-label: VIDEO CAPTIONING
+label: TACTICAL
 link: bit.ly/your-demo
 ---
 
@@ -231,7 +292,7 @@ link: bit.ly/your-demo
 ---
 layout: beat
 number: '#1'
-label: THE FUTURE
+label: STRATEGY
 ---
 
 # AI is coming to every web application
@@ -239,13 +300,14 @@ label: THE FUTURE
 ---
 layout: beat
 number: '#2'
-label: THE FUTURE
+label: STRATEGY
 ---
 
 # Privacy preserving inference
 
 ---
 layout: end
+label: TACTICAL
 ---
 
 # Thank You.

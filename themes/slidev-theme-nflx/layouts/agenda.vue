@@ -3,21 +3,25 @@ defineProps({
   label: { type: String, default: 'AGENDA' },
   title: { type: String, default: 'Agenda' },
   image: { type: String, default: '' },
+  kicker: { type: String, default: 'SECURE PROTOCOL // INITIALIZED' },
+  accent: { type: String, default: '' },
 })
 </script>
 
 <template>
-  <div class="slidev-layout agenda">
-    <div class="agenda-media">
-      <h1 v-if="title">{{ title }}</h1>
-      <slot name="media">
-        <img v-if="image" :src="image" alt="">
-      </slot>
-    </div>
+  <HudShell class="agenda" :label="label">
     <div class="agenda-body">
-      <slot />
+      <HudTitle :title="title" :accent="accent" :kicker="kicker" />
+      <HudCard accent="none" class="agenda-card">
+        <slot />
+      </HudCard>
     </div>
-    <FooterLabel :label="label" />
-    <SlideNumber />
-  </div>
+    <div class="agenda-media">
+      <HudFrame>
+        <slot name="media">
+          <img v-if="image" :src="image" alt="">
+        </slot>
+      </HudFrame>
+    </div>
+  </HudShell>
 </template>

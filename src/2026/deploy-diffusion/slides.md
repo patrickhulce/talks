@@ -1,6 +1,7 @@
 ---
 theme: ../../../themes/slidev-theme-nflx
 title: Deploy Your Own VideoGen Model
+command: VIDEOGEN
 info: Commit Your Code · September 2026
 layout: cover
 event: Commit Your Code
@@ -8,9 +9,15 @@ date: September 2026
 speaker: Patrick Hulce
 email: patrick.hulce@gmail.com
 link: talks.patrickhulce.com/cyc2026
+label: AGENDA
+sections:
+  - AGENDA
+  - DIFFUSION BASICS
+  - CUSTOMIZATION
+  - WALKTHROUGH
 ---
 
-# Deploy Your Own VideoGen Model
+<HudTitle title="Deploy Your Own" accent="VideoGen Model" />
 
 ::media::
 
@@ -26,9 +33,10 @@ Twenty years ago, I starred in...
 
 ---
 layout: about
+label: AGENDA
 ---
 
-# OUR INSPIRATION…
+# Our Inspiration
 
 ::tiles::
 
@@ -47,7 +55,9 @@ Let's dive into the agenda...
 ---
 layout: agenda
 label: AGENDA
-title: AGENDA
+title: Mission
+accent: Agenda
+kicker: SECURE PROTOCOL // INITIALIZED
 ---
 
 ::media::
@@ -83,7 +93,7 @@ layout: section
 label: DIFFUSION BASICS
 ---
 
-# Diffusion<br>Basics
+<HudTitle kicker="CHAPTER 01 // ORIGINS" title="Diffusion" accent="Basics" />
 
 What are we talking about?
 
@@ -96,67 +106,20 @@ It started with things like...
 ---
 layout: timeline
 label: DIFFUSION BASICS
+kicker: DEPLOYMENT SEQUENCE
 ---
 
-# Media Generation Models Over Time
+<HudTitle title="Generation" accent="Models" />
 
-<NetflixTimeline :items="[
-  { year: '2014', label: 'GANs', tone: 'dark' },
-  { year: '2020', label: 'DDPM', tone: 'deep' },
-  { year: '2021', label: 'Latent Diffusion', tone: 'accent' },
-  { year: '2022', label: 'SD 1.5 (OSS)', tone: 'deep' },
-  { year: '2023', label: 'SD2 / SDXL', tone: 'dark' },
-  { year: '2024', label: 'FLUX', tone: 'accent' },
-  { year: '…', label: '…', tone: 'dark' },
-  { year: '2025', label: 'GPT-4o', tone: 'deep' },
+<NetflixTimeline variant="axis" :items="[
+  { year: '2014', label: 'GANs', body: 'High-quality but narrow scope. thispersondoesnotexist.com', src: './images/gan-face-quality-2014-2017.avif', tone: 'dark' },
+  { year: '2020', label: 'DDPM', body: 'The start of something big — still slow and low-res.', tone: 'deep' },
+  { year: '2021', label: 'Latent Diffusion', body: 'Speed and resolution solved by diffusing in latent space.', src: './images/astronaut-riding-a-horse.avif', tone: 'accent' },
+  { year: '2022', label: 'SD 1.5 (OSS)', body: 'Latent diffusion goes open-source. The ecosystem explodes.', src: './images/dall-e-2-astronaut-riding-a-horse.avif', tone: 'deep' },
+  { year: '2023', label: 'SD2 / SDXL', body: 'Faster and higher-resolution variants mature the stack.', src: './images/astronaut-riding-a-horse-on-the-moon.avif', tone: 'dark' },
+  { year: '2024', label: 'FLUX', body: 'Original SD team ships a new breed of diffusion models.', src: './images/astronaut-riding-a-horse-in-a-desert.avif', tone: 'accent' },
+  { year: '2025', label: 'GPT-4o', body: 'Autoregressive token models shed diffusion limits.', tone: 'deep' },
 ]" />
-
-<div class="grid grid-cols-4 gap-3" style="margin-top: 1.4rem; font-size: 0.78rem; line-height: 1.25; color: #d5d5d5;">
-  <div>
-    <strong>2014 — Generative Adversarial Networks (GANs)</strong><br>
-    High-quality but narrow scope.<br>
-    thispersondoesnotexist.com
-  </div>
-  <div>
-    <strong>2020 — OG Diffusion Paper (DDPM)</strong><br>
-    The start of something big, but too slow and low resolution.
-  </div>
-  <div>
-    <strong>2021 — Latent Diffusion</strong><br>
-    Speed and resolution are “solved” by diffusing in latent space instead of pixel space.
-  </div>
-  <div>
-    <strong>2022 — Stable Diffusion 1.5 (OSS)</strong><br>
-    Latent diffusion goes open-source and the ecosystem explodes.
-  </div>
-  <div>
-    <strong>2023 — SD Variants (SD2, SDXL)</strong><br>
-    The ecosystem continues to mature with faster and higher resolution models.
-  </div>
-  <div>
-    <strong>2024 — Sora</strong><br>
-    Realistic video appears to be within reach for first time.
-  </div>
-  <div>
-    <strong>2025 — TODO___FIGURE_OUT_VIDEO_MILESTONE</strong><br>
-    ...
-  </div>
-  <div>
-    <strong>2026 — Video Is Viable</strong><br>
-    Many high-quality open-source video models up to 4K resolution.
-  </div>
-</div>
-
-
-TODO__INSERT_WILL_SMITH_SPAGHETTI_EVOLUTION_SEQUENCE
-
-<div class="flex items-end justify-center gap-3" style="margin-top: 1.1rem;">
-  <img src="./images/gan-face-quality-2014-2017.avif" alt="GAN face quality 2014–2017" style="height: 4.4rem;" />
-  <img src="./images/astronaut-riding-a-horse.avif" alt="Astronaut riding a horse" style="height: 4.4rem;" />
-  <img src="./images/astronaut-riding-a-horse-on-the-moon.avif" alt="Astronaut riding a horse on the moon" style="height: 4.4rem;" />
-  <img src="./images/astronaut-riding-a-horse-in-a-desert.avif" alt="Astronaut riding a horse in a desert" style="height: 4.4rem;" />
-  <img src="./images/dall-e-2-astronaut-riding-a-horse.avif" alt="DALL-E 2 astronaut riding a horse" style="height: 4.4rem;" />
-</div>
 
 <!--
 ...GANs or Generative Adversarial Networks all the way back in 2014.
@@ -172,23 +135,20 @@ If you've ever seen this amusing montage of "Will Smith eating spaghetti" you ca
 But enough about where we've been, let's talk about how the task of generating an image or video actually works, and to do that we're going to start with a slightly different task...
 -->
 
-
 ---
-layout: image
+layout: default
 label: DIFFUSION BASICS
-tone: dark
+title: Diffusion
+accent: Process
+kicker: IMAGE RESTORATION // ANALOGY
 ---
 
-# DIFFUSION PROCESS
-
-::media::
-
-<div class="flex items-center justify-center gap-4 w-full h-full">
-  <img src="./images/damaged-photograph.avif" alt="Damaged photograph" style="height: 18rem; object-fit: contain;" />
-  <span style="font-size: 6rem; font-weight: 800; line-height: 1;">−</span>
-  <img src="./images/isolated-scratches-and-stains.avif" alt="Isolated scratches and stains" style="height: 18rem; object-fit: contain;" />
-  <span style="font-size: 6rem; font-weight: 800; line-height: 1;">=</span>
-  <img src="./images/restored-original-photograph.avif" alt="Restored original photograph" style="height: 18rem; object-fit: contain;" />
+<div class="flex items-center justify-center gap-4 w-full" style="flex: 1; min-height: 0;">
+  <HudFrame caption="DAMAGED"><img src="./images/damaged-photograph.avif" alt="Damaged photograph" /></HudFrame>
+  <span class="hud-op">−</span>
+  <HudFrame caption="NOISE"><img src="./images/isolated-scratches-and-stains.avif" alt="Isolated scratches and stains" /></HudFrame>
+  <span class="hud-op">=</span>
+  <HudFrame caption="RESTORED"><img src="./images/restored-original-photograph.avif" alt="Restored original photograph" /></HudFrame>
 </div>
 
 <!--
@@ -203,25 +163,28 @@ Let's take a look at a concrete example.
 -->
 
 ---
-layout: image
+layout: default
 label: DIFFUSION BASICS
-tone: dark
+title: Diffusion
+accent: MNIST
+kicker: NOISE REMOVAL // LOOP
 ---
 
-# DIFFUSION (MNIST)
-
-::media::
-
-<div class="flex flex-col items-center justify-center gap-4 w-full">
-  <img src="./images/mnist-diffusion-noisy-input-vs-model-prediction.avif" alt="MNIST diffusion: noisy input vs model prediction" style="max-height: 16rem; width: auto; object-fit: contain;" />
-  <div class="flex items-center justify-center gap-6 w-full" style="font-size: 1.35rem; font-weight: 700;">
+<div class="mnist-split">
+  <HudFrame fit="contain" target="MNIST  //  NOISY INPUT VS PREDICTION">
+    <img src="./images/mnist-diffusion-noisy-input-vs-model-prediction.avif" alt="MNIST diffusion: noisy input vs model prediction" />
+  </HudFrame>
+  <div class="hud-loop">
     <span>Pure randomness</span>
-    <NetflixArrow />
-    <span>Predict the noise</span>
-    <NetflixArrow />
-    <span>Remove some of it</span>
-    <NetflixArrow />
-    <span>Repeat</span>
+    <NetflixArrow direction="down" />
+    <div class="hud-loop-cycle">
+      <span class="hud-loop-return" aria-hidden="true" />
+      <span>Predict the noise</span>
+      <NetflixArrow direction="down" />
+      <span>Remove some of it</span>
+      <NetflixArrow direction="down" />
+      <span>Repeat</span>
+    </div>
   </div>
 </div>
 
@@ -245,7 +208,7 @@ layout: section
 label: CUSTOMIZATION
 ---
 
-# Customization
+<HudTitle kicker="CHAPTER 02 // INFLUENCE" title="Model" accent="Customization" />
 
 How do we hack the diffusion process?
 
@@ -256,28 +219,27 @@ So, how do we exert that influence? How do we teach these models our concepts?
 ---
 layout: default
 label: CUSTOMIZATION
-title: ML 101
+title: ML
+accent: 101
+kicker: CUSTOMIZATION // BRIEFING
 ---
 
-<div class="grid grid-cols-3 gap-6 h-full text-center" style="align-items: start;">
-  <div>
-    <h2>MODEL</h2>
-    <p style="font-size: 1.15rem; line-height: 1.35;">a description of how to process data to derive some useful output</p>
-    <p style="margin-top: 1.2rem; font-size: 1.35rem; font-weight: 800;">procedure + parameters</p>
-  </div>
-  <div>
-    <h2>TRAINING</h2>
-    <p style="font-size: 1.15rem; line-height: 1.35;">the process of deriving a model’s parameters using its procedure and a large set of observations</p>
-    <p style="margin-top: 1.2rem; font-size: 1.35rem; font-weight: 800;">compute the parameters</p>
-  </div>
-  <div>
-    <h2>INFERENCE</h2>
-    <p style="font-size: 1.15rem; line-height: 1.35;">the process of deriving useful output using a model and input data</p>
-    <p style="margin-top: 1.2rem; font-size: 1.35rem; font-weight: 800;">apply the procedure</p>
-  </div>
+<div class="briefing-grid">
+  <HudCard title="Model" accent="bottom">
+    A description of how to process data to derive some useful output.
+    <p v-click class="briefing-sub">procedure + parameters</p>
+  </HudCard>
+  <HudCard title="Training" accent="bottom">
+    The process of deriving a model’s parameters using its procedure and a large set of observations.
+    <p v-click class="briefing-sub">compute the parameters</p>
+  </HudCard>
+  <HudCard title="Inference" accent="bottom">
+    The process of deriving useful output using a model and input data.
+    <p v-click class="briefing-sub">apply the procedure</p>
+  </HudCard>
 </div>
 
-<p style="text-align: center; font-size: 1.5rem; font-weight: 800; margin-top: 1.4rem;">bit.ly/intro-2-cv-video</p>
+<p class="briefing-link">bit.ly/intro-2-cv-video</p>
 
 <!--
 Before we dive into the specific method, I need to do a super-fast Machine Learning 101 recap. Quick show of hands, how many people here would be comfortable defining the terms, “model”, “training”, and “inference” for everyone?
@@ -306,27 +268,23 @@ OK, so what does this mean for diffusion…
 ---
 layout: default
 label: CUSTOMIZATION
-title: ML 101 - text2img
+title: ML 101
+accent: text2img
+kicker: CUSTOMIZATION // DIFFUSION
 ---
 
-<div class="grid grid-cols-3 gap-6 h-full text-center" style="align-items: start;">
-  <div>
-    <h2>MODEL</h2>
-    <p style="font-size: 1.2rem; font-weight: 800; margin: 0.6rem 0 0.35rem;">A CAT</p>
-    <img src="./images/a-cat.avif" alt="A cat" style="width: 100%; max-height: 8.5rem; object-fit: cover;" />
-    <p style="font-size: 1.2rem; font-weight: 800; margin: 0.7rem 0 0.35rem;">A DOG</p>
-    <img src="./images/a-dog.avif" alt="A dog" style="width: 100%; max-height: 8.5rem; object-fit: cover;" />
-  </div>
-  <div>
-    <h2>TRAINING</h2>
-    <p style="margin-top: 2.2rem; font-size: 1.35rem; font-weight: 800;">THE BILLIONS OF PARAMETERS</p>
-    <p style="margin-top: 1.6rem; font-size: 1.6rem; font-weight: 800;">????</p>
-  </div>
-  <div>
-    <h2>INFERENCE</h2>
-    <p style="margin-top: 2.2rem; font-size: 1.35rem; font-weight: 800;">A DOG AND A CAT</p>
-  </div>
-</div>
+<ConceptFlow
+  :examples="[
+    { label: 'A CAT', src: './images/a-cat.avif', alt: 'A cat' },
+    { label: 'A DOG', src: './images/a-dog.avif', alt: 'A dog' },
+  ]"
+  trainingCaption="THE BILLIONS OF PARAMETERS"
+  inferencePrompt="A DOG AND A CAT"
+  :inferenceImages="[
+    { src: './images/a-cat.avif', alt: 'A cat' },
+    { src: './images/a-dog.avif', alt: 'A dog' },
+  ]"
+/>
 
 <!--
 …well in diffusion, our model is going to be taking some text prompt as input and generating an image, using billions of parameters.
@@ -337,34 +295,50 @@ So, we’re just going to pick right up where they left off and keep training on
 -->
 
 ---
-layout: two-cols
+layout: default
 label: CUSTOMIZATION
-title: LoRA (Low-Rank Adaptation)
+title: LoRA
+accent: Adaptation
+kicker: LOW-RANK  //  TARGETED TWEAK
 ---
 
-::left::
-
-- **What is it?** Retrain *part* of the model with your data.
-- **Requires?** A strong GPU (5090)<br>10s-100s of well-captioned videos
-- **Good for?** Add a single style, character, or concept.
-- **Bad for?** Massive changes.
-- **How?** python libraries (diffusers, kohya_ss)
-
-::right::
-
-<div class="grid grid-cols-2 gap-3">
-  <Callout label="NICE EYES">
-    <img src="./images/nice-eyes.avif" alt="Nice eyes" />
-  </Callout>
-  <Callout label="TAYLOR SWIFT">
-    <img src="./images/taylor-swift.avif" alt="Taylor Swift" />
-  </Callout>
-  <Callout label="MASTER CHIEF">
-    <img src="./images/master-chief.avif" alt="Master Chief" />
-  </Callout>
-  <Callout label="STRONG FLASH">
-    <img src="./images/strong-flash.avif" alt="Strong flash" />
-  </Callout>
+<div class="lora-explainer">
+  <div class="lora-shots">
+    <Callout label="NICE EYES" overlay="top">
+      <img src="./images/nice-eyes.avif" alt="Nice eyes" />
+    </Callout>
+    <Callout label="TAYLOR SWIFT" overlay="top">
+      <img src="./images/taylor-swift.avif" alt="Taylor Swift" />
+    </Callout>
+    <Callout label="STRONG FLASH" overlay="bottom">
+      <img src="./images/strong-flash.avif" alt="Strong flash" />
+    </Callout>
+    <Callout label="MASTER CHIEF" overlay="bottom">
+      <img src="./images/master-chief.avif" alt="Master Chief" />
+    </Callout>
+  </div>
+  <div class="hud-qa">
+    <div>
+      <p class="hud-qa-q">What is it?</p>
+      <p class="hud-qa-a">Retrain <em>part</em> of the model with your data.</p>
+    </div>
+    <div>
+      <p class="hud-qa-q">Requires?</p>
+      <p class="hud-qa-a">A strong GPU (5090)<br>10s-100s of well-captioned videos</p>
+    </div>
+    <div>
+      <p class="hud-qa-q">Good for?</p>
+      <p class="hud-qa-a">Add a single style, character, or concept.</p>
+    </div>
+    <div>
+      <p class="hud-qa-q">Bad for?</p>
+      <p class="hud-qa-a">Massive changes.</p>
+    </div>
+    <div>
+      <p class="hud-qa-q">How?</p>
+      <p class="hud-qa-a">python libraries (diffusers, kohya_ss)</p>
+    </div>
+  </div>
 </div>
 
 <!--
@@ -378,29 +352,23 @@ There are a couple python libraries that help you do this and in practice it loo
 ---
 layout: default
 label: CUSTOMIZATION
-title: LoRA Process - Pets
+title: LoRA Process
+accent: Pets
+kicker: CUSTOMIZATION // TRIGGER WORD
 ---
 
-<div class="grid grid-cols-3 gap-6 h-full text-center" style="align-items: start;">
-  <div>
-    <h2>MODEL</h2>
-    <p style="font-size: 1.1rem; font-weight: 800; margin: 0.5rem 0 0.3rem;">ZXFL DOG</p>
-    <img src="./images/zxfl-dog-in-a-bed.avif" alt="ZXFL dog in a bed" style="width: 100%; max-height: 8rem; object-fit: cover;" />
-    <p style="font-size: 1.1rem; font-weight: 800; margin: 0.6rem 0 0.3rem;">ZXFL DOG</p>
-    <img src="./images/zxfl-dog-portrait.avif" alt="ZXFL dog portrait" style="width: 100%; max-height: 8rem; object-fit: cover;" />
-  </div>
-  <div>
-    <h2>TRAINING</h2>
-    <p style="margin-top: 2.2rem; font-size: 1.25rem; font-weight: 800;">JUST A FEW MILLION PARAMETERS</p>
-    <p style="margin-top: 1.6rem; font-size: 1.6rem; font-weight: 800;">????</p>
-  </div>
-  <div>
-    <h2>INFERENCE</h2>
-    <p style="margin-top: 2.2rem; font-size: 1.25rem; font-weight: 800;">A CAT WITH ZXFL DOG</p>
-    <p style="font-size: 1.1rem; font-weight: 800; margin-top: 1.4rem;">ZXFL DOG</p>
-    <p style="font-size: 1.1rem; font-weight: 800;">ZXFL DOG</p>
-  </div>
-</div>
+<ConceptFlow
+  :examples="[
+    { label: 'ZXFL DOG', src: './images/zxfl-dog-in-a-bed.avif', alt: 'ZXFL dog in a bed' },
+    { label: 'ZXFL DOG', src: './images/zxfl-dog-portrait.avif', alt: 'ZXFL dog portrait' },
+  ]"
+  trainingCaption="JUST A FEW MILLION PARAMETERS"
+  inferencePrompt="A CAT WITH ZXFL DOG"
+  :inferenceImages="[
+    { src: './images/a-cat.avif', alt: 'A cat' },
+    { src: './images/zxfl-dog-portrait.avif', alt: 'ZXFL dog' },
+  ]"
+/>
 
 <!--
 …we gather some examples of the concept we want to train, in this case a pet, and we pick a random word that will become our trigger word.
@@ -416,7 +384,7 @@ layout: section
 label: WALKTHROUGH
 ---
 
-# Walkthrough
+<HudTitle kicker="CHAPTER 03 // LIVE FIRE" title="Practical" accent="Walkthrough" />
 
 How do we do all this in practice?
 
@@ -428,12 +396,16 @@ Well there are a lot of ways we could go about doing this, but I've got a specia
 ---
 layout: two-cols
 label: WALKTHROUGH
-tone: dark
+title: Modal
+accent: GPUs
+kicker: WALKTHROUGH // INFRA
 ---
 
 ::left::
 
-<img src="./images/modal-serverless-cloud.avif" alt="Modal — Serverless cloud infrastructure for AI, ML, and data applications" />
+<HudFrame fit="contain" target="MODAL" caption="SERVERLESS GPUS">
+  <img src="./images/modal-serverless-cloud.avif" alt="Modal — Serverless cloud infrastructure for AI, ML, and data applications" />
+</HudFrame>
 
 ::right::
 
@@ -459,7 +431,9 @@ So, hopefully you're sold already, let's get to trying it out...
 ---
 layout: default
 label: WALKTHROUGH
-tone: dark
+title: Setup
+accent: Modal
+kicker: WALKTHROUGH // TERMINAL
 ---
 
 <WindowChrome title="terminal">
@@ -481,7 +455,9 @@ You run `modal setup` and follow the prompts to link your account.
 ---
 layout: code
 label: WALKTHROUGH
-title: Setup Our Environment
+title: Setup Our
+accent: Environment
+kicker: WALKTHROUGH // IMAGE
 ---
 
 <div class="flex items-stretch gap-6">
@@ -508,7 +484,7 @@ volume = modal.Volume.from_name("mymodels", create_if_missing=True)
 </WindowChrome>
 
 </div>
-<div style="flex: 0 0 13rem; display: flex; flex-direction: column; justify-content: space-around; font-weight: 800; font-size: 1.15rem;">
+<div class="hud-rail">
   <p>Our dependencies</p>
   <p>Our container</p>
   <p>Our persistent storage</p>
@@ -528,7 +504,9 @@ Next up...
 ---
 layout: code
 label: WALKTHROUGH
-title: Setup Our Training
+title: Setup Our
+accent: Training
+kicker: WALKTHROUGH // LORA
 ---
 
 <div class="flex items-stretch gap-6">
@@ -561,7 +539,7 @@ def train(example_urls: string[]):
 </WindowChrome>
 
 </div>
-<div style="flex: 0 0 13rem; display: flex; flex-direction: column; justify-content: space-around; font-weight: 800; font-size: 1.15rem;">
+<div class="hud-rail">
   <p>Our environment</p>
   <p>Our trigger word</p>
   <p>Our training data</p>
@@ -595,11 +573,12 @@ And that's really it for the training. In fact...
 ---
 layout: statement
 label: WALKTHROUGH
+kicker: WALKTHROUGH // EXECUTE
 ---
 
 # RUN IT
 
-<p style="font-family: var(--slidev-font-mono), ui-monospace, monospace; font-size: 2.4rem; font-weight: 700; color: #e50914;">$ modal run lora.py</p>
+<p class="hud-cmd">$ modal run lora.py</p>
 
 <!--
 ...we're ready to run it!
@@ -614,7 +593,9 @@ If a _model_ was our procedure and weights, and _training_ was computing the par
 ---
 layout: code
 label: WALKTHROUGH
-title: Setup Our Inference
+title: Setup Our
+accent: Inference
+kicker: WALKTHROUGH // SERVE
 ---
 
 <WindowChrome title="lora.py">
@@ -652,11 +633,12 @@ And that's it! We're ready to rock...
 ---
 layout: statement
 label: WALKTHROUGH
+kicker: WALKTHROUGH // PROMOTE
 ---
 
 # DEPLOY IT
 
-<p style="font-family: var(--slidev-font-mono), ui-monospace, monospace; font-size: 2.4rem; font-weight: 700; color: #e50914;">$ modal deploy lora.py</p>
+<p class="hud-cmd">$ modal deploy lora.py</p>
 
 <!--
 And with that `modal deploy` command, our "Storybook as a Service" is live on the internet!
@@ -679,22 +661,21 @@ BOOM! Here we are, and it kinda worked! Phew! To save us a bit of time though, I
 ---
 layout: default
 label: WALKTHROUGH
-title: The LoRA Difference
+title: The LoRA
+accent: Difference
+kicker: WALKTHROUGH // BEFORE / AFTER
 ---
 
-<div class="grid grid-cols-3 gap-5 h-full text-center" style="align-items: start;">
-  <div>
-    <h2>ORIGINAL</h2>
-    <img src="./images/original-storybook-bear-illustration.avif" alt="Original storybook bear illustration" style="width: 100%; max-height: 18rem; object-fit: cover;" />
-  </div>
-  <div>
-    <h2>WITHOUT LoRA</h2>
-    <img src="./images/base-model-bear-without-lora.avif" alt="Base model bear without LoRA" style="width: 100%; max-height: 18rem; object-fit: cover;" />
-  </div>
-  <div>
-    <h2>WITH LoRA</h2>
-    <img src="./images/lora-styled-bear-illustration.avif" alt="LoRA-styled bear illustration" style="width: 100%; max-height: 18rem; object-fit: cover;" />
-  </div>
+<div class="grid grid-cols-3 gap-4" style="flex: 1; min-height: 0;">
+  <HudCard title="Original" kicker="TRAINING CROP" accent="bottom">
+    <HudFrame><img src="./images/original-storybook-bear-illustration.avif" alt="Original storybook bear illustration" /></HudFrame>
+  </HudCard>
+  <HudCard title="Without LoRA" kicker="BASE MODEL" accent="bottom">
+    <HudFrame><img src="./images/base-model-bear-without-lora.avif" alt="Base model bear without LoRA" /></HudFrame>
+  </HudCard>
+  <HudCard title="With LoRA" kicker="TRIGGER INJECTED" accent="bottom">
+    <HudFrame><img src="./images/lora-styled-bear-illustration.avif" alt="LoRA-styled bear illustration" /></HudFrame>
+  </HudCard>
 </div>
 
 <!--
@@ -742,42 +723,26 @@ And here are your options...
 -->
 
 ---
-layout: image
+layout: default
 label: WALKTHROUGH
-tone: dark
+title: Next
+accent: Briefing
+kicker: AUDIENCE  //  VOTE
 ---
 
-::media::
-
-<div class="grid grid-cols-2 gap-5 w-full h-full">
-  <div class="flex items-center gap-4">
-    <span style="font-size: 6.5rem; font-weight: 800; line-height: 0.85;">A</span>
-    <div>
-      <img src="./images/diver-in-a-data-center.avif" alt="Diver in a data center" style="width: 100%; height: 8.6rem; object-fit: cover;" />
-      <p style="margin-top: 0.45rem; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;">ML INFERENCE<br>OPTIMIZATIONS DEEP DIVE</p>
-    </div>
-  </div>
-  <div class="flex items-center gap-4">
-    <span style="font-size: 6.5rem; font-weight: 800; line-height: 0.85;">B</span>
-    <div>
-      <img src="./images/hand-reaching-for-red-building-blocks.avif" alt="Hand reaching for red building blocks" style="width: 100%; height: 8.6rem; object-fit: cover;" />
-      <p style="margin-top: 0.45rem; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;">USER-CENTRIC<br>HOW TO USE GENAI TOOLS</p>
-    </div>
-  </div>
-  <div class="flex items-center gap-4">
-    <span style="font-size: 6.5rem; font-weight: 800; line-height: 0.85;">C</span>
-    <div>
-      <img src="./images/editing-a-talk-at-a-computer.avif" alt="Editing a talk at a computer" style="width: 100%; height: 8.6rem; object-fit: cover;" />
-      <p style="margin-top: 0.45rem; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;">HANDS-ON<br>ML WEB APP CODE</p>
-    </div>
-  </div>
-  <div class="flex items-center gap-4">
-    <span style="font-size: 6.5rem; font-weight: 800; line-height: 0.85;">D</span>
-    <div>
-      <img src="./images/speaker-on-stage.avif" alt="Speaker on stage" style="width: 100%; height: 8.6rem; object-fit: cover;" />
-      <p style="margin-top: 0.45rem; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;">META-TALK<br>HOW TO GIVE A TALK</p>
-    </div>
-  </div>
+<div class="grid grid-cols-2 gap-4" style="flex: 1; min-height: 0;">
+  <HudCard title="A  //  Inference Deep Dive" kicker="ML OPTIMIZATIONS" accent="left">
+    <HudFrame caption="DISTILLATION / TENSORRT"><img src="./images/diver-in-a-data-center.avif" alt="Diver in a data center" /></HudFrame>
+  </HudCard>
+  <HudCard title="B  //  User-Centric Tools" kicker="HOW TO USE GENAI" accent="left">
+    <HudFrame caption="COMFY / PIPELINES"><img src="./images/hand-reaching-for-red-building-blocks.avif" alt="Hand reaching for red building blocks" /></HudFrame>
+  </HudCard>
+  <HudCard title="C  //  Hands-On Web App" kicker="ML WEB APP CODE" accent="left">
+    <HudFrame caption="FULL STACK"><img src="./images/editing-a-talk-at-a-computer.avif" alt="Editing a talk at a computer" /></HudFrame>
+  </HudCard>
+  <HudCard title="D  //  Meta-Talk" kicker="HOW TO GIVE A TALK" accent="left">
+    <HudFrame caption="STAGECRAFT"><img src="./images/speaker-on-stage.avif" alt="Speaker on stage" /></HudFrame>
+  </HudCard>
 </div>
 
 <!--
@@ -799,6 +764,7 @@ Awesome, thank you all for your honesty and participation...
 
 ---
 layout: end
+label: WALKTHROUGH
 ---
 
 # Thank You.

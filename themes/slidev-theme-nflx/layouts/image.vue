@@ -6,28 +6,21 @@ defineProps({
   image: { type: String, default: '' },
   caption: { type: String, default: '' },
   bleed: { type: Boolean, default: false },
-  tone: { type: String, default: 'light' },
+  tone: { type: String, default: 'dark' },
+  kicker: { type: String, default: '' },
+  accent: { type: String, default: '' },
+  target: { type: String, default: '' },
 })
 </script>
 
 <template>
-  <div
-    class="slidev-layout image-slide"
-    :class="{
-      'is-light': tone === 'light',
-      'has-title-bar': tone === 'light',
-      bleed,
-    }"
-  >
-    <TitleBar v-if="tone === 'light'" :title="title" />
+  <HudShell class="image-slide" :class="{ bleed }" :label="label || split">
+    <HudTitle v-if="title" :title="title" :accent="accent" :kicker="kicker" />
     <slot />
     <div class="image-frame">
-      <slot name="media">
-        <img v-if="image" :src="image" alt="">
-      </slot>
+      <HudFrame :src="image" :caption="caption" :target="target">
+        <slot name="media" />
+      </HudFrame>
     </div>
-    <p v-if="caption" class="image-caption">{{ caption }}</p>
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

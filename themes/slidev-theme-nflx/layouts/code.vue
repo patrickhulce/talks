@@ -3,16 +3,16 @@ defineProps({
   label: { type: String, default: '' },
   split: { type: String, default: '' },
   title: { type: String, default: '' },
+  kicker: { type: String, default: '' },
+  accent: { type: String, default: '' },
 })
 </script>
 
 <template>
-  <div class="slidev-layout code is-light has-title-bar">
-    <TitleBar :title="title" />
+  <HudShell class="code" :label="label || split">
+    <HudTitle v-if="title" :title="title" :accent="accent" :kicker="kicker" :stacked="false" />
     <div class="code-body">
       <slot />
     </div>
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

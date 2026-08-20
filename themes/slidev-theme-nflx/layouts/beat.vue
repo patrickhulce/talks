@@ -8,13 +8,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="slidev-layout beat">
+  <HudShell class="beat" :label="label || split">
     <img v-if="image" class="beat-bg" :src="image" alt="">
     <p class="beat-number">{{ number }}</p>
     <div class="beat-body">
       <slot />
     </div>
-    <FooterLabel :label="label" :split="split" />
-    <SlideNumber />
-  </div>
+  </HudShell>
 </template>

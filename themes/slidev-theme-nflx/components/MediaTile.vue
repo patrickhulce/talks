@@ -15,7 +15,7 @@ const tones = {
   dim: ['#1a1a1a', '#5e5e5e', '#2a2a2a'],
   dark: ['#000000', '#801f17', '#3a0c08'],
   deep: ['#1a0504', '#d83729', '#801f17'],
-  accent: ['#3a0608', '#e50914', '#801f17'],
+  accent: ['#3a0608', '#ff1e4e', '#4a0a18'],
 }
 
 const stops = computed(() => tones[props.tone] || tones.dim)
@@ -23,6 +23,10 @@ const stops = computed(() => tones[props.tone] || tones.dim)
 
 <template>
   <div class="media-tile" :data-size="size" :data-tone="tone">
+    <span class="media-bracket tl" aria-hidden="true" />
+    <span class="media-bracket tr" aria-hidden="true" />
+    <span class="media-bracket bl" aria-hidden="true" />
+    <span class="media-bracket br" aria-hidden="true" />
     <img v-if="src" :src="src" alt="">
     <template v-else>
       <div
@@ -41,8 +45,8 @@ const stops = computed(() => tones[props.tone] || tones.dim)
       <svg v-if="icon === 'browser'" class="media-tile-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <rect x="6" y="10" width="52" height="44" stroke="#fff" stroke-width="2.2" />
         <path d="M6 20h52" stroke="#fff" stroke-width="2.2" />
-        <circle cx="14" cy="15" r="2" fill="#e50914" />
-        <circle cx="21" cy="15" r="2" fill="#d83729" />
+        <circle cx="14" cy="15" r="2" fill="#ff1e4e" />
+        <circle cx="21" cy="15" r="2" fill="#c4123a" />
         <circle cx="28" cy="15" r="2" fill="#fff" />
       </svg>
       <svg v-else-if="icon === 'chip'" class="media-tile-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
@@ -97,7 +101,23 @@ const stops = computed(() => tones[props.tone] || tones.dim)
   width: 100%;
   overflow: hidden;
   background: #111;
+  border: 1px solid var(--n-border, #2a2a2a);
 }
+
+.media-bracket {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  z-index: 2;
+  pointer-events: none;
+  border-color: var(--n-accent, #ff1e4e);
+  border-style: solid;
+}
+
+.media-bracket.tl { top: 5px; left: 5px; border-width: 2px 0 0 2px; }
+.media-bracket.tr { top: 5px; right: 5px; border-width: 2px 2px 0 0; }
+.media-bracket.bl { bottom: 5px; left: 5px; border-width: 0 0 2px 2px; }
+.media-bracket.br { bottom: 5px; right: 5px; border-width: 0 2px 2px 0; }
 
 .media-tile[data-size="sm"] {
   width: 4.6rem;

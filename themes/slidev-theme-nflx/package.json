@@ -1,6 +1,6 @@
 {
   "name": "slidev-theme-nflx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "keywords": [
     "slidev-theme",
@@ -29,8 +29,8 @@
       "canvasWidth": 1280,
       "fonts": {
         "sans": "Inter",
-        "mono": "IBM Plex Mono",
-        "weights": "300,400,500,600,700,800,900"
+        "mono": "JetBrains Mono",
+        "weights": "400,500,600,700,800,900"
       }
     }
   }
