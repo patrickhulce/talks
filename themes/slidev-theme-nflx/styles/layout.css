@@ -902,8 +902,11 @@ html.dark {
   align-items: stretch;
 }
 
+.briefing-grid:has(.hud-card[data-variant='content']) {
+  align-items: center;
+}
+
 .slidev-layout .briefing-grid .hud-card {
-  /* height: 100%; */
   min-height: 0;
   text-align: center;
 }

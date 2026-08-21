@@ -3,11 +3,12 @@ defineProps({
   title: { type: String, default: '' },
   kicker: { type: String, default: '' },
   accent: { type: String, default: 'left' },
+  variant: { type: String, default: 'content' },
 })
 </script>
 
 <template>
-  <div class="hud-card" :data-accent="accent">
+  <div class="hud-card" :data-accent="accent" :data-variant="variant">
     <div v-if="title || kicker" class="hud-card-head">
       <p v-if="title" class="hud-card-title">{{ title }}</p>
       <p v-if="kicker" class="hud-card-kicker">{{ kicker }}</p>
@@ -48,6 +49,10 @@ defineProps({
 
 .hud-card[data-accent='none'] {
   box-shadow: none;
+}
+
+.hud-card[data-variant='full'] {
+  height: 100%;
 }
 
 .hud-card-head {

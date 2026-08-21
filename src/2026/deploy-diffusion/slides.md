@@ -56,8 +56,8 @@ Let's dive into the agenda...
 layout: agenda
 label: AGENDA
 title: Mission
-accent: Agenda
-kicker: SECURE PROTOCOL // INITIALIZED
+accent: SCHEDULE
+kicker: CYC PROTOCOL // INITIALIZED
 ---
 
 ::media::
@@ -228,19 +228,19 @@ kicker: CUSTOMIZATION // BRIEFING
 ---
 
 <div class="briefing-grid">
-  <HudCard title="Model" accent="bottom">
+  <HudCard variant="content" title="Model" accent="bottom" style="height: 16rem">
     <p>A description of how to process data to derive some useful output.</p>
     <div class="briefing-sub-slot">
       <p v-click class="briefing-sub">procedure + parameters</p>
     </div>
   </HudCard>
-  <HudCard title="Training" accent="bottom">
+  <HudCard variant="content" title="Training" accent="bottom" style="height: 16rem">
     <p>The process of deriving a model’s parameters using its procedure and a large set of observations.</p>
     <div class="briefing-sub-slot">
       <p v-click class="briefing-sub">compute the parameters</p>
     </div>
   </HudCard>
-  <HudCard title="Inference" accent="bottom">
+  <HudCard variant="content" title="Inference" accent="bottom" style="height: 16rem">
     <p>The process of deriving useful output using a model and input data.</p>
     <div class="briefing-sub-slot">
       <p v-click class="briefing-sub">apply the procedure</p>
@@ -290,8 +290,7 @@ kicker: CUSTOMIZATION // DIFFUSION
   trainingCaption="THE BILLIONS OF PARAMETERS"
   inferencePrompt="A DOG AND A CAT"
   :inferenceImages="[
-    { src: './images/a-cat.avif', alt: 'A cat' },
-    { src: './images/a-dog.avif', alt: 'A dog' },
+    { src: './images/cat-dog.avif', alt: 'A dog and a cat' },
   ]"
 />
 
@@ -374,8 +373,7 @@ kicker: CUSTOMIZATION // TRIGGER WORD
   trainingCaption="JUST A FEW MILLION PARAMETERS"
   inferencePrompt="A CAT WITH ZXFL DOG"
   :inferenceImages="[
-    { src: './images/a-cat.avif', alt: 'A cat' },
-    { src: './images/zxfl-dog-portrait.avif', alt: 'ZXFL dog' },
+    { src: './images/cat-zxfl-dog.avif', alt: 'A cat with ZXFL dog' },
   ]"
 />
 

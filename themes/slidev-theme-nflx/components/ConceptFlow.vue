@@ -44,7 +44,7 @@ defineProps({
         <span class="concept-chip">{{ inferencePrompt }}</span>
         <NetflixArrow direction="down" />
         <div class="concept-result">
-          <div v-for="(img, i) in inferenceImages" :key="i" class="concept-thumb concept-thumb-lg">
+          <div v-for="(img, i) in inferenceImages" :key="i" class="concept-thumb">
             <img :src="img.src" :alt="img.alt || inferencePrompt">
           </div>
         </div>
@@ -57,45 +57,47 @@ defineProps({
 .concept-flow {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.2rem;
+  gap: 1.4rem;
   flex: 1;
   width: 100%;
   min-height: 0;
-  align-items: stretch;
+  align-content: center;
+  align-items: start;
 }
 
 .concept-col {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  min-height: 0;
 }
 
 .concept-col h2 {
   text-align: center;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.65rem;
+  font-size: 2.2rem;
 }
 
 .concept-col-body {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.85rem;
-  min-height: 0;
+  gap: 1rem;
 }
 
 .concept-pair {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
   width: 100%;
 }
 
 .concept-pair :deep(.netflix-arrow svg) {
-  width: 2.6rem;
+  width: 3.4rem;
+}
+
+.concept-col-body :deep(.netflix-arrow[data-direction='down'] svg) {
+  width: 2.2rem;
 }
 
 .concept-chip {
@@ -103,11 +105,11 @@ defineProps({
   align-items: center;
   justify-content: center;
   flex: none;
-  padding: 0.42rem 0.72rem;
+  padding: 0.55rem 0.9rem;
   background: var(--n-accent);
   color: #fff;
   font-family: var(--n-font-display);
-  font-size: 0.82rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -118,7 +120,7 @@ defineProps({
 
 .concept-thumb {
   flex: none;
-  width: 5.4rem;
+  width: 8rem;
   aspect-ratio: 1;
   overflow: hidden;
   border: 1px solid var(--n-border);
@@ -132,28 +134,24 @@ defineProps({
   display: block;
 }
 
-.concept-thumb-lg {
-  width: 7.2rem;
-}
-
 .concept-train-row {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 0.65rem;
+  gap: 0.85rem;
 }
 
 .concept-train-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .concept-caption {
   margin: 0;
   font-family: var(--n-font-display);
-  font-size: 1.12rem;
+  font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -165,6 +163,11 @@ defineProps({
 
 .concept-result {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.65rem;
+}
+
+.concept-result .concept-thumb:only-child {
+  width: 16rem;
+  aspect-ratio: 3 / 2;
 }
 </style>

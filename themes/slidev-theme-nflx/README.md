@@ -53,7 +53,7 @@ Every layout sits in `HudShell` (header nav + footer index). `tone: light` / `to
 |---|---|---|
 | `HudShell` | `label` | Header / nav / footer. Used by every layout. |
 | `HudTitle` | `title`, `accent`, `kicker`, `stacked` | Last word in neon, short red rule. |
-| `HudCard` | `title`, `kicker`, `accent`: `left` / `bottom` / `none` | Chamfered surface panel. |
+| `HudCard` | `title`, `kicker`, `accent`: `left` / `bottom` / `none`, `variant`: `content` (default, hug) / `full` (fill parent) | Chamfered surface panel. |
 | `HudFrame` | `src`, `target`, `caption`, `scanlines`, `fit`, `hug`, `panel` | L-brackets, scanlines, overlay chip. `panel`: rich overlay slot (e.g. a `HudCard`). |
 | `HudList` | `items`: `{ title, body }[]` | `01 >` numbered rows. Raw `ol` in agenda/default matches. |
 | `HudMeta` | — | `// PHASE 3` kicker line. |
