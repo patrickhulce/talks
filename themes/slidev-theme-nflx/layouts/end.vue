@@ -17,11 +17,11 @@ const hasMedia = computed(() => Boolean(props.image || slots.media))
         <slot />
       </div>
       <div v-if="hasMedia" class="end-media">
-        <HudFrame fit="contain">
-          <slot name="media">
-            <img v-if="image" :src="image" alt="">
-          </slot>
-        </HudFrame>
+        <slot name="media">
+          <HudFrame v-if="image" fit="contain" hug>
+            <img :src="image" alt="">
+          </HudFrame>
+        </slot>
       </div>
     </div>
   </HudShell>

@@ -58,6 +58,7 @@ const parts = computed(() => {
 .hud-title[data-stacked='true'] .hud-title-accent {
   display: block;
   margin: 0;
+  margin-left: -4px;
   padding: 0;
   white-space: nowrap;
 }

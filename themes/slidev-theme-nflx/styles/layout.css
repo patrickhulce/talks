@@ -268,6 +268,7 @@ html.dark {
   font-weight: 700;
   max-width: none;
   margin: 0;
+  margin-left: -4px;
   padding: 0;
   letter-spacing: 0.02em;
   line-height: 0.92;
@@ -640,11 +641,38 @@ html.dark {
   align-items: center;
 }
 
-.end-media img,
-.end-media .media-tile,
-.end-media .hud-frame {
+.end-media > .media-tile,
+.end-media > .hud-frame {
   width: 14rem;
   height: 14rem;
+}
+
+.end-socials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.end-socials-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.end-socials-icons img {
+  height: 2.2rem;
+  width: auto;
+  flex: none;
+}
+
+.slidev-layout.end .end-socials .hud-frame,
+.slidev-layout.end .end-socials .media-tile {
+  flex: none;
+  width: 12rem;
+  max-width: 12rem;
+  height: auto;
+  min-height: 0;
 }
 
 /* Statement */
@@ -691,11 +719,25 @@ html.dark {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .slidev-layout.code pre,
 .slidev-layout.code .window-chrome {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
+}
+
+.slidev-layout.code .code-with-rail {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.slidev-layout.code .code-with-rail .window-chrome {
+  min-width: 0;
+  max-width: calc(100% - 14rem);
 }
 
 /* Image */
@@ -842,6 +884,11 @@ html.dark {
   flex-direction: column;
 }
 
+.default-body > .hud-frame {
+  flex: 1;
+  min-height: 0;
+}
+
 .default-body.has-hud-title > h1:first-child {
   display: none;
 }
@@ -852,13 +899,12 @@ html.dark {
   gap: 1.4rem;
   flex: 1;
   min-height: 0;
-  align-items: center;
-  align-content: center;
+  align-items: stretch;
 }
 
 .slidev-layout .briefing-grid .hud-card {
-  height: auto;
-  min-height: 17rem;
+  /* height: 100%; */
+  min-height: 0;
   text-align: center;
 }
 
@@ -875,10 +921,22 @@ html.dark {
   color: var(--n-soft);
 }
 
-.briefing-sub {
-  margin: auto 0 0;
-  padding-top: 1rem;
+.slidev-layout .briefing-grid .hud-card-body > p {
+  margin: 0;
+}
+
+.briefing-sub-slot {
+  margin-top: auto;
   min-height: 2.4rem;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.briefing-sub {
+  margin: 0;
   font-family: var(--n-font-display);
   font-size: 1.15rem;
   font-weight: 700;
@@ -1012,7 +1070,7 @@ html.dark {
 .hud-loop {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 1.05rem;
   min-height: 0;
@@ -1024,14 +1082,20 @@ html.dark {
   padding: 0;
 }
 
-.hud-loop-cycle {
-  position: relative;
+.hud-loop-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 1.05rem;
+  min-height: 0;
+  padding-left: 2.4rem;
+}
+
+.hud-loop-cycle {
+  position: relative;
   gap: 1.05rem;
   margin: 0;
-  padding-left: 2.4rem;
 }
 
 .hud-loop-return {
@@ -1050,7 +1114,7 @@ html.dark {
 .hud-loop-return::after {
   content: '';
   position: absolute;
-  top: -1px;
+  top: -6px;
   right: -8px;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;

@@ -34,7 +34,6 @@ defineProps({
   );
   padding: 1.05rem 1.15rem 1.1rem;
   min-width: 0;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }

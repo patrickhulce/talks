@@ -44,8 +44,14 @@ const slots = useSlots()
   overflow: hidden;
   border: 1px solid var(--n-border);
   background: var(--n-code);
-  width: 100%;
+  width: max-content;
+  max-width: 100%;
   box-shadow: 0 0 0 1px rgba(255, 30, 78, 0.08);
+}
+
+.window-chrome[data-kind='browser'],
+.window-chrome[data-kind='screenshot'] {
+  width: 100%;
 }
 
 .window-chrome-bar {
@@ -110,6 +116,9 @@ const slots = useSlots()
   border-radius: 0;
   background: transparent !important;
   border: 0 !important;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .window-chrome-skeleton {

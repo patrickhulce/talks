@@ -7,11 +7,18 @@ defineProps({
   scanlines: { type: Boolean, default: true },
   fit: { type: String, default: 'cover' },
   hug: { type: Boolean, default: false },
+  panel: { type: Boolean, default: false },
 })
 </script>
 
 <template>
-  <div class="hud-frame" :data-scanlines="scanlines ? 'true' : 'false'" :data-fit="fit" :data-hug="hug ? 'true' : 'false'">
+  <div
+    class="hud-frame"
+    :data-scanlines="scanlines ? 'true' : 'false'"
+    :data-fit="fit"
+    :data-hug="hug ? 'true' : 'false'"
+    :data-panel="panel ? 'true' : 'false'"
+  >
     <span class="hud-bracket tl" aria-hidden="true" />
     <span class="hud-bracket tr" aria-hidden="true" />
     <span class="hud-bracket bl" aria-hidden="true" />
@@ -116,6 +123,25 @@ defineProps({
   padding: 0.45rem 0.6rem;
   background: rgba(10, 10, 10, 0.82);
   border: 1px solid var(--n-border);
+}
+
+.hud-frame[data-panel='true'] .hud-frame-overlay {
+  right: 1.15rem;
+  bottom: 1.15rem;
+  max-width: 22.5rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.hud-frame[data-panel='true'] .hud-frame-overlay :deep(.hud-card) {
+  background: rgba(8, 8, 8, 0.9);
+  backdrop-filter: blur(10px);
+  height: auto;
+}
+
+.hud-frame[data-panel='true'] .hud-frame-overlay :deep(.hud-card-body li) {
+  font-size: 1.05rem;
 }
 
 .hud-frame-target {

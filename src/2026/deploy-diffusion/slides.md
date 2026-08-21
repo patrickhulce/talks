@@ -117,8 +117,9 @@ kicker: DEPLOYMENT SEQUENCE
   { year: '2021', label: 'Latent Diffusion', body: 'Speed and resolution solved by diffusing in latent space.', src: './images/astronaut-riding-a-horse.avif', tone: 'accent' },
   { year: '2022', label: 'SD 1.5 (OSS)', body: 'Latent diffusion goes open-source. The ecosystem explodes.', src: './images/dall-e-2-astronaut-riding-a-horse.avif', tone: 'deep' },
   { year: '2023', label: 'SD2 / SDXL', body: 'Faster and higher-resolution variants mature the stack.', src: './images/astronaut-riding-a-horse-on-the-moon.avif', tone: 'dark' },
-  { year: '2024', label: 'FLUX', body: 'Original SD team ships a new breed of diffusion models.', src: './images/astronaut-riding-a-horse-in-a-desert.avif', tone: 'accent' },
-  { year: '2025', label: 'GPT-4o', body: 'Autoregressive token models shed diffusion limits.', tone: 'deep' },
+  { year: '2024', label: 'Sora', body: 'Realistic video appears to be within reach for the first time.', tone: 'accent' },
+  { year: '2025', label: 'Wan', body: 'Open-source video models arrive — Wan, Hunyuan, and friends.', src: './images/wan-logo.avif', tone: 'deep' },
+  { year: '2026', label: 'Video Is Viable', body: 'Many high-quality open-source video models up to 4K resolution.', tone: 'accent' },
 ]" />
 
 <!--
@@ -175,9 +176,11 @@ kicker: NOISE REMOVAL // LOOP
     <img src="./images/mnist-diffusion-noisy-input-vs-model-prediction.avif" alt="MNIST diffusion: noisy input vs model prediction" />
   </HudFrame>
   <div class="hud-loop">
-    <span>Pure randomness</span>
-    <NetflixArrow direction="down" />
-    <div class="hud-loop-cycle">
+    <div class="hud-loop-block">
+      <span>Pure randomness</span>
+      <NetflixArrow direction="down" />
+    </div>
+    <div class="hud-loop-block hud-loop-cycle">
       <span class="hud-loop-return" aria-hidden="true" />
       <span>Predict the noise</span>
       <NetflixArrow direction="down" />
@@ -226,16 +229,22 @@ kicker: CUSTOMIZATION // BRIEFING
 
 <div class="briefing-grid">
   <HudCard title="Model" accent="bottom">
-    A description of how to process data to derive some useful output.
-    <p v-click class="briefing-sub">procedure + parameters</p>
+    <p>A description of how to process data to derive some useful output.</p>
+    <div class="briefing-sub-slot">
+      <p v-click class="briefing-sub">procedure + parameters</p>
+    </div>
   </HudCard>
   <HudCard title="Training" accent="bottom">
-    The process of deriving a model’s parameters using its procedure and a large set of observations.
-    <p v-click class="briefing-sub">compute the parameters</p>
+    <p>The process of deriving a model’s parameters using its procedure and a large set of observations.</p>
+    <div class="briefing-sub-slot">
+      <p v-click class="briefing-sub">compute the parameters</p>
+    </div>
   </HudCard>
   <HudCard title="Inference" accent="bottom">
-    The process of deriving useful output using a model and input data.
-    <p v-click class="briefing-sub">apply the procedure</p>
+    <p>The process of deriving useful output using a model and input data.</p>
+    <div class="briefing-sub-slot">
+      <p v-click class="briefing-sub">apply the procedure</p>
+    </div>
   </HudCard>
 </div>
 
@@ -394,25 +403,26 @@ Well there are a lot of ways we could go about doing this, but I've got a specia
 -->
 
 ---
-layout: two-cols
+layout: default
 label: WALKTHROUGH
 title: Modal
 accent: GPUs
 kicker: WALKTHROUGH // INFRA
 ---
 
-::left::
-
-<HudFrame fit="contain" target="MODAL" caption="SERVERLESS GPUS">
+<HudFrame fit="cover" panel>
   <img src="./images/modal-serverless-cloud.avif" alt="Modal — Serverless cloud infrastructure for AI, ML, and data applications" />
+  <template #overlay>
+    <HudCard title="Serverless GPUs" kicker="MODAL" accent="left">
+      <ul>
+        <li>Per-second GPU billing.</li>
+        <li>Hard billing limits.</li>
+        <li>H100s and B200s on-demand.</li>
+        <li>Generous free tier.</li>
+      </ul>
+    </HudCard>
+  </template>
 </HudFrame>
-
-::right::
-
-- Per-second GPU billing.
-- Hard billing limits.
-- H100s and B200s on-demand.
-- Generous free tier.
 
 <!--
 ...enter **Modal**! Funny story -- a year and a half ago I gave a similar talk on image models and joked that Modal was #not-a-sponsor, I just happened to love them and invited them to slide into my DMs. Well a bit ago, you'll never guess who loved what I had to say and slide into my DMs!? So everyone here is getting some great Modal swag and $XXX in free GPU credits.
@@ -460,9 +470,7 @@ accent: Environment
 kicker: WALKTHROUGH // IMAGE
 ---
 
-<div class="flex items-stretch gap-6">
-<div style="flex: 1; min-width: 0;">
-
+<div class="code-with-rail">
 <WindowChrome title="train.py">
 
 ```python
@@ -482,8 +490,6 @@ volume = modal.Volume.from_name("mymodels", create_if_missing=True)
 ```
 
 </WindowChrome>
-
-</div>
 <div class="hud-rail">
   <p>Our dependencies</p>
   <p>Our container</p>
@@ -509,9 +515,7 @@ accent: Training
 kicker: WALKTHROUGH // LORA
 ---
 
-<div class="flex items-stretch gap-6">
-<div style="flex: 1; min-width: 0;">
-
+<div class="code-with-rail">
 <WindowChrome title="lora.py">
 
 ```python
@@ -537,8 +541,6 @@ def train(example_urls: string[]):
 ```
 
 </WindowChrome>
-
-</div>
 <div class="hud-rail">
   <p>Our environment</p>
   <p>Our trigger word</p>
@@ -775,12 +777,14 @@ label: WALKTHROUGH
 
 ::media::
 
-<div class="flex flex-col items-end gap-4">
-  <div class="flex items-center gap-3">
-    <img src="./images/threads.avif" alt="Threads" style="height: 2.2rem;" />
-    <img src="./images/linkedin.avif" alt="LinkedIn" style="height: 2.2rem;" />
+<div class="end-socials">
+  <div class="end-socials-icons">
+    <img src="./images/threads.avif" alt="Threads" />
+    <img src="./images/linkedin.avif" alt="LinkedIn" />
   </div>
-  <img src="./images/scan-me-qr-code.avif" alt="SCAN ME QR code" style="width: 12rem; height: auto;" />
+  <HudFrame hug fit="contain">
+    <img src="./images/scan-me-qr-code.avif" alt="SCAN ME QR code" />
+  </HudFrame>
 </div>
 
 <!--
