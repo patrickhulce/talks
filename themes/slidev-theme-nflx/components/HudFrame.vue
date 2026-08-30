@@ -87,6 +87,7 @@ defineProps({
 }
 
 .hud-frame[data-fit='contain'] :deep(img),
+.hud-frame[data-fit='contain'] :deep(video),
 .hud-frame[data-fit='contain'] img {
   object-fit: contain;
   filter: none;

@@ -25,27 +25,30 @@ sections:
 
 <!--
 Alright everyone settled in? Thanks for coming to Commit Your Code and welcome to Dallas for those of you who are visiting us! My name is Patrick, and I’m an ML architect at a big red streaming company you may know that rhymes with Shmetflix, creating tools for Studio Production.
-But I’m not here for them, I'm here for me, and today my grand goal is to introduce you to the basic concepts behind image and video generation in this era of GenAI, just enough for you to start googling on your own. Then ALSO give you not just an understanding, but the *confidence* to go out and train, and deploy, your very own video generation model, all in a tight 25 minutes, crazy, right? Maybe. Time will tell.
-We _are_ going to cover a LOT today though, so we’ll be speeding right along, if you get lost, follow along the slides at this link below.
-To kick things off, and to explain *why* I’m so excited about this, let me tell you a quick story.
-Twenty years ago, I starred in...
+But I’m not here for them, I'm here for me, and today my grand goal is to introduce you to the basic concepts behind image and video generation in this era of GenAI. Then once you've obtained this understanding, I'll try to give you the *confidence* to go out and train, and deploy, your very own video generation model, all in a tight 25 minutes, crazy, right? Maybe. Time will tell.
+We _are_ going to cover a LOT today though, so we’ll be speeding right along, if you get lost, follow along the slides at this QR code.
+To kick things off, and to explain *why* I’m so excited about this topic, let me tell you a quick story.
+TWENTY years ago, I produced a series of epic films about various aspects of world historya and a high school-level mastery of the German language, starring...
 -->
 
 ---
-layout: about
+layout: default
 label: AGENDA
 ---
 
-# Our Inspiration
+<h1 style="font-size: 4.4rem; margin-bottom: 0.8rem;">Our Inspiration</h1>
 
-::tiles::
-
-TODO__FILL_THIS_IN_WITH_STILLS_FROM_MY_MOVIES
+<div class="grid grid-cols-2 gap-3 w-full" style="flex: 1; min-height: 0; grid-template-rows: 1fr 1fr;">
+  <MediaTile src="./images/high-school-still-1.avif" tone="dim" style="width: 100%; height: 100%; max-width: none; aspect-ratio: unset; min-height: 0; min-width: 0;" />
+  <MediaTile src="./images/high-school-still-2.avif" tone="dark" style="width: 100%; height: 100%; max-width: none; aspect-ratio: unset; min-height: 0; min-width: 0;" />
+  <MediaTile src="./images/high-school-still-3.avif" tone="deep" style="width: 100%; height: 100%; max-width: none; aspect-ratio: unset; min-height: 0; min-width: 0;" />
+  <MediaTile src="./images/high-school-still-4.avif" tone="accent" style="width: 100%; height: 100%; max-width: none; aspect-ratio: unset; min-height: 0; min-width: 0;" />
+</div>
 
 <!--
-...a series of epic films about various aspects of world history, produced by yours truly as a high school student.
-They were my introduction to video production and VFX, opened doors to my first major entrepreneurial adventures, and the main reason I've loved working in Hollywood.
-But, there's a problem here, these beautiful masterpieces have some pretty glarring omissions that I'd love to reshoot, and I'm not in my teens anymore. In fact I'm so old now that these were recorded on video cameras with physical _tapes_. How are we going to help deliver the extra shots we need?
+...yours truly as a high school student.
+They were my introduction to video production and VFX, opened doors to my first major entrepreneurial adventures, and the main reason working in Hollywood has been a dream come true.
+But, there's a problem here, these beautiful masterpieces have some pretty glarring omissions and shoddy visual quality that I'd love to reshoot, and I'm not in my teens anymore. In fact I'm so old now that these were recorded on video cameras with physical _tapes_. How are we going to help deliver the extra shots we need?
 
 So that’s what we’re solve today, we're going to be training a video generation model to replicate this beautiful 2000s era footage of a Patrick in high school.
 
@@ -117,7 +120,7 @@ kicker: DEPLOYMENT SEQUENCE
   { year: '2021', label: 'Latent Diffusion', body: 'Speed and resolution solved by diffusing in latent space.', src: './images/astronaut-riding-a-horse.avif', tone: 'accent' },
   { year: '2022', label: 'SD 1.5 (OSS)', body: 'Latent diffusion goes open-source. The ecosystem explodes.', src: './images/dall-e-2-astronaut-riding-a-horse.avif', tone: 'deep' },
   { year: '2023', label: 'SD2 / SDXL', body: 'Faster and higher-resolution variants mature the stack.', src: './images/astronaut-riding-a-horse-on-the-moon.avif', tone: 'dark' },
-  { year: '2024', label: 'Sora', body: 'Realistic video appears to be within reach for the first time.', tone: 'accent' },
+  { year: '2024', label: 'OpenAI Sora', body: 'Realistic video appears to be within reach for the first time.', src: './images/sora-mammoth.avif', tone: 'accent' },
   { year: '2025', label: 'Wan', body: 'Open-source video models arrive — Wan, Hunyuan, and friends.', src: './images/wan-logo.avif', tone: 'deep' },
   { year: '2026', label: 'Video Is Viable', body: 'Many high-quality open-source video models up to 4K resolution.', tone: 'accent' },
 ]" />
@@ -130,9 +133,33 @@ Even so, GANs were the king around town for quite a while.
 But, around 2020, we got a new type of image called called a diffusion model, which is what we'll be covering today.
 And this was the start of something big. Nothing really happened immediately, everyone was still distracted by COVID and the crypto psychosis.
 But over the next couple years we got a series of improvements to diffusion in the open source community that really caused feasibility to explode, including the ability to generate not just realistic images, but video too.
+-->
 
-If you've ever seen this amusing montage of "Will Smith eating spaghetti" you can see how far we've come in just a few short years. 
+---
+layout: default
+label: DIFFUSION BASICS
+title: Progress
+accent: Timeline
+kicker: WILL SMITH // EATING SPAGHETTI
+---
 
+<div class="grid grid-cols-2 gap-3 w-full" style="flex: 1; min-height: 0; grid-template-rows: 1fr 1fr;">
+  <HudCard title="2023" kicker="EARLY ATTEMPTS" accent="bottom">
+    <HudFrame fit="contain"><img src="./videos/will-smith-2023.avif" alt="Will Smith eating spaghetti, 2023 generation" /></HudFrame>
+  </HudCard>
+  <HudCard title="2024" kicker="SOME PROGRESS" accent="bottom">
+    <HudFrame fit="contain"><img src="./videos/will-smith-2024.avif" alt="Will Smith eating spaghetti, 2024 generation" /></HudFrame>
+  </HudCard>
+  <HudCard title="2025" kicker="ALMOST REAL" accent="bottom">
+    <HudFrame fit="contain"><img src="./videos/will-smith-2025.avif" alt="Will Smith eating spaghetti, 2025 generation" /></HudFrame>
+  </HudCard>
+  <HudCard title="2026" kicker="ALMOST CINEMATIC" accent="bottom">
+    <HudFrame fit="contain"><img src="./videos/will-smith-2026.avif" alt="Will Smith eating spaghetti, 2026 generation" /></HudFrame>
+  </HudCard>
+</div>
+
+<!--
+If you've ever seen this amusing montage of "Will Smith eating spaghetti" you can see how far we've come in just a few short years.
 But enough about where we've been, let's talk about how the task of generating an image or video actually works, and to do that we're going to start with a slightly different task...
 -->
 
@@ -229,21 +256,21 @@ kicker: CUSTOMIZATION // BRIEFING
 
 <div class="briefing-grid">
   <HudCard variant="content" title="Model" accent="bottom" style="height: 16rem">
-    <p>A description of how to process data to derive some useful output.</p>
+    <p v-click="1">A description of how to process data to derive some useful output.</p>
     <div class="briefing-sub-slot">
-      <p v-click class="briefing-sub">procedure + parameters</p>
+      <p v-click="4" class="briefing-sub">procedure + parameters</p>
     </div>
   </HudCard>
   <HudCard variant="content" title="Training" accent="bottom" style="height: 16rem">
-    <p>The process of deriving a model’s parameters using its procedure and a large set of observations.</p>
+    <p v-click="2">The process of deriving a model’s parameters using its procedure and a large set of observations.</p>
     <div class="briefing-sub-slot">
-      <p v-click class="briefing-sub">compute the parameters</p>
+      <p v-click="5" class="briefing-sub">compute the parameters</p>
     </div>
   </HudCard>
   <HudCard variant="content" title="Inference" accent="bottom" style="height: 16rem">
-    <p>The process of deriving useful output using a model and input data.</p>
+    <p v-click="3">The process of deriving useful output using a model and input data.</p>
     <div class="briefing-sub-slot">
-      <p v-click class="briefing-sub">apply the procedure</p>
+      <p v-click="6" class="briefing-sub">apply the procedure</p>
     </div>
   </HudCard>
 </div>
@@ -306,9 +333,11 @@ So, we’re just going to pick right up where they left off and keep training on
 layout: default
 label: CUSTOMIZATION
 title: LoRA
-accent: Adaptation
-kicker: LOW-RANK  //  TARGETED TWEAK
+accent: Training
+kicker: LOW-RANK ADAPTATION // A TARGETED TWEAK
 ---
+
+<HudTitle kicker="LOW-RANK ADAPTATION // A TARGETED TWEAK" title="LoRA" accent="Training" :stacked="false" style="margin-bottom: 0.9rem;" />
 
 <div class="lora-explainer">
   <div class="lora-shots">
@@ -348,6 +377,13 @@ kicker: LOW-RANK  //  TARGETED TWEAK
     </div>
   </div>
 </div>
+
+<style>
+  .lora-shots img[alt="Taylor Swift"] {
+    object-position: center top;
+  }
+</style>
+
 
 <!--
 …a **LoRA**, or Low-Rank Adaptation. This is clever. Instead of retraining everything, we freeze most of the original pre-trained model. Then, you train a *much smaller* set of its weights to tweak its output just a bit, usually to introduce a single concept or character.
@@ -437,19 +473,19 @@ So, hopefully you're sold already, let's get to trying it out...
 -->
 
 ---
-layout: default
+layout: code
 label: WALKTHROUGH
 title: Setup
 accent: Modal
 kicker: WALKTHROUGH // TERMINAL
 ---
 
-<WindowChrome title="terminal">
+
+<WindowChrome title="setup">
 
 ```bash
 $ pip install modal
 $ modal setup
-EOF
 ```
 
 </WindowChrome>
@@ -469,40 +505,45 @@ kicker: WALKTHROUGH // IMAGE
 ---
 
 <div class="code-with-rail">
-<WindowChrome title="train.py">
+<WindowChrome title="ltx2_modal.py">
 
 ```python
 import modal
 
-pip_deps = ["accelerate==0.31.0", "torch~=2.2.0", ...]
-apt_deps = ["git", "curl", "zip", ...]
-
 image = (
-  modal.Image
-    .debian_slim(python_version="3.11")
-    .pip_install(pip_deps)
-    .apt_install(apt_deps)
+  modal.Image.debian_slim(python_version="3.12")
+    .apt_install("git", "ffmpeg", ...)
+    .pip_install("uv", "huggingface_hub[cli]")
+    .run_commands(
+      "git clone https://github.com/Lightricks/LTX-2.git ...",
+      "cd ... && uv sync",
+    )
 )
 
-volume = modal.Volume.from_name("mymodels", create_if_missing=True)
+app = modal.App("patrick-ltx", image=image)
+models_vol = modal.Volume.from_name("patrick-ltx-models", ...)
+data_vol = modal.Volume.from_name("patrick-ltx-data", ...)
+runs_vol = modal.Volume.from_name("patrick-ltx-runs", ...)
 ```
 
 </WindowChrome>
 <div class="hud-rail">
-  <p>Our dependencies</p>
   <p>Our container</p>
-  <p>Our persistent storage</p>
+  <p>Our dependencies</p>
+  <p>Our storage</p>
 </div>
 </div>
 
 <!--
 ...then we'll set up the basics of our environment.
 This is everything that Modal needs to know about in order to run our code.
-We'll define our python dependencies with pip, system dependencies with apt, and then we build our debian-based docker image with those.
-What Modal is doing here behind the scenes is making sure that our container has everything it needs to run our code before we even ask for a GPU, so you don't pay the huge setup cost you'd get with bare metal instances on other cloud providrs.
-Fianlly, we set up a `volume`, which is like a persistent network disk.
-This is where we'll store our downloaded base models and our eventual trained LoRA, so we don't have to re-download or re-train everything **every** **single** **time**.
-Next up...
+Up here we're building our container with a debian image, installing system deps like ffmpeg and git, before pulling in the repository of the open source model we'll be basing everything off of today, which is LTX-2, a high quality video generation model with great performance characteristics which will let us stretch our GPU budget really far. And last but not least we let `uv` install its python stack.
+
+Next we're creating our modal app — that's just how Modal organizes our deployments — and three persistent storage volumes: one for base model weights so we don't redownload _every single time_ we run our training job, one for our training dataset of captioned videos, and one for run outputs and LoRA checkpoints.
+
+All of this is to help make sure that our container has everything it needs to run our code before we even ask for a GPU, so we don't pay a huge setup cost you'd get with bare metal instances on other cloud providrs.
+
+Once we've got our environment set up, we're ready to move on to the actual...
 -->
 
 ---
@@ -514,61 +555,56 @@ kicker: WALKTHROUGH // LORA
 ---
 
 <div class="code-with-rail">
-<WindowChrome title="lora.py">
+<WindowChrome title="ltx2_modal.py">
 
 ```python
-import name_of_training_library
-
-app = modal.App(name="example-lora")
+@app.local_entrypoint()
+def run(run_name="v1", steps=2000, rank=32, ...):
+  config = _patch_config(
+    _load_config(),  # ← ltx2_lora.yml on disk
+    run_name=run_name, steps=steps, rank=rank,
+  )
+  download_models.remote()           # HF → /models
+  preprocess.remote()                # clips → latents on /data
+  train_lora.remote(run_name, yaml.safe_dump(config))
 
 @app.function(
-  image=image,
-  volumes={"/model": volume},
-  gpu="A100-80GB",
+  gpu="B200", timeout=24 * 60 * 60,
+  volumes={"/models": models_vol, "/data": data_vol, "/runs": runs_vol},
 )
-def train(example_urls: string[]):
-    name_of_training_library.launch(
-      instance_name="zxflStoryBook",
-      instance_image_urls=example_urls,
-      class_name="illustration",
-      base_model="black-forest-labs/FLUX.1-dev",
-      model_dir="/model",
-    )
-
-    volume.commit()
+def train_lora(run_name: str, config_yaml: str) -> str:
+  config = Path(f"/runs/{run_name}/config.yaml")
+  config.write_text(config_yaml)
+  _run_in_ltx(["scripts/train.py", str(config)], cwd=TRAINER_DIR)
+  runs_vol.commit()
 ```
 
 </WindowChrome>
 <div class="hud-rail">
-  <p>Our environment</p>
-  <p>Our trigger word</p>
-  <p>Our training data</p>
+  <p>Load + patch YAML</p>
+  <p>Download base model</p>
+  <p>Precompute latents</p>
+  <p>Train LoRA on B200</p>
 </div>
 </div>
 
 <!--
 ...training code.
-We create an app, which is just how Modal organizes our deployments.
-Then, we're going to attach a function to it.
-Here, we use a decorator to tell Modal that this function is going to use the image and volume we set up earlier, plus it'll run on a B200 with 80GB of VRAM.
-That's way overkill for us, but if you've been around AI for a while, you will appreciate how awesome it is that we can just immediately get 80GB of VRAM with per-second billing.
-Then, inside this function is where the actual LoRA training happens.
-In our case we're going to be fine-tuning an open source model called LTX-2 which comes with a great starter repository for training a LoRA.
-But feel free to poke around the lora.py file in the repo for more details if you're curious.
 
-TODO__REPLACE_THIS_STUFF_FOR_ACTUAL_WORK
-What I do want you to understand at least though are these few parameters we pass in.
-First, we pass our trigger word, the name we want to associate with our new concept in our LoRA.
-Then, we pass in our set of URLs to our training images.
-Then, we pass in the fundamental type of thing that our new concept is.
-This is actually one of the major innovations here of LoRA in general.
-The reason this entire approach can work at all with so few images is that the model _already_ knows a ton of stuff.
-If you're training a LoRA for a particular pet cat, you'd pass in "cat" here, and your LoRA would work because the model has already seen a billion cats, so it's going to be able to piggyback on already generally knowing what a cat looks like, and just slightly adjust it's cat output to match your training images.
-In our case, the model has already seen a billion different illustrations, we just want a particular type of illustration.
-Then, we pass in the base model we're using and where we want to save the results of our training.
-Finally, when training has all wrapped up, we commit the changes to our mounted volume, which is how Modal knows to save the results of our training for later use.
+Modal is doing some really smart things here behind the scenes. You'll notice that we have some of our python code annotated with `@app.local_entrypoint()` and others with `@app.function()`. Basically Modal is intelligently deciding when to run our code locally on your laptop and when to run it on a remote GPU, so that you only pay for GPU compute you absolutely need.
+
+
+So locally, our run function is orchestrating the entire training process by farming out to a few different remote functions.
+At first we are loading up the open source training config and patching in a few knobs to point to our own data on the volumes we set up earlier.
+Then we need to make sure we've downloaded the big base model weights onto the storage volume that we'll be creating our LoRA off of.
+Then we do a bit of preprocessing to prepare our training dataset to be ready for training. 
+And finally we actually kick off the training process on a massively beefy B200 GPU. 
+That's actually a bit of overkill for this particular task B200s have almost 200GB of VRAM while LTX-2 only needs about 80, but if you've been around AI for a while, you will appreciate how awesome it is that we can just immediately get that a B200 with per-second billing, at the drop of a hat. In fact while training my own I accidentally kicked off a job that farmed out to 96 B200s at once which on AWS is a terrifying idea. But thanks to per-second billing and low startup time it only cost me like $5.
+
+Anyhoo, once the training job comes back, we commit our LoRA checkpoint to the storage volume so that we can use it in our deployment.
 And that's really it for the training. In fact...
 -->
+
 
 ---
 layout: statement
@@ -578,12 +614,21 @@ kicker: WALKTHROUGH // EXECUTE
 
 # RUN IT
 
-<p class="hud-cmd">$ modal run lora.py</p>
+```bash
+$ modal run ltx2_modal.py::run
+```
+
+<style>
+pre {
+  font-size: 2rem !important;
+  padding: 1.5rem !important;
+}
+</style>
 
 <!--
 ...we're ready to run it!
-If you run this command, Modal will spin up a container with our deps and a B200, runs your training code, and saves your LoRA to that volume we defined earlier.
-It takes about ~20 minutes, and once it's done we have our model!
+If you run this command, Modal will spin up a container with our deps and a B200, download the base model if needed, preprocess our clips, run training, and save the LoRA to that runs volume we defined earlier.
+It takes a bit, and once it's done we have our model!
 But... a model file sitting on a disk isn't sufficient for our deployment promise is it?
 We need a way to actually *use* it, to generate videos.
 Anyone remember what that's called from ML 101 a few slides ago?
@@ -598,35 +643,57 @@ accent: Inference
 kicker: WALKTHROUGH // SERVE
 ---
 
-<WindowChrome title="lora.py">
+<div class="code-with-rail">
+<WindowChrome title="ltx2_modal.py">
 
 ```python
-from diffusers import DiffusionPipeline
-from fastapi import FastAPI
-
-@app.function(image=image, gpu="A100", volumes={"/model": volume})
+@app.function(
+  gpu="B200", timeout=2 * 60 * 60,
+  volumes={"/models": models_vol, "/runs": runs_vol},
+)
+@modal.asgi_app()
 def web_app():
-  pipeline = DiffusionPipeline.from_pretrained("/model").to("cuda")
-  pipeline.load_lora_weights("/model")
+  api = FastAPI()
 
-  app = FastAPI()
+  
 
-  @app.post("/generate")
-  async def generate(image_request: ImageRequest):
-    results = pipeline(image_request.prompt)
-    return results.images[0]
+  @api.post("/generate")
+  async def generate(req: GenerateRequest):
+    checkpoint_path = _find_latest_checkpoint(runs_vol)
+    lora = Path(checkpoint_path)
+    output = Path("/tmp/out.mp4")
+    _run_in_ltx([
+      "-m", "ltx_pipelines.ti2vid_one_stage",
+      "--transformer-path", TRANSFORMER,
+      "--text-encoder-path", TEXT_ENCODER,
+      "--video-vae-path", VIDEO_VAE, ...
+      "--lora", str(lora), str(req.strength),
+      "--prompt", req.prompt,
+      "--output-path", str(output),
+    ])
+    return FileResponse(
+      output, media_type="video/mp4", filename="out.mp4"
+    )
 
-  return app
+  return api
 ```
 
 </WindowChrome>
+<div class="hud-rail">
+  <p>Define GPU + Volumes</p>
+  <p>Load OUR LoRA</p>
+  <p>RUN LTX-2 pipeline</p>
+  <p>Stream mp4 bytes</p>
+</div>
+</div>
 
 <!--
-...INFERENCE that's right
-For inference, we're going to set up another Modal function, but this time we'll be returning a FastAPI app.
-For those of you who aren't as familiar with python, FastAPI is a popular web framework in python, think like express for node if you're familiar with that.
-And here we're going to load the base model and our LoRA from the volume using the diffusers library,
-and then we're going to define a simple endpoint `/generate` that takes the text prompt from the network request and runs that model we loaded.
+...INFERENCE that's right.
+So we're going to attach the same fancy GPU and storage volumes from our training function but this time wrapped with an HTTP handler.
+The `/generate` route takes a prompt and how much we want to apply our lora, called strength. 
+
+and then it's going to find our latest LoRA checkpoint that we trained, and use LTX-2's `ti2vid_one_stage` pipeline to generate a video for us.
+We write the mp4 to disk, then return a `FileResponse` so the client gets the video bytes
 And that's it! We're ready to rock...
 -->
 
@@ -638,24 +705,22 @@ kicker: WALKTHROUGH // PROMOTE
 
 # DEPLOY IT
 
-<p class="hud-cmd">$ modal deploy lora.py</p>
+```bash
+$ modal deploy ltx2_modal.py
+```
+
+<style>
+pre {
+  font-size: 2rem !important;
+  padding: 1.5rem !important;
+}
+</style>
 
 <!--
-And with that `modal deploy` command, our "Storybook as a Service" is live on the internet!
-Modal gives you a URL, and anyone can hit it to generate images in your unique style.
-How awesome is that? From a few image URLs to a deployed web service in minutes.
-Let's see what it can do!
-_opens browser to the deployed URL_
-We'll run the basics here of the recommended prompt, and we'll get a result here in a minute.
-So remember here it's actually running that diffusion process we learned about earlier.
-Inference takes a while because we're taking this massive, multi-billion parameter procedure that is predicting the noise to remove from randomness in order to get a picture.
-And then it's removing just a little bit of it.
-And then running another multi-billion parameter procedure.
-And another.
-And another.
-And another.
-Another ~50 times until we finally get a crisp result. So the fact that we can get it in under a minute at all, is pretty incredible.
-BOOM! Here we are, and it kinda worked! Phew! To save us a bit of time though, I ran a few more before this talk to compare how we're doing and...
+And with that `modal deploy` command, our "VideoGen as a Service" is live on the internet!
+Modal gives you a URL, and anyone can POST a prompt with the ZXFL trigger to `/generate`.
+How awesome is that? From a few training clips to a deployed web service in minutes.
+Let's see how well it does on our high school Patrick data!
 -->
 
 ---
@@ -666,28 +731,30 @@ accent: Difference
 kicker: WALKTHROUGH // BEFORE / AFTER
 ---
 
-<div class="grid grid-cols-3 gap-4" style="flex: 1; min-height: 0;">
-  <HudCard title="Original" kicker="TRAINING CROP" accent="bottom">
-    <HudFrame><img src="./images/original-storybook-bear-illustration.avif" alt="Original storybook bear illustration" /></HudFrame>
-  </HudCard>
+<div class="grid grid-cols-2 gap-4" style="flex: 1; min-height: 0;">
   <HudCard title="Without LoRA" kicker="BASE MODEL" accent="bottom">
-    <HudFrame><img src="./images/base-model-bear-without-lora.avif" alt="Base model bear without LoRA" /></HudFrame>
+    <HudFrame fit="contain">
+      <img src="./videos/without-lora.avif" alt="Base model without LoRA" />
+    </HudFrame>
   </HudCard>
   <HudCard title="With LoRA" kicker="TRIGGER INJECTED" accent="bottom">
-    <HudFrame><img src="./images/lora-styled-bear-illustration.avif" alt="LoRA-styled bear illustration" /></HudFrame>
+    <HudFrame fit="contain">
+      <img src="./videos/with-lora.avif" alt="LoRA-styled generation" />
+    </HudFrame>
   </HudCard>
 </div>
 
+<p style="margin: 1rem 0; font-family: var(--n-font-mono); font-size: 1.5rem; line-height: 1.35; letter-spacing: 0.02em; color: var(--n-muted); text-align: center;">
+  In a tracking medium shot, a <span style="color: var(--n-accent); font-weight: 700;">&lt;ZXFL&gt;</span> caucasian male teenager with light brown hair walks confidently down a city street at night in a black and red hoodie.
+</p>
+
 <!--
 ...it's not bad.
-I trained this LoRA with only 10 random crops of my storybook illustrations, and it's already doing a decent job of capturing the style.
-On the left, one of our original training illustrations.
-In the middle, what the base model might give you for the prompt "a ferocious brown bear, icy cave, illustration"
-It's fine, but not really the style we're going for.
-And on the right... this is what we get when we use the *same* base model, the *same* prompt, but we inject our trained LoRA and our trigger word.
-Look at that! It’s clearly captured the unique art style of the book.
-If I did a more meticulous job of caption writing, and curating crops, we could get even better results.
-But this is already a pretty good start.
+So these two videos have the same prompt shown up here, but the one on the right is using our trigger word and LoRA. 
+On the left, it's a person walking, sure, but it's not me, he's a got a little more "Hollywood model" look about him, and it's definitely not that shoddy 2000s camcorder look.
+On the right, we inject the trigger word and our trained LoRA. Same prompt, totally different identity. That's high-school Patrick. The LoRA did its job.
+This was all from a dataset of only 22 5s clips and less than a hour training of a single B200.  
+With more time and more data, we could get even better results. But this is already a pretty good start.
 -->
 
 ---

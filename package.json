@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "./scripts/dev.sh",
-    "build": "./scripts/build.sh"
+    "build": "./scripts/build.sh",
+    "optimize-media": "./scripts/optimize-media.py",
+    "check-media": "./scripts/optimize-media.py --check"
   },
   "author": "Patrick Hulce <patrick.hulce@gmail.com>",
   "license": "MIT",
