@@ -507,10 +507,12 @@ accent: Environment
 kicker: WALKTHROUGH // IMAGE
 ---
 
-<div class="code-with-rail">
-<WindowChrome title="ltx2_modal.py">
+<HudCodeRail
+  title="ltx2_modal.py"
+  :labels="['Our container', 'Our dependencies', 'Our storage']"
+>
 
-```python
+```python {1-11|13|14-16}
 import modal
 
 image = (
@@ -529,13 +531,7 @@ data_vol = modal.Volume.from_name("patrick-ltx-data", ...)
 runs_vol = modal.Volume.from_name("patrick-ltx-runs", ...)
 ```
 
-</WindowChrome>
-<div class="hud-rail">
-  <p>Our container</p>
-  <p>Our dependencies</p>
-  <p>Our storage</p>
-</div>
-</div>
+</HudCodeRail>
 
 <!--
 ...then we'll set up the basics of our environment.
@@ -557,10 +553,12 @@ accent: Training
 kicker: WALKTHROUGH // LORA
 ---
 
-<div class="code-with-rail">
-<WindowChrome title="ltx2_modal.py">
+<HudCodeRail
+  title="ltx2_modal.py"
+  :labels="['Load + patch YAML', 'Download base model', 'Precompute latents', 'Train LoRA on B200']"
+>
 
-```python
+```python {1-6|7|8|9-19}
 @app.local_entrypoint()
 def run(run_name="v1", steps=2000, rank=32, ...):
   config = _patch_config(
@@ -582,14 +580,7 @@ def train_lora(run_name: str, config_yaml: str) -> str:
   runs_vol.commit()
 ```
 
-</WindowChrome>
-<div class="hud-rail">
-  <p>Load + patch YAML</p>
-  <p>Download base model</p>
-  <p>Precompute latents</p>
-  <p>Train LoRA on B200</p>
-</div>
-</div>
+</HudCodeRail>
 
 <!--
 ...training code.
@@ -646,10 +637,12 @@ accent: Inference
 kicker: WALKTHROUGH // SERVE
 ---
 
-<div class="code-with-rail">
-<WindowChrome title="ltx2_modal.py">
+<HudCodeRail
+  title="ltx2_modal.py"
+  :labels="['Define GPU + Volumes', 'Load OUR LoRA', 'RUN LTX-2 pipeline', 'Stream mp4 bytes']"
+>
 
-```python
+```python {1-10|11-13|14-22|23-27}
 @app.function(
   gpu="B200", timeout=2 * 60 * 60,
   volumes={"/models": models_vol, "/runs": runs_vol},
@@ -679,14 +672,7 @@ def web_app():
   return api
 ```
 
-</WindowChrome>
-<div class="hud-rail">
-  <p>Define GPU + Volumes</p>
-  <p>Load OUR LoRA</p>
-  <p>RUN LTX-2 pipeline</p>
-  <p>Stream mp4 bytes</p>
-</div>
-</div>
+</HudCodeRail>
 
 <!--
 ...INFERENCE that's right.

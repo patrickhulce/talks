@@ -718,19 +718,6 @@ html.dark {
   font-size: 1.25rem;
 }
 
-.slidev-layout.code .code-with-rail {
-  display: flex;
-  align-items: stretch;
-  gap: 1.5rem;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.slidev-layout.code .code-with-rail .window-chrome {
-  min-width: 0;
-  max-width: calc(100% - 14rem);
-}
-
 /* Image */
 .slidev-layout.image-slide .image-frame {
   flex: 1;
@@ -1037,23 +1024,6 @@ html.dark {
   line-height: 1;
   color: var(--n-accent);
   text-shadow: 0 0 18px var(--n-accent-glow);
-}
-
-.hud-rail {
-  flex: 0 0 12.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.hud-rail p {
-  margin: 0;
-  font-family: var(--n-font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--n-accent);
 }
 
 .mnist-split {
