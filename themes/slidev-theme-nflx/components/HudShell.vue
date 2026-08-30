@@ -53,7 +53,7 @@ function footerLeft(configs) {
         >{{ section }}</span>
       </nav>
       <div class="hud-status">
-        <span class="hud-status-text">INSIGHTS UPLOADED</span>
+        <span class="hud-status-text">INSIGHTS UPLOAD</span>
         <span class="hud-avatar" :title="$slidev.configs.speaker">{{ initials($slidev.configs.speaker) }}</span>
       </div>
     </header>

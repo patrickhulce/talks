@@ -28,6 +28,9 @@ defineProps({
       <slot v-else />
       <div v-if="scanlines" class="hud-scanlines" aria-hidden="true" />
     </div>
+    <div v-if="$slots.badge" class="hud-frame-badge">
+      <slot name="badge" />
+    </div>
     <div v-if="target || caption || $slots.overlay" class="hud-frame-overlay">
       <slot name="overlay">
         <p v-if="target" class="hud-frame-target">{{ target }}</p>
@@ -113,6 +116,29 @@ defineProps({
       transparent 1px 3px
     );
   mix-blend-mode: multiply;
+}
+
+.hud-frame-badge {
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  z-index: 2;
+  line-height: 0;
+}
+
+.hud-frame-badge :deep(img) {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--n-border);
+  filter: none;
+}
+
+.hud-frame[data-panel='true'] .hud-frame-badge {
+  left: 1.15rem;
+  bottom: 1.15rem;
 }
 
 .hud-frame-overlay {

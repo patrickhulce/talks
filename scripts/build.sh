@@ -21,14 +21,19 @@ cp -R ./assets/favicons ./dist-www/favicons
 
 # Generate meta-refresh redirect pages from the "redirects" map in package.json,
 # e.g. "cyc2026": "2026/deploy-diffusion" -> domain.com/cyc2026 redirects to the talk.
+# Absolute https:// URLs are used as-is.
 node -e '
 const redirects = require("./package.json").redirects || {};
 for (const [from, to] of Object.entries(redirects)) {
   console.log(`${from}\t${to}`);
 }
 ' | while IFS=$'\t' read -r FROM TO; do
-  echo "Building redirect /$FROM -> /$TO..."
-  TARGET="/${TO%/}/"
+  if [[ "$TO" == https://* ]]; then
+    TARGET="$TO"
+  else
+    TARGET="/${TO%/}/"
+  fi
+  echo "Building redirect /$FROM -> $TARGET..."
   OUT_DIR="./dist-www/$FROM"
   mkdir -p "$OUT_DIR"
   cat > "$OUT_DIR/index.html" <<EOF

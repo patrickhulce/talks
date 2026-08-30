@@ -21,7 +21,7 @@ sections:
 
 ::media::
 
-<img src="./images/qr-code-for-bit-ly-genai-4.avif" alt="QR code for bit.ly/genai-4-media" />
+<img src="./images/qr-code-for-cyc2026.avif" alt="QR code for cyc2026.patrickhulce.com" />
 
 <!--
 Alright everyone settled in? Thanks for coming to Commit Your Code and welcome to Dallas for those of you who are visiting us! My name is Patrick, and I’m an ML architect at a big red streaming company you may know that rhymes with Shmetflix, creating tools for Studio Production.
@@ -446,6 +446,9 @@ kicker: WALKTHROUGH // INFRA
 
 <HudFrame fit="cover" panel>
   <img src="./images/modal-serverless-cloud.avif" alt="Modal — Serverless cloud infrastructure for AI, ML, and data applications" />
+  <template #badge>
+    <img src="./images/qr-code-for-modal.avif" alt="QR code for Modal" />
+  </template>
   <template #overlay>
     <HudCard title="Serverless GPUs" kicker="MODAL" accent="left">
       <ul>
@@ -655,8 +658,6 @@ kicker: WALKTHROUGH // SERVE
 def web_app():
   api = FastAPI()
 
-  
-
   @api.post("/generate")
   async def generate(req: GenerateRequest):
     checkpoint_path = _find_latest_checkpoint(runs_vol)
@@ -760,7 +761,7 @@ With more time and more data, we could get even better results. But this is alre
 ---
 layout: demo
 label: WALKTHROUGH
-link: bit.ly/dsd-lora-app-2025
+link: https://talks.patrickhulce.com/cyc2026-feedback
 ---
 
 # LIVE DEMO
