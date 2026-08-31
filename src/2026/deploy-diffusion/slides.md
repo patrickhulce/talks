@@ -510,9 +510,14 @@ kicker: WALKTHROUGH // IMAGE
 <HudCodeRail
   title="ltx2_modal.py"
   :labels="['Our container', 'Our dependencies', 'Our storage']"
+  :ranges="[
+    { start: /import modal/, end: /debian_slim/ },
+    { start: /apt_install/, end: /\s+\)$/ },
+    { start: /models_vol/, end: /runs_vol/ },
+  ]"
 >
 
-```python {1-11|13|14-16}
+```python
 import modal
 
 image = (
@@ -556,9 +561,15 @@ kicker: WALKTHROUGH // LORA
 <HudCodeRail
   title="ltx2_modal.py"
   :labels="['Load + patch YAML', 'Download base model', 'Precompute latents', 'Train LoRA on B200']"
+  :ranges="[
+    { start: /@app.local_entrypoint/, end: /^\s+\)$/ },
+    { start: /download_models/, end: /download_models/ },
+    { start: /preprocess/, end: /preprocess/ },
+    { start: /train_lora\.remote/, end: /runs_vol\.commit/ },
+  ]"
 >
 
-```python {1-6|7|8|9-19}
+```python
 @app.local_entrypoint()
 def run(run_name="v1", steps=2000, rank=32, ...):
   config = _patch_config(
@@ -640,9 +651,15 @@ kicker: WALKTHROUGH // SERVE
 <HudCodeRail
   title="ltx2_modal.py"
   :labels="['Define GPU + Volumes', 'Load OUR LoRA', 'RUN LTX-2 pipeline', 'Stream mp4 bytes']"
+  :ranges="[
+    { start: /@app.function/, end: /asgi_app/ },
+    { start: /checkpoint_path/, end: /lora =/ },
+    { start: /_run_in_ltx/, end: /\]\)/ },
+    { start: /FileResponse/, end: /return api/ },
+  ]"
 >
 
-```python {1-10|11-13|14-22|23-27}
+```python
 @app.function(
   gpu="B200", timeout=2 * 60 * 60,
   volumes={"/models": models_vol, "/runs": runs_vol},
@@ -744,23 +761,56 @@ This was all from a dataset of only 22 5s clips and less than a hour training of
 With more time and more data, we could get even better results. But this is already a pretty good start.
 -->
 
+
+---
+layout: statement
+label: WALKTHROUGH
+kicker: WALKTHROUGH // AGENTIFY
+---
+
+# AGENTIFY IT
+
+```bash
+$ modal skills install
+$ claude -p "Deploy LTX-2.5 as a REST API to Modal" \
+    --dangerously-skip-permissions \
+    --dangerously-open-your-wallet-to-anyone-with-internet \
+    --dangerously-submit-to-an-ai-hellscape-future \
+    --dangerously-rot-your-brain-and-give-up-now \
+    --superfast-make-no-mistakes
+```
+
+<style>
+pre {
+  text-align: left !important;
+}
+</style>
+
+<!--
+And these code examples were cool and all, but let's be real, you're probably just going to hand this off to Claude anyway, so even there Modal's got you covered with a set of skills which are vibecode ready.
+
+use at your own risk. 
+-->
+
 ---
 layout: demo
 label: WALKTHROUGH
-link: https://talks.patrickhulce.com/cyc2026-feedback
+link: talks.patrickhulce.com/cyc2026-feedback
 ---
 
-# LIVE DEMO
+# FEEDBACK
 
 ::media::
 
-<img src="./images/qr-code-for-bit-ly-dsd-lora.avif" alt="QR code for bit.ly/dsd-lora-app-2025" style="width: 12.5rem; height: 12.5rem;" />
+<img src="./images/qr-code-for-feedback.avif" alt="QR code for feedback" style="width: 12.5rem; height: 12.5rem;" />
 
 <!--
-...but don't take my word for it, go try it out for yourself!
-The wonderful Modal billing cap feature should mean y'all can go nuts here and I won't go bankrupt, so have at it!
-Alright, deep breath, we made it! That was a marathon in 20 minutes. Thank you for your attention!
-I always try to learn something myself about the audience before I go, so I'd appreciate indulging me in a few quick questions.
+...and that's all I had for you today! Out in a tight 21 minutes, Danny would be so proud. 
+
+With these precious extra seconds, I'd like to invite you to leave some feedback for me at this very official QR code.
+
+And while you pull that up I'd love a quick show of hands in person too.
+
 Number one, quick show of hands: how many of you feel like you learned something genuinely new or useful today?
 __WAIT_FOR_AUDIENCE_RESPONSE__
 Awesome.
@@ -788,11 +838,11 @@ kicker: AUDIENCE  //  VOTE
   <HudCard title="A  //  Inference Deep Dive" kicker="ML OPTIMIZATIONS" accent="left">
     <HudFrame caption="DISTILLATION / TENSORRT"><img src="./images/diver-in-a-data-center.avif" alt="Diver in a data center" /></HudFrame>
   </HudCard>
-  <HudCard title="B  //  User-Centric Tools" kicker="HOW TO USE GENAI" accent="left">
-    <HudFrame caption="COMFY / PIPELINES"><img src="./images/hand-reaching-for-red-building-blocks.avif" alt="Hand reaching for red building blocks" /></HudFrame>
+  <HudCard title="B  //  Video Deep Dives" kicker="BEYOND THE BASICS" accent="left">
+    <HudFrame caption="STUDIO COLOR / PHD OPTICAL PHYSICS"><img src="./images/editing-a-talk-at-a-computer.avif" alt="Editing a talk at a computer" /></HudFrame>
   </HudCard>
-  <HudCard title="C  //  Hands-On Web App" kicker="ML WEB APP CODE" accent="left">
-    <HudFrame caption="FULL STACK"><img src="./images/editing-a-talk-at-a-computer.avif" alt="Editing a talk at a computer" /></HudFrame>
+  <HudCard title="C  //  Agentic Development" kicker="ENGINEERING IN THE LLM AGE" accent="left">
+    <HudFrame caption="SKILLS / TOOLS"><img src="./images/hand-reaching-for-red-building-blocks.avif" alt="Hand reaching for red building blocks" /></HudFrame>
   </HudCard>
   <HudCard title="D  //  Meta-Talk" kicker="HOW TO GIVE A TALK" accent="left">
     <HudFrame caption="STAGECRAFT"><img src="./images/speaker-on-stage.avif" alt="Speaker on stage" /></HudFrame>
@@ -801,15 +851,15 @@ kicker: AUDIENCE  //  VOTE
 
 <!--
 First option, I could go super deep into advanced ML model inference optimizations, distillation of models, tensorRT optimizations, etc.
-Second option, I could go the opposite direction and talk about how to use these tools in a real video generation pipeline, using GUI-based editors like ComfyUI which I mentioned a lot earlier.
-Third option, I could go even further here but focus much more hands on with the code and talk about building a full web app around this.
+Second option, I could go super deep into video internals, studio color problems, camera intrinsics, and what these means for ML models today.
+Third option, I could switch gears entirely and focus on just engineering in this modern LLM age, former best practices I've had to abandon in the last year, new skills and tools I've adopted, a personal take on the hype and naysayers.
 Fourth option, I could go super meta and give a talk about how to give a talk.
 You can vote for as many as you want, but only raise your hand if you'd honestly show up.
-Alright who'd show up for A, the deep dive?
+Alright who'd show up for A, the ML inference deep dive?
 __WAIT_FOR_AUDIENCE_RESPONSE__
-Okay, who'd show up for B, the user perspective?
+Okay, who'd show up for B, the video deep dive?
 __WAIT_FOR_AUDIENCE_RESPONSE__
-And who'd show up for C, the hands-on?
+And who'd show up for C, the agentic development?
 __WAIT_FOR_AUDIENCE_RESPONSE__
 And who'd show up for D, the meta-talk?
 __WAIT_FOR_AUDIENCE_RESPONSE__
@@ -843,5 +893,5 @@ label: WALKTHROUGH
 ...that’s all I’ve got for the planned content.
 I hope this gave you a bit of inspiration and the confidence to try some of this out yourself.
 The tools are more accessible than ever!
-Happy to take any questions you might have.
+Happy to take any questions you might have out in the hall, and don't forget to come grab your modal swag!
 -->

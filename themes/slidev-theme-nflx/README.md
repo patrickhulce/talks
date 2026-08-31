@@ -59,7 +59,7 @@ Every layout sits in `HudShell` (header nav + footer index). `tone: light` / `to
 | `HudMeta` | — | `// PHASE 3` kicker line. |
 | `HudButton` | `kind`: `solid` / `ghost` | Execute / abort pair. |
 | `PhaseCard` | `phase`, `kicker`, `title`, `src` | Sequence card. Body slot: `#body`. |
-| `HudCodeRail` | `title`, `labels`: `string[]` | One fence inside a `WindowChrome`. Put Slidev line-range stages on the fence; each click highlights that range and the matching rail label. |
+| `HudCodeRail` | `title`, `labels`: `string[]`, `ranges`: `{ start, end }[]` | One fence inside a `WindowChrome`. Each range is a start/end line regex; clicks highlight that span and the matching rail label. |
 | `WindowChrome` | `title`, `kind`, `url` | `kind`: `code` (default), `browser`, `screenshot`. Always dark. |
 | `DeviceFrame` | `kind`: `monitor` / `tablet` / `phone` | Device wireframe. |
 | `NetflixTimeline` | `variant`: `axis` / `phases`; `items`: `{ year, label, body, src, images, side, tone }[]` | Axis: years on a red bar, copy/images alternate above/below. Phases: staggered `PhaseCard`s. |
