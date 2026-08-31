@@ -7,16 +7,23 @@ const props = defineProps({
   labels: { type: Array, default: () => [] },
 })
 
-const { $clicks } = useSlideContext()
+const { $clicksContext } = useSlideContext()
 
 const activeIndex = computed(() => {
   const last = Math.max(0, props.labels.length - 1)
-  return Math.min(Math.max(0, Number($clicks.value) || 0), last)
+  const raw = $clicksContext?.current
+  const n = typeof raw === 'number' ? raw : Number(raw)
+  const current = Number.isFinite(n) ? Math.max(0, n) : 0
+  return Math.min(current, last)
 })
+
+function isActive(i) {
+  return i === activeIndex.value
+}
 </script>
 
 <template>
-  <div class="hud-code-rail" :data-active="activeIndex">
+  <div class="hud-code-rail" :data-active="String(activeIndex)">
     <WindowChrome :title="title">
       <slot />
     </WindowChrome>
@@ -24,7 +31,7 @@ const activeIndex = computed(() => {
       <p
         v-for="(label, i) in labels"
         :key="i"
-        :class="{ 'is-active': i === activeIndex }"
+        :class="{ 'is-active': isActive(i) }"
       >{{ label }}</p>
     </div>
   </div>
@@ -32,16 +39,17 @@ const activeIndex = computed(() => {
 
 <style scoped>
 .hud-code-rail {
+  width: 100%;
   display: flex;
   align-items: stretch;
   gap: 1.5rem;
   min-width: 0;
-  max-width: 100%;
 }
 
 .hud-code-rail :deep(.window-chrome) {
+  flex: 1 1 auto;
   min-width: 0;
-  max-width: calc(100% - 14rem);
+  width: auto;
 }
 
 .hud-code-rail :deep(.line) {
