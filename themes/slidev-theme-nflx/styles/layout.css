@@ -666,6 +666,21 @@ html.dark {
   flex: none;
 }
 
+.end-qrs {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+.end-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  text-align: center;
+}
+
 .slidev-layout.end .end-socials .hud-frame,
 .slidev-layout.end .end-socials .media-tile {
   flex: none;
@@ -673,6 +688,25 @@ html.dark {
   max-width: 12rem;
   height: auto;
   min-height: 0;
+}
+
+.slidev-layout.end .end-qr .hud-frame {
+  width: 9.5rem;
+  max-width: 9.5rem;
+}
+
+.slidev-layout.end .end-qr .hud-kicker {
+  margin: 0;
+}
+
+.end-qr-url {
+  margin: 0;
+  font-family: var(--n-font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--n-dim);
+  word-break: break-all;
 }
 
 /* Statement */
@@ -704,6 +738,14 @@ html.dark {
 }
 
 /* Code */
+.slidev-layout.code .hud-main {
+  gap: 0.7rem;
+}
+
+.slidev-layout.code .hud-title {
+  flex: none;
+}
+
 .slidev-layout.code .code-body {
   flex: 1;
   min-height: 0;

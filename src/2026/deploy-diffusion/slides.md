@@ -650,9 +650,10 @@ kicker: WALKTHROUGH // SERVE
 
 <HudCodeRail
   title="ltx2_modal.py"
-  :labels="['Define GPU + Volumes', 'Load OUR LoRA', 'RUN LTX-2 pipeline', 'Stream mp4 bytes']"
+  :labels="['Define GPU + Volumes', 'DEFINE OUR ROUTE', 'Load OUR LoRA', 'RUN LTX-2 pipeline', 'Stream mp4 bytes']"
   :ranges="[
-    { start: /@app.function/, end: /asgi_app/ },
+    { start: /@app.function/, end: /runs_vol/ },
+    { start: /asgi_app/, end: /GenerateRequest/ },
     { start: /checkpoint_path/, end: /lora =/ },
     { start: /_run_in_ltx/, end: /\]\)/ },
     { start: /FileResponse/, end: /return api/ },
@@ -693,10 +694,12 @@ def web_app():
 
 <!--
 ...INFERENCE that's right.
-So we're going to attach the same fancy GPU and storage volumes from our training function but this time wrapped with an HTTP handler.
-The `/generate` route takes a prompt and how much we want to apply our lora, called strength. 
+So we're going to attach the same fancy GPU and storage volumes from our training function.
+That's the decorator: GPU, timeout, and the volumes with our base weights and the LoRA we just trained.
 
-and then it's going to find our latest LoRA checkpoint that we trained, and use LTX-2's `ti2vid_one_stage` pipeline to generate a video for us.
+Next we define our route. `@modal.asgi_app()` turns this into an HTTP service, and `/generate` is the path anyone will POST to — prompt in, how strongly to apply our LoRA, called strength.
+
+Then it's going to find our latest LoRA checkpoint that we trained, and use LTX-2's `ti2vid_one_stage` pipeline to generate a video for us.
 We write the mp4 to disk, then return a `FileResponse` so the client gets the video bytes
 And that's it! We're ready to rock...
 -->
@@ -793,40 +796,6 @@ use at your own risk.
 -->
 
 ---
-layout: demo
-label: WALKTHROUGH
-link: talks.patrickhulce.com/cyc2026-feedback
----
-
-# FEEDBACK
-
-::media::
-
-<img src="./images/qr-code-for-feedback.avif" alt="QR code for feedback" style="width: 12.5rem; height: 12.5rem;" />
-
-<!--
-...and that's all I had for you today! Out in a tight 21 minutes, Danny would be so proud. 
-
-With these precious extra seconds, I'd like to invite you to leave some feedback for me at this very official QR code.
-
-And while you pull that up I'd love a quick show of hands in person too.
-
-Number one, quick show of hands: how many of you feel like you learned something genuinely new or useful today?
-__WAIT_FOR_AUDIENCE_RESPONSE__
-Awesome.
-How many felt like parts of that were a bit too advanced, like I was just throwing jargon at you?
-If you don't really feel comfortable trying this yourself after today, your hand should be up!
-Be honest, it really helps me prepare appropriately for future talks!
-__WAIT_FOR_AUDIENCE_RESPONSE__
-Okay, duly noted.
-And for the certified geniuses in the room, how many felt this was way too basic, you already knew all this stuff and could’ve given this talk in your sleep?
-__WAIT_FOR_AUDIENCE_RESPONSE__
-I respect your honesty!
-Finally, if I were to do another one of these talks, what would you be most interested in?
-And here are your options...
--->
-
----
 layout: default
 label: WALKTHROUGH
 title: Next
@@ -850,6 +819,23 @@ kicker: AUDIENCE  //  VOTE
 </div>
 
 <!--
+...and that's all I had for you today! Out in a tight 21 minutes, Danny would be so proud.
+
+I'd love a quick show of hands.
+
+Number one: how many of you feel like you learned something genuinely new or useful today?
+__WAIT_FOR_AUDIENCE_RESPONSE__
+Awesome.
+How many felt like parts of that were a bit too advanced, like I was just throwing jargon at you?
+If you don't really feel comfortable trying this yourself after today, your hand should be up!
+Be honest, it really helps me prepare appropriately for future talks!
+__WAIT_FOR_AUDIENCE_RESPONSE__
+Okay, duly noted.
+And for the certified geniuses in the room, how many felt this was way too basic, you already knew all this stuff and could’ve given this talk in your sleep?
+__WAIT_FOR_AUDIENCE_RESPONSE__
+I respect your honesty!
+Finally, if I were to do another one of these talks, what would you be most interested in?
+Here are your options...
 First option, I could go super deep into advanced ML model inference optimizations, distillation of models, tensorRT optimizations, etc.
 Second option, I could go super deep into video internals, studio color problems, camera intrinsics, and what these means for ML models today.
 Third option, I could switch gears entirely and focus on just engineering in this modern LLM age, former best practices I've had to abandon in the last year, new skills and tools I've adopted, a personal take on the hype and naysayers.
@@ -884,14 +870,26 @@ label: WALKTHROUGH
     <img src="./images/threads.avif" alt="Threads" />
     <img src="./images/linkedin.avif" alt="LinkedIn" />
   </div>
-  <HudFrame hug fit="contain">
-    <img src="./images/scan-me-qr-code.avif" alt="SCAN ME QR code" />
-  </HudFrame>
+  <div class="end-qrs">
+    <div class="end-qr">
+      <HudMeta>Feedback</HudMeta>
+      <HudFrame hug fit="contain">
+        <img src="./images/qr-code-for-feedback.avif" alt="QR code for feedback" />
+      </HudFrame>
+      <p class="end-qr-url">talks.patrickhulce.com/cyc2026-feedback</p>
+    </div>
+    <div class="end-qr">
+      <HudMeta>Connect with me</HudMeta>
+      <HudFrame hug fit="contain">
+        <img src="./images/scan-me-qr-code.avif" alt="QR code to connect" />
+      </HudFrame>
+    </div>
+  </div>
 </div>
 
 <!--
-...that’s all I’ve got for the planned content.
 I hope this gave you a bit of inspiration and the confidence to try some of this out yourself.
 The tools are more accessible than ever!
+If you’ve got a minute, written feedback is this QR — and if you want to connect, that’s the other one.
 Happy to take any questions you might have out in the hall, and don't forget to come grab your modal swag!
 -->
