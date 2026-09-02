@@ -3,7 +3,12 @@ set -euo pipefail
 
 export NODE_OPTIONS="${NODE_OPTIONS:+$NODE_OPTIONS }--openssl-legacy-provider"
 
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
 rm -rf ./dist ./dist-www
+mkdir -p ./dist-www
+touch ./dist-www/.nojekyll
 
 for f in $(find ./src -type f -regex ".*/deck.*"); do
   echo "Building $f..."
@@ -16,6 +21,36 @@ for f in $(find ./src -type f -regex ".*/deck.*"); do
   mkdir -p "$OUT_DIR"
   mv ./dist/* "$OUT_DIR/"
 done
+
+# Slidev talks live at src/<year>/<talk>/slides.md and are not picked up by the
+# mdx-deck loop above. Build each as a SPA under /<year>/<talk>/ so GitHub Pages
+# can serve them next to the older decks.
+while IFS= read -r slides; do
+  dir="$(dirname "$slides")"
+  year="$(basename "$(dirname "$dir")")"
+  talk="$(basename "$dir")"
+  out="$ROOT/dist-www/$year/$talk"
+  echo "Building slidev $year/$talk..."
+  (
+    cd "$dir"
+    pnpm exec slidev build slides.md \
+      --base "/$year/$talk/" \
+      --out "$out" \
+      --router-mode hash \
+      --without-notes
+  )
+  # Vite only hashes <img src> it can statically see. Component props like
+  # MediaTile src="./images/..." stay as relative URLs, so copy media through.
+  for media in images videos; do
+    if [[ -d "$dir/$media" ]]; then
+      mkdir -p "$out/$media"
+      cp -R "$dir/$media/." "$out/$media/"
+    fi
+  done
+  if [[ -d "$dir/public" ]]; then
+    cp -R "$dir/public/." "$out/"
+  fi
+done < <(find ./src -type f -name 'slides.md' | sort)
 
 cp -R ./assets/favicons ./dist-www/favicons
 
@@ -45,8 +80,67 @@ for (const [from, to] of Object.entries(redirects)) {
 EOF
 done
 
-cat > ./dist-www/index.html <<'EOF'
-<!DOCTYPE html>
+node <<'NODE'
+const fs = require('fs');
+const path = require('path');
+
+const DECK_TITLES = {
+  '2018/devtools-lighthouse': 'DevTools + Lighthouse',
+  '2018/ndb-lightning': 'ndb',
+  '2019/chrome-internals': 'Chrome Internals',
+  '2019/lighthouse-ci-lightning': 'Lighthouse CI',
+  '2019/lighthouse-vue': 'Staying Off the Rocks (Lighthouse + Vue)',
+  '2019/pwas': 'PWAs',
+  '2020/lighthouse-ci-with-quiz': 'Lighthouse CI',
+  '2020/puppeteer-lightning': 'Browser Integration Testing with Puppeteer',
+};
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function frontmatterTitle(file) {
+  const text = fs.readFileSync(file, 'utf8');
+  const block = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!block) return null;
+  const title = block[1].match(/^title:\s*(.+)$/m);
+  if (!title) return null;
+  return title[1].trim().replace(/^['"]|['"]$/g, '');
+}
+
+const talks = [];
+for (const year of fs.readdirSync('src')) {
+  const yearDir = path.join('src', year);
+  if (!/^\d{4}$/.test(year) || !fs.statSync(yearDir).isDirectory()) continue;
+  for (const name of fs.readdirSync(yearDir)) {
+    const talkDir = path.join(yearDir, name);
+    if (!fs.statSync(talkDir).isDirectory()) continue;
+    const slug = `${year}/${name}`;
+    const slides = path.join(talkDir, 'slides.md');
+    const deckMdx = path.join(talkDir, 'deck.mdx');
+    const deckJs = path.join(talkDir, 'deck.js');
+    let title = null;
+    if (fs.existsSync(slides)) {
+      title = frontmatterTitle(slides) || name;
+    } else if (fs.existsSync(deckMdx) || fs.existsSync(deckJs)) {
+      title = DECK_TITLES[slug] || name;
+    } else {
+      continue;
+    }
+    talks.push({ year, slug, title });
+  }
+}
+
+talks.sort((a, b) => b.year.localeCompare(a.year) || a.slug.localeCompare(b.slug));
+const items = talks
+  .map((t) => `    <li><a href="./${t.slug}/">${t.year} — ${escapeHtml(t.title)}</a></li>`)
+  .join('\n');
+
+const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -75,15 +169,12 @@ cat > ./dist-www/index.html <<'EOF'
 <body>
   <h1>Talks</h1>
   <ul>
-    <li><a href="./2020/puppeteer-lightning/">2020 — Browser Integration Testing with Puppeteer</a></li>
-    <li><a href="./2020/lighthouse-ci-with-quiz/">2020 — Lighthouse CI</a></li>
-    <li><a href="./2019/chrome-internals/">2019 — Chrome Internals</a></li>
-    <li><a href="./2019/lighthouse-ci-lightning/">2019 — Lighthouse CI</a></li>
-    <li><a href="./2019/lighthouse-vue/">2019 — Staying Off the Rocks (Lighthouse + Vue)</a></li>
-    <li><a href="./2019/pwas/">2019 — PWAs</a></li>
-    <li><a href="./2018/devtools-lighthouse/">2018 — DevTools + Lighthouse</a></li>
-    <li><a href="./2018/ndb-lightning/">2018 — ndb</a></li>
+${items}
   </ul>
 </body>
 </html>
-EOF
+`;
+
+fs.writeFileSync('dist-www/index.html', html);
+console.log(`Wrote index with ${talks.length} talks`);
+NODE
