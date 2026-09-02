@@ -72,14 +72,13 @@ kicker: CYC PROTOCOL // INITIALIZED
 1. Diffusion Basics
    <small>History</small>
    <small>Mechanics</small>
-   <small>Models</small>
 2. Model Customization
    <small>ML 101</small>
    <small>LoRAs</small>
 3. Practical Walkthrough
    <small>Training a custom model</small>
    <small>Deploying that custom model</small>
-   <small>Live demo</small>
+   <small>Results</small>
 
 <!--
 So, first, we’ll take a quick sprint through the history and mechanics of modern image and video generation models, and some of the common options out there.
@@ -373,7 +372,7 @@ kicker: LOW-RANK ADAPTATION // A TARGETED TWEAK
     </div>
     <div>
       <p class="hud-qa-q">How?</p>
-      <p class="hud-qa-a">python libraries (diffusers, kohya_ss)</p>
+      <p class="hud-qa-a">Python libraries (e.g. diffsynth, ai-toolkit)</p>
     </div>
   </div>
 </div>
@@ -863,27 +862,21 @@ label: WALKTHROUGH
 - <NetflixIcon name="mail" /> patrick.hulce@gmail.com
 - <NetflixIcon name="link" /> /in/patrickhulce
 
+<div class="end-socials-icons">
+  <img src="./images/threads.avif" alt="Threads" />
+  <img src="./images/linkedin.avif" alt="LinkedIn" />
+</div>
+
 ::media::
 
-<div class="end-socials">
-  <div class="end-socials-icons">
-    <img src="./images/threads.avif" alt="Threads" />
-    <img src="./images/linkedin.avif" alt="LinkedIn" />
+<div class="end-qrs">
+  <div class="end-qr">
+    <HudMeta>Feedback</HudMeta>
+    <img class="end-qr-img" src="./images/qr-code-for-feedback.avif" alt="QR code for feedback" />
   </div>
-  <div class="end-qrs">
-    <div class="end-qr">
-      <HudMeta>Feedback</HudMeta>
-      <HudFrame hug fit="contain">
-        <img src="./images/qr-code-for-feedback.avif" alt="QR code for feedback" />
-      </HudFrame>
-      <p class="end-qr-url">talks.patrickhulce.com/cyc2026-feedback</p>
-    </div>
-    <div class="end-qr">
-      <HudMeta>Connect with me</HudMeta>
-      <HudFrame hug fit="contain">
-        <img src="./images/scan-me-qr-code.avif" alt="QR code to connect" />
-      </HudFrame>
-    </div>
+  <div class="end-qr">
+    <HudMeta>Connect with me</HudMeta>
+    <img class="end-qr-img" src="./images/connect-qr.avif" alt="QR code to connect" />
   </div>
 </div>
 
