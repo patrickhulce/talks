@@ -356,7 +356,7 @@ kicker: LOW-RANK ADAPTATION // A TARGETED TWEAK
   <div class="hud-qa">
     <div>
       <p class="hud-qa-q">What is it?</p>
-      <p class="hud-qa-a">Retrain <em>part</em> of the model with your data.</p>
+      <p class="hud-qa-a">Train <em>a small fraction</em> of a base model with your data.</p>
     </div>
     <div>
       <p class="hud-qa-q">Requires?</p>
@@ -372,7 +372,7 @@ kicker: LOW-RANK ADAPTATION // A TARGETED TWEAK
     </div>
     <div>
       <p class="hud-qa-q">How?</p>
-      <p class="hud-qa-a">Python libraries (e.g. diffsynth, ai-toolkit)</p>
+      <p class="hud-qa-a">Python libraries (e.g. Musubi-Tuner, diffsynth, ai-toolkit)</p>
     </div>
   </div>
 </div>
@@ -876,7 +876,7 @@ label: WALKTHROUGH
   </div>
   <div class="end-qr">
     <HudMeta>Connect with me</HudMeta>
-    <img class="end-qr-img" src="./images/connect-qr.avif" alt="QR code to connect" />
+    <img class="end-qr-img" src="./images/qr-code-for-connect.avif" alt="QR code to connect" />
   </div>
 </div>
 
