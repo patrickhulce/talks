@@ -9,5 +9,6 @@ allowBuilds:
   core-js: false
   es5-ext: false
   fsevents: false
+  playwright-chromium: false
   puppeteer: false
   styled-components: false
